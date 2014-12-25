@@ -1,0 +1,24 @@
+- id: origami
+  description: Modular Origami Projects
+  imagefolder: /img/origami
+  images:
+  - name: spike.jpg
+    thumb: spike-thumb.jpg
+    text: 12-module spike balls – fun and easy!
+    link: http://makezine.com/projects/origami-spike-ball/
+  - name: cube.jpg
+    thumb: cube-thumb.jpg
+    text: Cube made from 24 Oxi modules. Had to glue it to get it to stay.
+    link: http://michal.kosmulski.org/origami/oxi/index.html
+  - name: bucky.jpg
+    thumb: bucky-thumb.jpg
+    text: Buckyball made from 30 PHiZZ units.
+    linke: https://www.usd.edu/arts-and-sciences/math/upload/The_PHiZZ_Unit.pdf
+  - name: curler2.jpg
+    thumb: curler2-thumb.jpg
+    text: Aquilegia flower made from 8 curlers. Use a pen to curl the units!
+    link: https://www.youtube.com/watch?v=HIRKHwG1CIk
+  - name: curler.jpg
+    thumb: curler-thumb.jpg
+    text: Curler Cuboctahedron from 12 units. My favorite model! 
+    link: abc

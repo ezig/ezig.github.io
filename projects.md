@@ -4,7 +4,13 @@ title: Projects
 ---
 
 <p class="message">
-  Hey there! This is the home of my projects
+  Stop by my <a href="https://github.com/ezig/">GitHub</a> to see my latest!
 </p>
+##Flip (in progress)
+A game about tiles. Built using Phaser.js. Play the live demo <a href="https://ezig.github.io/flip/">here</a>, or check out the <a href="https://github.com/ezig/flip">source code</a> Hoping to port the game to iOS – stay posted!
 
-In the novel, *The Strange Case of Dr. Jeykll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+##Budget Buddy
+A friendly app that streamlines your budget management experience. Coming to the App Store soon. In the meantime, watch the <a href="https://www.youtube.com/watch?v=hMnQPRcO7yo">commercial</a>, or check out the project on <a href="https://github.com/ezig/CS50-final">GitHub</a>.
+
+##Write Temp
+A temperature-writing robot built with Raspberry Pi and programmed in Python. Check out a quick <a href="https://www.youtube.com/watch?v=GqTgcuXFwXc"> video</a>, or see more details <a href="https://github.com/ezig/ES50-final">here</a>.
