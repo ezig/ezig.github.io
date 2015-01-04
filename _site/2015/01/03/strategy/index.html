@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Strategy Game Grid Movement &middot; Ezra Zigmond
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0d">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Ezra Zigmond
+        </a>
+      </h1>
+      <p class="lead">CS student and developer.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/projects/">Projects</a>
+          
+        
+      
+    
+      <a class="sidebar-nav-item" href="/origami">Origami</a>
+      <a class="sidebar-nav-item" href="https://github.com/ezig">GitHub</a>
+
+      <!---<span class="sidebar-nav-item">Currently v</span>-->
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Strategy Game Grid Movement</h1>
+  <span class="post-date">03 Jan 2015</span>
+  <p>I&#39;ve been working the past week on a (very rough) framework for a turn-based strategy game using Phaser.js. I got the movement code working today, and I thought it was worth sharing. </p>
+
+<p>A little demo of how the movement works is below. Click on a character (the smaller squares) to see all possible spaces to move (in blue) and places outside of the movement range that are within attack range (in red), and then click a blue square to move. </p>
+
+<p>The solid tiles are obstacles, and the tiles with an X are rough terrain that have double the movement cost of a plain tile. The green character is intended to be a melee unit and the pink character is an unit with 2 attack range. </p>
+
+<p>Actual art coming &quot;soon.&quot;</p>
+
+<p><center><iframe src="https://ezig.github.io/strategy-game" width="320" height="260" frameborder="0"></iframe></center></p>
+
+<!--more-->
+
+<p>Obviously, this is far from being an actual game, but I&#39;m quite excited to have the movement working. There are three main components to the movement:</p>
+
+<ol>
+<li><strong>Finding Range</strong>: Determining which tiles are within movement/attack range of a unit.</li>
+<li><strong>Finding a Path</strong>: If the user clicks on a tile in range, how does the unit get there?</li>
+<li><strong>Following a Path</strong>: Making the unit actually move to the target.</li>
+</ol>
+
+<p>The third part wasn&#39;t too hard – once I had the path, I could make the unit animate along the path in steps. But the first two parts caused a lot of trouble and ended up being far more related than I first realized.</p>
+
+<p>I tried a number took of different approaches to find one that actually works, and my current approach finds the range and constructs paths together in the same process. One of the biggest challenges is that I made the attack range insensitive to terrain – otherwise, a melee unit couldn&#39;t attack from one rough terrain space to an adjacent one! Dealing with attacking through obstacles (which you can see by moving the pink unit around) also caused some trouble.</p>
+
+<p>My first thought was just to use a (depth-limited) <a href="http://en.wikipedia.org/wiki/Flood_fill">flood fill</a> algorithm to find the range. The main problem with this was that the flood fill didn&#39;t really have a particular sense of &quot;outward&quot; movement because it was depth-first. This made it difficult to determine which space were in the movement range and which were in the attack range.</p>
+
+<p>To resolve this, I switched to a rather depth-limited <a href="http://en.wikipedia.org/wiki/Breadth-first_search">breadth-first</a> search. This had a clear outward search and did not revisit grid spaces that had already been searched. It was easy to distinguish between movable and attackable spaces, and it was easy to build paths as the search was going. Whenever the algorithm reached a tile, I assigned the tile a property to keep track of the tile the search came from. Then from any given tile, I could follow the references back to the player to reconstruct a path.</p>
+
+<p>For a while, it seemed like this approach was working, until I tested out the code in the very rough region in the western part of the map above. I quickly discovered that some spaces that should be reachable were not being found.</p>
+
+<p>After struggling with the problem for a while, I finally realized that the search was never guaranteed to find the <em>best</em> path to a space because it never revisited a space. After it found one path to a space, it never looked back. Some spaces are only reachable by a specific best path through other spaces, and these paths were never considered. </p>
+
+<p>Thus, I refined the search to revisit tiles if a better (i.e. lower-cost) path was found, which ensured that the <em>best</em> path to every reachable space was found. Further, I simplified the search by worrying about whether a space was movable or attackable outside of the search, and simply assigning a depth value to each space.</p>
+
+<p>Now that the movement is finally working, I&#39;m going to work on actually adding gameplay!</p>
+
+<p>If you&#39;re interested, the source code is <a href="https://github.com/ezig/strategy-game">here</a>!</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/12/26/Flip/">
+            Flip (A game about tiles)
+            <small>26 Dec 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>
