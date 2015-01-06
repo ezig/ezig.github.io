@@ -7,7 +7,7 @@ I've been working the past week on a (very rough) framework for a turn-based str
 
 A little demo of how the movement works is below. Click on a character (the smaller squares) to see all possible spaces to move (in blue) and places outside of the movement range that are within attack range (in red), and then click a blue square to move. 
 
-The solid tiles are obstacles, and the tiles with an X are rough terrain that have double the movement cost of a plain tile. The green character is intended to be a melee unit and the pink character is an unit with 2 attack range. 
+The solid tiles are obstacles, and the tiles with an X are rough terrain that have double the movement cost of a plain tile. The green character is intended to be a melee unit and the pink character is an unit with 2 attack range. The red character is an "enemy" who currently doesn't have much of a brain.
 
 Actual art coming "soon."
 
