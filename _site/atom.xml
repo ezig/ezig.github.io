@@ -4,7 +4,7 @@
  <title>Ezra Zigmond</title>
  <link href="http://ezig.github.io//atom.xml" rel="self"/>
  <link href="http://ezig.github.io//"/>
- <updated>2015-01-03T22:44:08-05:00</updated>
+ <updated>2015-01-06T21:24:14-05:00</updated>
  <id>http://ezig.github.io/</id>
  <author>
    <name>Ezra Zigmond</name>
@@ -21,7 +21,7 @@
 
 &lt;p&gt;A little demo of how the movement works is below. Click on a character (the smaller squares) to see all possible spaces to move (in blue) and places outside of the movement range that are within attack range (in red), and then click a blue square to move. &lt;/p&gt;
 
-&lt;p&gt;The solid tiles are obstacles, and the tiles with an X are rough terrain that have double the movement cost of a plain tile. The green character is intended to be a melee unit and the pink character is an unit with 2 attack range. &lt;/p&gt;
+&lt;p&gt;The solid tiles are obstacles, and the tiles with an X are rough terrain that have double the movement cost of a plain tile. The green character is intended to be a melee unit and the pink character is an unit with 2 attack range. The red character is an &amp;quot;enemy&amp;quot; who currently doesn&amp;#39;t have much of a brain.&lt;/p&gt;
 
 &lt;p&gt;Actual art coming &amp;quot;soon.&amp;quot;&lt;/p&gt;
 
