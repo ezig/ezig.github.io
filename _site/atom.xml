@@ -4,13 +4,22 @@
  <title>Ezra Zigmond</title>
  <link href="http://ezig.github.io//atom.xml" rel="self"/>
  <link href="http://ezig.github.io//"/>
- <updated>2015-01-14T10:14:13-05:00</updated>
+ <updated>2015-01-14T10:23:11-05:00</updated>
  <id>http://ezig.github.io/</id>
  <author>
    <name>Ezra Zigmond</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Budget Buddy is On the App Store!</title>
+   <link href="http://ezig.github.io//2015/01/14/Budget-Buddy/"/>
+   <updated>2015-01-14T00:00:00-05:00</updated>
+   <id>http://ezig.github.io//2015/01/14/Budget-Buddy</id>
+   <content type="html">&lt;p&gt;Budget Buddy is now available free on the App Store &lt;a href=&quot;https://itunes.apple.com/us/app/budget-buddy!/id954624765?ls=1&amp;mt=8&quot;&gt;here&lt;/a&gt;! If you aren&amp;#39;t convinced that Budget Buddy is the best budget management app, check out our &lt;a href=&quot;https://www.youtube.com/watch?v=hMnQPRcO7yo&quot;&gt;commercial&lt;/a&gt;!&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Strategy Game Grid Movement</title>

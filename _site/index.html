@@ -94,14 +94,28 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/2015/01/14/Budget-Buddy/">
+        Budget Buddy is On the App Store!
+      </a>
+    </h1>
+
+    <span class="post-date">14 Jan 2015</span>
+        <p>Budget Buddy is now available free on the App Store <a href="https://itunes.apple.com/us/app/budget-buddy!/id954624765?ls=1&mt=8">here</a>! If you aren&#39;t convinced that Budget Buddy is the best budget management app, check out our <a href="https://www.youtube.com/watch?v=hMnQPRcO7yo">commercial</a>!</p>
+
+<!--     <p>Budget Buddy is now available free on the App Store <a href="https://itunes.apple.com/us/app/budget-buddy!/id954624765?ls=1&mt=8">here</a>! If you aren&#39;t convinced that Budget Buddy is the best budget management app, check out our <a href="https://www.youtube.com/watch?v=hMnQPRcO7yo">commercial</a>!</p>
+
+            <a href="/2015/01/14/Budget-Buddy/">Read more...</a> -->
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/2015/01/03/strategy/">
         Strategy Game Grid Movement
       </a>
     </h1>
 
     <span class="post-date">03 Jan 2015</span>
-
-    <p>I&#39;ve been working the past week on a (very rough) framework for a turn-based strategy game using Phaser.js. I got the movement code working today, and I thought it was worth sharing. </p>
+        <p>I&#39;ve been working the past week on a (very rough) framework for a turn-based strategy game using Phaser.js. I got the movement code working today, and I thought it was worth sharing. </p>
 
 <p>A little demo of how the movement works is below. Click on a character (the smaller squares) to see all possible spaces to move (in blue) and places outside of the movement range that are within attack range (in red), and then click a blue square to move. </p>
 
@@ -111,7 +125,45 @@
 
 <p><center><iframe src="https://ezig.github.io/strategy-game" width="320" height="260" frameborder="0"></iframe></center></p>
 
-            <a href="/2015/01/03/strategy/">Read more...</a>
+<!--more-->
+
+<p>Obviously, this is far from being an actual game, but I&#39;m quite excited to have the movement working. There are three main components to the movement:</p>
+
+<ol>
+<li><strong>Finding Range</strong>: Determining which tiles are within movement/attack range of a unit.</li>
+<li><strong>Finding a Path</strong>: If the user clicks on a tile in range, how does the unit get there?</li>
+<li><strong>Following a Path</strong>: Making the unit actually move to the target.</li>
+</ol>
+
+<p>The third part wasn&#39;t too hard – once I had the path, I could make the unit animate along the path in steps. But the first two parts caused a lot of trouble and ended up being far more related than I first realized.</p>
+
+<p>I tried a number took of different approaches to find one that actually works, and my current approach finds the range and constructs paths together in the same process. One of the biggest challenges is that I made the attack range insensitive to terrain – otherwise, a melee unit couldn&#39;t attack from one rough terrain space to an adjacent one! Dealing with attacking through obstacles (which you can see by moving the pink unit around) also caused some trouble.</p>
+
+<p>My first thought was just to use a (depth-limited) <a href="http://en.wikipedia.org/wiki/Flood_fill">flood fill</a> algorithm to find the range. The main problem with this was that the flood fill didn&#39;t really have a particular sense of &quot;outward&quot; movement because it was depth-first. This made it difficult to determine which space were in the movement range and which were in the attack range.</p>
+
+<p>To resolve this, I switched to a rather depth-limited <a href="http://en.wikipedia.org/wiki/Breadth-first_search">breadth-first</a> search. This had a clear outward search and did not revisit grid spaces that had already been searched. It was easy to distinguish between movable and attackable spaces, and it was easy to build paths as the search was going. Whenever the algorithm reached a tile, I assigned the tile a property to keep track of the tile the search came from. Then from any given tile, I could follow the references back to the player to reconstruct a path.</p>
+
+<p>For a while, it seemed like this approach was working, until I tested out the code in the very rough region in the western part of the map above. I quickly discovered that some spaces that should be reachable were not being found.</p>
+
+<p>After struggling with the problem for a while, I finally realized that the search was never guaranteed to find the <em>best</em> path to a space because it never revisited a space. After it found one path to a space, it never looked back. Some spaces are only reachable by a specific best path through other spaces, and these paths were never considered. </p>
+
+<p>Thus, I refined the search to revisit tiles if a better (i.e. lower-cost) path was found, which ensured that the <em>best</em> path to every reachable space was found. Further, I simplified the search by worrying about whether a space was movable or attackable outside of the search, and simply assigning a depth value to each space.</p>
+
+<p>Now that the movement is finally working, I&#39;m going to work on actually adding gameplay!</p>
+
+<p>If you&#39;re interested, the source code is <a href="https://github.com/ezig/strategy-game">here</a>!</p>
+
+<!--     <p>I&#39;ve been working the past week on a (very rough) framework for a turn-based strategy game using Phaser.js. I got the movement code working today, and I thought it was worth sharing. </p>
+
+<p>A little demo of how the movement works is below. Click on a character (the smaller squares) to see all possible spaces to move (in blue) and places outside of the movement range that are within attack range (in red), and then click a blue square to move. </p>
+
+<p>The solid tiles are obstacles, and the tiles with an X are rough terrain that have double the movement cost of a plain tile. The green character is intended to be a melee unit and the pink character is an unit with 2 attack range. The red character is an &quot;enemy&quot; who currently doesn&#39;t have much of a brain.</p>
+
+<p>Actual art coming &quot;soon.&quot;</p>
+
+<p><center><iframe src="https://ezig.github.io/strategy-game" width="320" height="260" frameborder="0"></iframe></center></p>
+
+            <a href="/2015/01/03/strategy/">Read more...</a> -->
   </div>
   
   <div class="post">
@@ -122,14 +174,39 @@
     </h1>
 
     <span class="post-date">26 Dec 2014</span>
+        <p><a href="http://ezig.github.io//flip">Flip</a> is a tile-based game built using Phaser.js that I&#39;ve worked on over the past week that I want to introduce.</p>
 
-    <p><a href="http://ezig.github.io//flip">Flip</a> is a tile-based game built using Phaser.js that I&#39;ve worked on over the past week that I want to introduce.</p>
+<p><center><img src="/img/flip2.png" alt="Flip screenshot"></center></p>
+
+<p>Flip is based on a really simple goal (turn all of the red tiles white) and a really simple mechanic (flipping over a tile also flips the adjacent tiles). 
+&lt;!--more--&gt;</p>
+
+<p>Right now, there are two modes: </p>
+
+<ul>
+<li><strong>Classic</strong>: randomly generated square levels from 3x3 up to 5x5.</li>
+<li><strong>Adventure</strong>: hand-crafted levels of varying shapes. </li>
+</ul>
+
+<p>I&#39;m really excited about Flip because I finally made a game that looks and feels <em>polished</em>. A lot of thought went into making the game look clean. I&#39;ve fiddled around with game development for a long time, but most of my projects have gotten stuck in ugly prototypes– if they made it that far.</p>
+
+<p><center><img src="/img/flip1.png" alt="Attractive Level Select screen!"></center></p>
+
+<p>Furthermore, I&#39;m quite happy with the way I designed the code. Both game modes are handled by the same game state with a few options passed in, and I made it really easy to add new levels.</p>
+
+<p>Next, I&#39;m looking to add more a lot more levels (Adventure mode currently has just more than 30) and also add new tile types to make sure that the levels stay exciting.</p>
+
+<p>I also plan to port Flip to iOS and get it on the App Store (along with <a href="https://github.com/ezig/CS50-final">Budget Buddy</a>!). This should be fairly easy using UIWebView and then adjusting the game scale for a smaller screen.</p>
+
+<p>In the meantime, you can play Flip <a href="http://ezig.github.io//flip">here</a> right now!</p>
+
+<!--     <p><a href="http://ezig.github.io//flip">Flip</a> is a tile-based game built using Phaser.js that I&#39;ve worked on over the past week that I want to introduce.</p>
 
 <p><center><img src="/img/flip2.png" alt="Flip screenshot"></center></p>
 
 <p>Flip is based on a really simple goal (turn all of the red tiles white) and a really simple mechanic (flipping over a tile also flips the adjacent tiles). </p>
 
-            <a href="/2014/12/26/Flip/">Read more...</a>
+            <a href="/2014/12/26/Flip/">Read more...</a> -->
   </div>
   
 </div>
