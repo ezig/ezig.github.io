@@ -4,7 +4,7 @@
  <title>Ezra Zigmond</title>
  <link href="http://ezig.github.io//atom.xml" rel="self"/>
  <link href="http://ezig.github.io//"/>
- <updated>2015-01-14T10:23:11-05:00</updated>
+ <updated>2015-01-28T14:16:16-05:00</updated>
  <id>http://ezig.github.io/</id>
  <author>
    <name>Ezra Zigmond</name>
@@ -75,8 +75,7 @@
 
 &lt;p&gt;&lt;center&gt;&lt;img src=&quot;/img/flip2.png&quot; alt=&quot;Flip screenshot&quot;&gt;&lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;Flip is based on a really simple goal (turn all of the red tiles white) and a really simple mechanic (flipping over a tile also flips the adjacent tiles). 
-&amp;lt;!--more--&amp;gt;&lt;/p&gt;
+&lt;p&gt;Flip is based on a really simple goal (turn all of the red tiles white) and a really simple mechanic (flipping over a tile also flips the adjacent tiles). &lt;/p&gt;
 
 &lt;p&gt;Right now, there are two modes: &lt;/p&gt;
 
@@ -91,7 +90,7 @@
 
 &lt;p&gt;Furthermore, I&amp;#39;m quite happy with the way I designed the code. Both game modes are handled by the same game state with a few options passed in, and I made it really easy to add new levels.&lt;/p&gt;
 
-&lt;p&gt;Next, I&amp;#39;m looking to add more a lot more levels (Adventure mode currently has just more than 30) and also add new tile types to make sure that the levels stay exciting.&lt;/p&gt;
+&lt;p&gt;Next, I&amp;#39;m looking to add more levels (Adventure mode currently has just more than 30) and also add new tile types to make sure that the levels stay exciting.&lt;/p&gt;
 
 &lt;p&gt;I also plan to port Flip to iOS and get it on the App Store (along with &lt;a href=&quot;https://github.com/ezig/CS50-final&quot;&gt;Budget Buddy&lt;/a&gt;!). This should be fairly easy using UIWebView and then adjusting the game scale for a smaller screen.&lt;/p&gt;
 
