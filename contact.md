@@ -42,8 +42,8 @@ input[type=submit] {
 }</style>
 
 <form accept-charset="UTF-8" action="http://formspree.io/ezrazigmond@gmail.com" method="POST">
-<label>Name:</label><input type = "text" name="name" placeholder = "Your Name"><br>
-<label>Email:</label><input type = "email" name = "email" placeholder = "Your Email"><br>
+<label>Name:</label><input type = "text" name="name"><br>
+<label>Email:</label><input type = "email" name = "email"><br>
 <label>Subject:</label>
 <select name = "subject">
 <option value = "Budget Buddy Support">Budget Buddy Support</option>
