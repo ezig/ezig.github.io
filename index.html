@@ -1,38 +1,132 @@
----
-layout: default
-title: Home
----
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="posts">
-  {% for post in paginator.posts %}
-  <div class="post">
-    <h1 class="post-title">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </h1>
+<head>
 
-    <span class="post-date">{{ post.date | date_to_string }}</span>
-        {{ post.content }}
-<!--     {{ post.excerpt}}
-            <a href="{{ post.url }}">Read more...</a> -->
-  </div>
-  {% endfor %}
-</div>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<div class="pagination">
-  {% if paginator.next_page %}
-    <a class="pagination-item older" href="{{ site.baseurl }}page{{paginator.next_page}}">Older</a>
-  {% else %}
-    <span class="pagination-item older">Older</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    {% if paginator.page == 2 %}
-      <a class="pagination-item newer" href="{{ site.baseurl }}">Newer</a>
-    {% else %}
-      <a class="pagination-item newer" href="{{ site.baseurl }}page{{paginator.previous_page}}">Newer</a>
-    {% endif %}
-  {% else %}
-    <span class="pagination-item newer">Newer</span>
-  {% endif %}
-</div>
+    <title>Bare - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    
+    #header {
+        background-image: url('assets/img/me.png');
+    	background-repeat: no-repeat;
+    	background-position: 35px 70px;
+    }
+
+    h1 {
+    	font-size: 3.5em;
+    }
+
+    #header h1, h2, h3 {
+        text-align: right;
+    }
+
+    #header a:not(.hover) {
+        color: #777777;
+    }
+    
+    #header a:hover {
+        color: #A67EC3;
+    }
+    
+    #header table {
+        float:left;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    #header table tr td {
+        text-align: left;
+        padding-right: 20px;
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Ezra Zigmond</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#Education">Education</a>
+                    </li>
+                    <li>
+                        <a href="#Experience">Experience</a>
+                    </li>
+                    <li>
+                        <a href="#Projects">Projects</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+    <div class="jumbotron" id="header">
+        <div class="row">
+                <h1>Ezra Zigmond</h1>
+                <table>
+                <tr>
+                    </td> <td>
+                        <a href="mailto:ezrazigmond@gmail.com"><i class="fa fa-envelope fa-3x"></i></a>
+                    </td> <td>
+                        <a href="https://github.com/ezig"><i class="fa fa-github fa-3x"></i></a>
+                    </td> <td>
+                        <a href="http://stackoverflow.com/users/3183737/ezig"><i class="fa fa-stack-overflow fa-3x"></i></a>
+                    </td> <td>
+                        <a href="https://www.linkedin.com/in/ezrazigmond"><i class="fa fa-linkedin-square fa-3x"></i></a>
+                    </td>
+                </tr>
+                </table>
+                <h3>CS student and developer</h3>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>
+    
