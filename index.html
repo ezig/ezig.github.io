@@ -21,15 +21,17 @@
 
     <!-- Custom CSS -->
     <style>
+        
     body {
         padding-top: 70px;
         /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     }
     
     #header {
-        background-image: url('assets/img/me.png');
+        background-color: #6a9fb5;
+        /*background-image: url('assets/img/me.png');
     	background-repeat: no-repeat;
-    	background-position: 35px 70px;
+    	background-position: 112px 75px;*/
     }
 
     h1 {
@@ -41,10 +43,14 @@
     }
 
     #header a:not(.hover) {
-        color: #777777;
+        -webkit-transition: 0.25s;
+        transition: 0.25s;
+        color: #444444;
     }
     
     #header a:hover {
+        -webkit-transition: 0.25s;
+        transition: 0.25s;
         color: #A67EC3;
     }
     
@@ -57,6 +63,12 @@
     #header table tr td {
         text-align: left;
         padding-right: 20px;
+    }
+    
+    #header img {
+        margin-left: -10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
     }
     
     h2 {
@@ -76,8 +88,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -108,11 +119,11 @@
     </nav>
 
     <!-- Page Content -->
-    <div class="container">
-        <div class="jumbotron" id="header">
-            <div class="row">
-                    <h1>Ezra Zigmond</h1>
-                    <table>
+    <div class="jumbotron" id="header">
+            <div class="container">
+            <div class="col-md-6">
+                    <img src="assets/img/me.png"/><br>
+                   <table>
                     <tr>
                         </td> <td>
                             <a href="mailto:ezrazigmond@gmail.com"><i class="fa fa-envelope fa-3x"></i></a>
@@ -125,6 +136,9 @@
                         </td>
                     </tr>
                     </table>
+            </div>
+            <div class="col-md-6">
+                     <h1>Ezra Zigmond</h1>
                     <h3>CS student and developer</h3>
             </div>
         </div>
@@ -284,7 +298,7 @@
                                    <li>Overhauled and refactored existing Python scripts to make it easier to integrate more web geocoding services and output formats</li>
                                    <li>Added support for geocoding using Wikipedia (Several historians advised me that Wikipedia is a reliable source for 
                                        this sort of data)</li>
-                                   <li>Made configuring and using the interface easier for non-technical project members to use</li>
+                                   <li>Made configuring and using the command line interface easier for non-technical project members</li>
                                </ul>
                           </div>
                         </div>
@@ -295,44 +309,63 @@
     <div id="Projects">
         <div class="container">
             <h2>Projects</h2>
-            <div class="col-md-12">
                 <div class="row">
-                    <h3>Budget Butler</h3>
-                    <ul class="list-inline">
-                        <li><a href="https://itunes.apple.com/us/app/budget-butler/id1013599349?ls=1&mt=8">App Store</a></li>
-                        <li><a href="https://github.com/ezig/cs50-final">GitHub</a></li><br>
-                    </ul>
-                    A polite app to streamline your budget management experience. Reads totals from receipts using optical character recognition, 
-                        stores receipt information with Core Data and displays spending information in tidy tables and graphs. Available free on the App Store
+                    <div class="col-md-8">
+                        <h3>Budget Butler</h3>
+                        <ul class="list-inline">
+                            <li><a href="https://itunes.apple.com/us/app/budget-butler/id1013599349?ls=1&mt=8">App Store</a></li>
+                            <li><a href="https://github.com/ezig/cs50-final">GitHub</a></li><br>
+                        </ul>
+                        A polite app to streamline your budget management experience. Reads totals from receipts using optical character recognition, 
+                            stores receipt information with Core Data and displays spending information in tidy tables and graphs. Available free on the App Store
+                    </div>
+                    <div class="col-md-4">
+                        
+                    </div>
                 </div>
                 <div class="row">
-                    <h3>Amplify</h3>
-                    <ul class="list-inline">
-                        <li><a href="https://github.com/ezig/amplify">GitHub</a></li><br>
-                    </ul>                    
+                    <div class="col-md-8">
+                        <h3>Amplify</h3>
+                        <ul class="list-inline">
+                            <li><a href="https://github.com/ezig/amplify">GitHub</a></li><br>
+                        </ul>  
+                    </div>
+                    <div class="col-md-4">
+                    </div>                  
                 </div>
                 <div class="row">
-                    <h3>NPuzzles</h3>
-                    <ul class="list-inline">
-                        <li><a href="https://github.com/ezig/npuzzles">GitHub</a></li><br>
-                    </ul>                
+                    <div class="col-md-8">
+                        <h3>NPuzzles</h3>
+                        <ul class="list-inline">
+                            <li><a href="https://github.com/ezig/npuzzles">GitHub</a></li><br>
+                        </ul>             
+                    </div>
+                    <div class="col-md-4">
+                    </div>   
                 </div>
                 <div class="row">
-                    <h3>Strategy Game Movement</h3>
-                    <ul class="list-inline">
-                        <li><a href="https://ezig.github.io/strategy-game">Live Demo</a></li>
-                        <li><a href="https://github.com/ezig/strategy-game">GitHub</a></li><br>
-                    </ul>                   
+                    <div class="col-md-8">
+                        <h3>Strategy Game Movement</h3>
+                        <ul class="list-inline">
+                            <li><a href="https://ezig.github.io/strategy-game">Live Demo</a></li>
+                            <li><a href="https://github.com/ezig/strategy-game">GitHub</a></li><br>
+                        </ul>      
+                    </div>
+                    <div class="col-md-4">
+                    </div>             
                 </div>
                 <div class="row">
-                    <h3>Flip</h3>
-                    <ul class="list-inline">
-                        <li><a href="https://ezig.github.io/flip">Play Game</a></li>
-                        <li><a href="https://github.com/ezig/flip">GitHub</a></li><br>
-                    </ul>                    
+                    <div class="col-md-8">
+                        <h3>Flip</h3>
+                        <ul class="list-inline">
+                            <li><a href="https://ezig.github.io/flip">Play Game</a></li>
+                            <li><a href="https://github.com/ezig/flip">GitHub</a></li><br>
+                        </ul>   
+                    </div>
+                    <div class="col-md-4">
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
 </body>
 
