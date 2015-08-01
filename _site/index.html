@@ -318,9 +318,16 @@
                             <li><h4><a href="https://itunes.apple.com/us/app/budget-butler/id1013599349?ls=1&mt=8">App Store</a></h4></li>
                             <li><h4><a href="https://github.com/ezig/cs50-final">GitHub</a><h4></li>
                         </ul>
-                        A polite app to streamline your budget management experience. Reads totals from receipts using optical character recognition, 
-                            stores receipt information with Core Data and displays spending information in tidy tables and graphs. Available free on the App Store
-                        </div>
+                        A polite app to streamline your budget management experience. Available free on the app store.
+                         Budget Butler is designed to simplify keeping track of receipts and spending by making it easy
+                         to add new receipts as you get them and to view past spending, either in table or chart form.<br><br>
+                         
+                         Adding a picture of a new receipt automatically fills in the total amount using optical character
+                         recognition powered by <a href="https://code.google.com/p/tesseract-ocr/">Tesseract</a>. Receipts pictures
+                         and information are then saved using Core Data. Budget Butler will even fill in payee names and expense categories
+                         based on previous saved purchases. In addition to the table-style log, the summary view generates a pie chart using
+                          <a href="https://github.com/core-plot/core-plot">Core Plot</a> to break down spending by category.                        
+                       </div>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -330,20 +337,34 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8">
-                        <h3>Amplify</h3>
-                        <ul class="list-inline">
-                            <li><a href="https://github.com/ezig/amplify">GitHub</a></li><br>
-                        </ul>  
+                        <div class="media">
+                            <div class="media-left">
+                                 <img class="media-object" src="assets/img/bblogo.jpg">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="media-heading">Amplify</h3>
+                                <ul class="list-inline">
+                                    <li><h4><a href="https://github.com/ezig/amplify">GitHub</a></h4></li><br>
+                                </ul>  
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-4">
                     </div>                  
                 </div>
                 <div class="row">
                     <div class="col-md-8">
-                        <h3>NPuzzles</h3>
-                        <ul class="list-inline">
-                            <li><a href="https://github.com/ezig/npuzzles">GitHub</a></li><br>
-                        </ul>             
+                        <div class="media">
+                            <div class="media-left">
+                                 <img class="media-object" src="assets/img/bblogo.jpg">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="media-heading">NPuzzles</h3>
+                                <ul class="list-inline">
+                                    <li><h4><a href="https://github.com/ezig/npuzzles">GitHub</a></h4></li><br>
+                                </ul>             
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-4">
                     </div>   
@@ -363,7 +384,11 @@
                                 An experiment with path-finding similar modeled on the way that movement works in turn-based strategy games
                                     like Fire Emblem and Advance Wars. Determines valid movement range based on a character's movement range
                                     and finds paths to tiles using a modified depth-limited breadth-first search that finds the shortest path to each tile.
-                                     Built using <a href="http://phaser.io/">Phaser.js</a> to draw tiles and move sprites.         
+                                     Built using <a href="http://phaser.io/">Phaser.js</a> to draw grid and move sprites. <br><br>
+                                     To try out the demo, click on and move the pink or the green friendly sprites to a valid (blue-highlighted)
+                                      tile in movement range. Once you've moved both friendly sprites, the red enemy will make a move.
+                                       The red-highlighteds squares indicate spaces within the sprite's attack range but outside of its move
+                                      range     
                             </div>
                         </div>
                     </div>
@@ -373,13 +398,29 @@
                 </div>
                 <div class="row">
                     <div class="col-md-8">
-                        <h3>Flip</h3>
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="assets/img/tile.png" width="64px" height="64px"/>
+                            </div>
+                            <div class="media-body">
+                            
+                        <h3 class="media-heading">Flip</h3>
                         <ul class="list-inline">
-                            <li><a href="https://ezig.github.io/flip">Play Game</a></li>
-                            <li><a href="https://github.com/ezig/flip">GitHub</a></li><br>
+                            <li><h4><a href="https://ezig.github.io/flip">Play Game</a><h4></li>
+                            <li><h4><a href="https://github.com/ezig/flip">GitHub</a><h4></li><br>
                         </ul>   
+                         A game about tiles. Flip is based on a simple goal (turn all of the red tiles white) and a simple mechanic
+                          (flipping over a tile also flips the adjacent tiles). Built using <a href="http://phaser.io/">Phaser.js</a>. <br><br>
+                          There are currently two different modes:
+                          <ul>
+                              <li>Classic: randomly generate square levels from 3x3 up to 5x5</li>
+                              <li>Adventure: hand-made levels of varying shape (shown on the right)</li>
+                          </ul>
+                   </div>
+                    </div>
                     </div>
                     <div class="col-md-4">
+                        <img src="assets/img/flip.png" width="75%"/>
                     </div>
                 </div>
             </div>
