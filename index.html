@@ -271,10 +271,11 @@
                               <ul>
                                   <li>Implemented <a href="https://en.wikipedia.org/wiki/Canny_edge_detector">Canny edge detection</a> in Objective-C to identify
                                   document borders in images </li>
-                                  <li>Used OpenGL ES to allow users to crop, de-skew, and adjust contrast/brightness levels of images</li>
-                                  <li>Integrated <a href="https://code.google.com/p/tesseract-ocr/">Tesseract</a> to perform
-                                   client-side OCR without needing to upload images to the server OCR engine</li>
-                                  <li>Designed and implemented a fuzzy matching algorithm to present autocompletion suggestions based on OCR results</li>
+                                  <li>Used OpenGL ES to allow users to crop, de-skew, and adjust contrast/brightness levels of captured images</li>
+                                  <li>Added service methods to Hyland's mobile server broker and application server to allow all three OnBase mobile applications
+                                      (iOS, Android, and Windows Store) to upload images to the server-side OCR engine for text recognition</li>
+                                  <li>Integrated client-side OCR with <a href="https://code.google.com/p/tesseract-ocr/">Tesseract</a> so that the
+                                   mobile team could decide whether client-side or server-side OCR made more sense for our apps</li>
                               </ul>
                           </div>
                         </div>
@@ -372,9 +373,17 @@
                             <div class="media-body">
                                 <h3 class="media-heading">NPuzzles</h3>
                                 <ul class="list-inline">
-                                    <li><h4><a href="https://github.com/ezig/npuzzles">GitHub</a></h4></li><br>
+                                    <li><h4><a href="https://github.com/ezig/npuzzles">GitHub</a></h4></li>
+                                    <li><h4><a href="https://ezig.github.io/npuzzles.pdf">Writeup of Results</a><h4></li><br>
                                 </ul>
-                                
+                                A sliding tile puzzles solver written in Clojure as a final project for CS51: Abstraction and Design in Computation.
+                                 The goal of the project was to compare
+                                 the effectiveness of a standard <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> strategy
+                                 with a genetic algorithm. After running tests on both square and non-square puzzles, we found 
+                                 our A* implementation about 30 times faster than the genetic algorithm. We also compared the effectiveness
+                                 of different heuristic functions for maximizing the speed of both algorithms, as well as for
+                                 increasing the accuracy of the genetic algorithm. Ultimately, we concluded that a genetic algorithm
+                                 was not well suited for a problem of this sort which involves planning and has a very small solution space.
                             </div>
                         </div>
                     </div>
