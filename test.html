@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+</head>
+
+<body>
+<div id="acceleration">
+  <ul>
+    <li>X acceleration <span id="accelerationX"></span></li>
+    <li>Y acceleration <span id="accelerationY"></span></li>
+    <li>Z acceleration <span id="accelerationZ"></span></li>
+  </ul>
+</div>
+
+<script type="text/javascript">
+var ax = 0,
+  ay = 0,
+  az = 0;
+
+if (window.DeviceMotionEvent != undefined) {
+  window.ondevicemotion = function(e) {
+    ax = event.accelerationIncludingGravity.x;
+    ay = event.accelerationIncludingGravity.y;
+    az = event.accelerationIncludingGravity.z;
+
+    document.getElementById("accelerationX").innerHTML = e.accelerationIncludingGravity.x;
+    document.getElementById("accelerationY").innerHTML = e.accelerationIncludingGravity.y;
+    document.getElementById("accelerationZ").innerHTML = e.accelerationIncludingGravity.z;
+  }
+} else {
+  document.getElementById("acceleration").innnerHTML = "Orientation unsupported"
+}
+</script>
+
+</body>
+</html>
