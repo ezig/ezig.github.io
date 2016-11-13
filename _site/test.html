@@ -12,23 +12,24 @@
     <li>X acceleration <span id="accelerationX"></span></li>
     <li>Y acceleration <span id="accelerationY"></span></li>
     <li>Z acceleration <span id="accelerationZ"></span></li>
+    <li>α rotation<span id="rotationAlpha"></span></li>
+    <li>β rotation<span id="rotationBeta"></span></li>
+    <li>γ rotation<span id="rotationGamma"></span></li>
   </ul>
 </div>
 
 <script type="text/javascript">
-var ax = 0,
-  ay = 0,
-  az = 0;
-
 if (window.DeviceMotionEvent != undefined) {
   window.ondevicemotion = function(e) {
-    ax = event.accelerationIncludingGravity.x;
-    ay = event.accelerationIncludingGravity.y;
-    az = event.accelerationIncludingGravity.z;
-
     document.getElementById("accelerationX").innerHTML = e.accelerationIncludingGravity.x;
     document.getElementById("accelerationY").innerHTML = e.accelerationIncludingGravity.y;
     document.getElementById("accelerationZ").innerHTML = e.accelerationIncludingGravity.z;
+
+    if ( e.rotationRate ) {
+      document.getElementById("rotationAlpha").innerHTML = e.rotationRate.alpha;
+      document.getElementById("rotationBeta").innerHTML = e.rotationRate.beta;
+      document.getElementById("rotationGamma").innerHTML = e.rotationRate.gamma;
+    } 
   }
 } else {
   document.getElementById("acceleration").innnerHTML = "Orientation unsupported"
