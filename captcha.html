@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+<div id="acceleration">
+
+</div>
+
+<script type="text/javascript">
+var motionEvents = [];
+
+if (window.DeviceMotionEvent != undefined) {
+  window.ondevicemotion = function(e) {
+    var me;
+    
+    me.accelerationX = e.accelerationIncludingGravity.x;
+    me.accelerationY = e.accelerationIncludingGravity.y;
+    me.accelerationZ = e.accelerationIncludingGravity.z;
+
+    if ( e.rotationRate ) {
+      me.rorationAlpha = e.rotationRate.alpha;
+      me.rorationBeta = e.rotationRate.beta;
+      me.rorationGamma = e.rotationRate.gamma;
+    }
+
+    motionEvents.push(me);
+  }
+}
+
+window.onload = function() {
+  setTimeout(function () {
+    window.ondevicemotion = function() {};
+
+    document.getElementById("acceleration").innerHTML = motionEvents.length;
+  }, 1000);
+}
+
+</script>
+
+
+
+</body>
+</html>
