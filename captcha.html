@@ -34,7 +34,7 @@ window.onload = function() {
   setTimeout(function () {
     window.ondevicemotion = function() {};
 
-    document.getElementById("acceleration").innerHTML = motionEvents.length;
+    document.getElementById("acceleration").innerHTML = JSON.stringify(motionEvents);
   }, 1000);
 }
 
