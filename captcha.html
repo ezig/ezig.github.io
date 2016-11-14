@@ -14,7 +14,7 @@ var motionEvents = [];
 
 if (window.DeviceMotionEvent != undefined) {
   window.ondevicemotion = function(e) {
-    var me;
+    var me = {};
     
     me.accelerationX = e.accelerationIncludingGravity.x;
     me.accelerationY = e.accelerationIncludingGravity.y;
@@ -26,7 +26,7 @@ if (window.DeviceMotionEvent != undefined) {
       me.rorationGamma = e.rotationRate.gamma;
     }
 
-    motionEvents.push(me);
+    console.log(motionEvents.push(me));
   }
 }
 
