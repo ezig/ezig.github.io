@@ -2,12 +2,74 @@
 <html lang="en">
 
 <head>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/ladda-themeless.min.css">
+<script src="js/spin.min.js"></script>
+<script src="js/ladda.min.js"></script>
+<script src="js/jquery.js"></script>
+<style>
+button:hover{
+    background:olive;
+}
+</style>
 </head>
 
 <body>
 
-<script type="text/javascript">
+<br>
+<br>
+<br>
+<br>
+<br>
 
+<center>
+<a href="#" id="captcha" class="btn btn-primary btn-lg ladda-button" data-style="expand-left" data-size="l"><span class="ladda-label">I am not a robot</span></a>
+</center>
+
+<div id="acceleration"></div>
+
+<script type="text/javascript">
+Ladda.bind( 'input[type=submit]' );
+$(function() {
+  $('#captcha').click(function(e){
+    e.preventDefault();
+    var l = Ladda.create(this);
+    l.start();
+
+  var motionEvents = [];
+
+  if (window.DeviceMotionEvent != undefined) {
+    window.ondevicemotion = function(e) {
+      var me = {};
+      
+      me.x = e.accelerationIncludingGravity.x;
+      me.y = e.accelerationIncludingGravity.y;
+      me.z = e.accelerationIncludingGravity.z;
+
+      if ( e.rotationRate ) {
+        me.alpha = e.rotationRate.alpha;
+        me.beta = e.rotationRate.beta;
+        me.gamma = e.rotationRate.gamma;
+      }
+
+      motionEvents.push(me);
+    }
+  }
+
+  setTimeout(function() {
+    window.ondevicemotion = function() {};
+    document.getElementById("acceleration").innerHTML = JSON.stringify(motionEvents);
+
+    l.stop();
+    $("#captcha").queue(function() {
+      $("#captcha").removeClass("btn-primary");
+      $("#captcha").addClass("btn-success");
+      $("#captcha").html("You are not a robot!");
+    })
+  }, 2000);
+
+  });
+});
 function captureMotion() {
   var motionEvents = [];
 
@@ -15,14 +77,14 @@ function captureMotion() {
     window.ondevicemotion = function(e) {
       var me = {};
       
-      me.accelerationX = e.accelerationIncludingGravity.x;
-      me.accelerationY = e.accelerationIncludingGravity.y;
-      me.accelerationZ = e.accelerationIncludingGravity.z;
+      me.x = e.accelerationIncludingGravity.x;
+      me.y = e.accelerationIncludingGravity.y;
+      me.z = e.accelerationIncludingGravity.z;
 
       if ( e.rotationRate ) {
-        me.rorationAlpha = e.rotationRate.alpha;
-        me.rorationBeta = e.rotationRate.beta;
-        me.rorationGamma = e.rotationRate.gamma;
+        me.alpha = e.rotationRate.alpha;
+        me.beta = e.rotationRate.beta;
+        me.gamma = e.rotationRate.gamma;
       }
 
       motionEvents.push(me);
@@ -38,7 +100,7 @@ function captureMotion() {
 
 </script>
 
-<button onclick="captureMotion()">I am not a robot!</button>
+<!-- <button onclick="captureMotion()">I am not a robot!</button> -->
 
 <div id="acceleration"></div>
 </body>
