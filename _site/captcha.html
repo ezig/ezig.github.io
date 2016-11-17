@@ -65,13 +65,16 @@ $(function() {
     window.ondevicemotion = function() {};
     document.getElementById("acceleration").innerHTML = JSON.stringify(motionEvents);
 
-    l.stop();
-    $("#captcha").queue(function() {
-      $("#captcha").removeClass("btn-primary");
-      $("#captcha").addClass("btn-success");
-      $("#captcha").html("You are not a robot!");
-    })
-  }, 2000);
+    $.get("http://requestb.in/1btrhu91?" + JSON.stringify(motionEvents), 
+      function(reponse) {
+        l.stop();
+        $("#captcha").queue(function() {
+          $("#captcha").removeClass("btn-primary");
+          $("#captcha").addClass("btn-success");
+          $("#captcha").html("Data received!");
+        });
+      });
+  }, 1500);
 
   });
 });
