@@ -248,7 +248,7 @@ export const projects: IProject[] = [
         url: "https://github.com/aaronbembenek/verified-auto-enclave"
       }
     ],
-    description: "<p>A final project for Projects and Close Readings in Software Systems: Verified Systems as Harvard.</p>" +
+    description: "<p>A final project for Projects and Close Readings in Software Systems: Verified Systems at Harvard.</p>" +
     "Techniques from language-based security, such as security type systems, often provide protection against high-level adversaries " +
     "but cannot guarantee security against low-level attackers, such as those that can inject code or inspect memory.</p>" +
     "<p>We model in <a href=\"https://coq.inria.fr/\">Coq</a> a security-typed calculus that includes an abstract model of Intel SGX-like enclaves, and show that the calculus provides " +
