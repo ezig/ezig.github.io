@@ -1,464 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Ezra Zigmond</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Custom CSS -->
-    <style>
-
-    body {
-        padding-top: 70px;
-        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    }
-
-    #header {
-        background-color: #6a9fb5;
-    }
-
-    h1 {
-    	font-size: 3.5em;
-    }
-
-    #header h1, #header h2, #header h3 {
-        text-align: right;
-    }
-
-    #header a:not(.hover) {
-        -webkit-transition: 0.25s;
-        transition: 0.25s;
-        color: #444444;
-    }
-
-    #header a:hover {
-        -webkit-transition: 0.25s;
-        transition: 0.25s;
-        color: #A67EC3;
-    }
-
-    #header table {
-        float:left;
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-    #header table tr td {
-        text-align: left;
-        padding-right: 20px;
-    }
-
-    #header img {
-        margin-left: -10px;
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
-
-    h2 {
-        text-align: left;
-    }
-    </style>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+  <meta charset="UTF-8">
+  <title>Ezra Zigmond</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href="css/bootstrap.css" rel="stylesheet">
 </head>
-
 <body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Ezra Zigmond</a>
+<div class="jumbotron" id="lead">
+    <div class="pic-and-social">
+        <img class="profilePic" src="assets/img/me.gif"/>
+        <table>
+            <tr>
+                <td class="social">
+                    <a href="mailto:ezrazigmond@gmail.com"><i class="fa fa-envelope fa-3x"></i></a>
+                </td>
+                <td class="social">
+                    <a href="https://github.com/ezig"><i class="fa fa-github fa-3x"></i></a>
+                </td>
+                <td class="social">
+                    <a href="http://stackoverflow.com/users/3183737/ezig"><i class="fa fa-stack-overflow fa-3x"></i></a>
+                </td>
+                <td class="social">
+                    <a href="https://www.linkedin.com/in/ezrazigmond"><i class="fa fa-linkedin-square fa-3x"></i></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="description">
+        <div class="title">
+            <h1>Ezra Zigmond</h1>
+        </div>
+        <div>
+            Senior at Harvard studying Computer Science. I'm writing a thesis with <a href="https://people.seas.harvard.edu/~chong/">Prof. Stephen Chong</a> on a capability-based interface for controlling access to SQL databases. I am also a Head Teaching Fellow for CS51, <a href="http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/"> one of the largest courses</a> at Harvard.
+        </div>
+    </div>
+</div>  <div class="education">
+    <h1>Education</h1>
+    <hr>
+    <div>
+        <div class="education-section">
+            <div class="education-title">
+                <h3>Harvard College</h3>
+                <img src="assets/img/harvard.png"/>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#education">Education</a>
-                    </li>
-                    <li>
-                        <a href="#experience">Experience</a>
-                    </li>
-                    <li>
-                        <a href="#projects">Projects</a>
-                    </li>
+            <div class="education-description">
+                <h4>A.B. in Computer Science, Secondary Field in Linguistic Theory</h4>
+                <span class="date"> Expected 2018 </span>
+                <h5>Honors:</h5> Phi Beta Kappa Junior 24, Detur Prize, John Harvard Scholar (2015, 2016)
+                <h5>Relevant Coursework:</h5>
+                Abstraction and Design, Data Structures and Algorithms, Programming Languages, Systems Programming, Operating Systems, Data Systems, Systems Security, Verified Systems, Theory of Computation, Linear Algebra and Real Analysis, Intro to Probability.
+            </div>
+        </div>
+        <div class="education-section">
+            <div class="education-title">
+                <h3>Skills</h3>
+            </div>
+            <div class="education-description">
+                <span class="skill-h">Proficient in:</span> C, Java, OCaml, Git, Basic UNIX
+                <br>
+                <span class="skill-h">Experience in:</span> Python, TypeScript/JavaScript, C++, Racket, Objective-C, HTML/CSS
+            </div>
+        </div>
+    </div>
+</div>  <div class="teaching">
+    <h1>Teaching</h1>
+    <hr>
+    <div class="teaching-container">
+        <div class="teaching-item">
+            <div class="teaching-icon">
+                <img class="teaching-icon" src="assets/img/ocaml.png"/>
+            </div>
+            <div class="teaching-description">
+                <h4>CS51: Abstraction and Design</h4>
+                <i>Teaching Fellow – 2016 - Present (Head Teaching Fellow, 2017)</i>
+                <ul>
+                    <li>Designed system for automatically grading correctness of assignments.</li>
+                    <li>Contributed to problem set development and course planning.</li>
+                    <li>Led code review section for 16 students, graded problem sets.</li>
+                    <li>Held office hours and fielded questions via email and Piazza.</li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
-    </nav>
-
-    <!-- Page Content -->
-    <div class="jumbotron" id="header">
-            <div class="container">
-            <div class="col-md-6">
-                    <img src="assets/img/me.gif"/><br>
-                   <table>
-                    <tr>
-                        </td> <td>
-                            <a href="mailto:ezrazigmond@gmail.com"><i class="fa fa-envelope fa-3x"></i></a>
-                        </td> <td>
-                            <a href="https://github.com/ezig"><i class="fa fa-github fa-3x"></i></a>
-                        </td> <td>
-                            <a href="http://stackoverflow.com/users/3183737/ezig"><i class="fa fa-stack-overflow fa-3x"></i></a>
-                        </td> <td>
-                            <a href="https://www.linkedin.com/in/ezrazigmond"><i class="fa fa-linkedin-square fa-3x"></i></a>
-                        </td>
-                    </tr>
-                    </table>
+        <div class="teaching-item">
+            <div class="teaching-icon">
+                <img class="teaching-icon" src="assets/img/cs50.png"/>
             </div>
-            <div class="col-md-6">
-                     <h1>Ezra Zigmond</h1>
-                    
+            <div class="teaching-description">
+                <h4>CS50: Introduction to Computer Science</h4>
+                <i>Teaching Fellow – Fall 2015</i>
+                <ul>
+                    <li>Led a weekly section for 20 students and grade problem sets.</li>
+                    <li>Held office hours and fielded questions via email and the course discussion site.</li>
+                    <li>Advised groups of students working on final projects.</li>
+                </ul>
             </div>
         </div>
     </div>
+</div>
+  <div style="background: #EEEEEE">
+<div class="experience">
+    <h1>Experience</h1>
+    <hr>
+    <ul class="timeline timeline-centered">
+        <li class="timeline-item">
+            <div class="timeline-info">
+                <img class="teaching-icon" src="assets/img/harvard.png"
+                    width="48px"
+                    height="56px"/>
+            </div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h4 class="timeline-title">Stephen Chong Research Group, Harvard University</h4>
+                <i class="timeline-subtitle">Undergraduate Researcher - 2016 - Present</i>
+                <ul>
+                    <li>Worked on <a href="http://shill.seas.harvard.edu/">Shill</a>, a secure shell scripting language.</li>
+                    <li>Designed a capability-based API for accessing SQL databases in Shill.</li>
+                </ul>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-info">
+                <img class="teaching-icon" src="assets/img/palantir.png"
+                    width="48px"
+                    height="48px"/>
+            </div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h4 class="timeline-title">Palantir Technologies, Inc.</h4>
+                <i class="timeline-subtitle">Software Engineer Intern - Summer 2017</i>
+                <ul>
+                    <li>Improved performance of data export between Palantir deployments.</li>
+                    <li>Designed a GUI for specifying data integrations without writing code.</li>
+                </ul>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-info">
+                <img class="teaching-icon" src="assets/img/google.png"
+                    width="48px"
+                    height="48px"/>
+            </div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h4 class="timeline-title">Google, Inc.</h4>
+                <i class="timeline-subtitle">Software Engineering Intern, Gmail Spam Team - Summer 2016</i>
+                <ul>
+                    <li>Improved spam classification throughput by 20% by batching together inference requests.</li>
+                    <li>Integrated spam deep neural network with automated hyperparameter search infrastructure. Used results to decrease training time by 4x.</li>
+                    <li>Designed and implemented a data-processing pipeline for finding features causing false positives.</li>
+                    <li>Collaborated with industry machine learning experts to design a new objective function for the spam model and experiment with serving the model on <a href="https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html">Tensor processing units</a>.</li>
+                </ul>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-info">
+                <img class="teaching-icon" src="assets/img/harvard.png"
+                    width="48px"
+                    height="56px"/>
+            </div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h4 class="timeline-title">Barbara Grosz Research Group, Harvard University</h4>
+                <i class="timeline-subtitle">Undergraduate Researcher - 2015 - 2016</i>
+ <p>Contributed to the group's research on developing intelligent information sharing algorithms for supporting distributed teamwork.</p>                 <ul>
+                    <li>Developed a Google Chrome extension and a Google Docs add-on for supporting collaborative editing of documents.</li>
+                    <li>Built a back-end using Flask to connect the Docs add-on to the group's algorithms and store revision information.</li>
+                </ul>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-info">
+                <img class="teaching-icon" src="assets/img/hyland.jpg"
+                    width="100px"
+                    height="37px"/>
+            </div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h4 class="timeline-title">Hyland, Creator of OnBase</h4>
+                <i class="timeline-subtitle">Software Development Intern - Summer 2015</i>
+ <p>Hyland creates enterprise content management software to help businesses manage documents, information, and everyday tasks. I worked on the image upload functionality of OnBase for iPad.</p>                 <ul>
+                    <li>Implemented <a href="https://en.wikipedia.org/wiki/Canny_edge_detector">Canny edge detection</a> in Objective-C to identify document borders in images.</li>
+                    <li>Used OpenGL ES to allow users to crop, de-skew, and adjust contrast/brightness levels of captured images.</li>
+                    <li>Integrated mobile app with server-side optical character recognition (OCR) engine so mobile users could upload documents for text recognition.</li>
+                    <li>Integrated client-side OCR with <a href="https://code.google.com/p/tesseract-ocr/">Tesseract</a> to compare the experience with server-side OCR.</li>
+                </ul>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-info">
+                <img class="teaching-icon" src="assets/img/harvard.png"
+                    width="48px"
+                    height="56px"/>
+            </div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h4 class="timeline-title">Digital Atlas of Roman and Medieval Civilization (DARMC)</h4>
+                <i class="timeline-subtitle">Undergraduate Research Assistant - 2015</i>
+ <p>DARMC is a digital humanities project at Harvard that pubishes freely available maps and geodatabases created from historical data on Roman and medieval civilization. A common task in the project was manually looking up and filling in coordinates for large CSV files of historical place names. I improved on an existing effort to automate this process.</p>                 <ul>
+                    <li>Designed a relational data model to replace the existing flat caching system and migrated old caches to the new model.</li>
+                    <li>Refactored existing Python scripts to make it easier to integrate more web geocoding services and output formats.</li>
+                    <li>Made configuring and using the command line interface easier for non-technical project members.</li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>  </div>
 
-    <div id="education">
-    	<div class="container">
-	      <h2>Education</h2>
-    		<div class="row">
-    			<div class="col-md-6">
-                  <div class="media">
-                      <div class="media-left">
-                          <img class="media-object" src="assets/img/harvard.png" height="56px" width="48px">
-                      </div>
-                      <div class="media-body">
-                          <h3 class="media-heading">Harvard College</h3>
-                          A.B. in Computer Science, Secondary Field in Linguistic Theory expected 2018
-                          <h5> Relevant Coursework:</h5>
-                          Abstraction and Design, Data Structures and Algorithms, Programming Languages, Systems Programming, Operating Systems Data Systems, Systems Security, Verified Systems, Theory of Computation, Linear Algebra and Real Analysis, Intro to Probability.                          
-                      </div>
-                  </div>
-                   <div class="media">
-                      <div class="media-left">
-
-                      </div>
-                      <div class="media-body">
-                          <h4 class="media-heading">Programming Languages and Technologies</h4>
-                          C(++), Objective-C, Python<br>
-                          OCaml, Racket, Clojure<br>
-                          HTML/CSS, Javascript, MySQL/SQLite<br>
-                      </div>
-                    </div>
-    			</div>
-    			<div class="col-md-6">
-                    <div class="media">
-                      <div class="media-left">
-                          <img class="media-object" src="assets/img/ocaml.png" height="56px" width="56px">
-                      </div>
-                      <div class="media-body">
-                          <h4 class="media-heading">CS51: Abstraction and Design in Computation</h4>
-                          <i>Teaching Fellow – 2016 - Present</i>
-                          <ul>
-                            <li>Design unit tests and scripts for grading student submissions.</li>
-                            <li>Contribute to problem set development and course planning.</li>
-                              <li>Lead a weekly code review for 26 students and grade problem sets.</li>
-                              <li>Hold office hours and answer student questions via email and Piazza.</li>
-                          </ul>
-                      </div>
-                    </div>
-                    <div class="media">
-                      <div class="media-left">
-                          <img class="media-object" src="assets/img/cs50.png" height="56px" width="56px">
-                      </div>
-                      <div class="media-body">
-                          <h4 class="media-heading">CS50: Introduction to Computer Science</h4>
-                          <i>Teaching Fellow – Fall 2015</i>
-                          <ul>
-                              <li>Lead a weekly section for 20 students and grade problem sets</li>
-                              <li>Hold office hours and answer student questions via email and the course discussion site</li>
-                              <li>Advise groups of students working on final projects</li>
-                          </ul>
-                      </div>
-                    </div>
-            	</div>
+<div class="projects">
+    <h1>Projects</h1>
+    <hr>
+    <div class="project-item">
+        <div class="project-info">
+            <div class="project-icon">
+                    <img src="assets/img/coq.jpg"
+                        width="64px"
+                        height="64px"/>
+            </div>
+            <div class="project-content">
+                <h3>Verifying Security of Enclave-Aware Calculi </h3>
+                <ul class="list-inline">
+                    <li><h4><a href="https://ezig.github.io/BTZ.pdf">Read the Paper</a></h4></li>
+                    <li><h4><a href="https://github.com/aaronbembenek/verified-auto-enclave">GitHub</a></h4></li>
+                </ul>
+                <p>A final project for Projects and Close Readings in Software Systems: Verified Systems as Harvard.</p>Techniques from language-based security, such as security type systems, often provide protection against high-level adversaries but cannot guarantee security against low-level attackers, such as those that can inject code or inspect memory.</p><p>We model in <a href="https://coq.inria.fr/">Coq</a> a security-typed calculus that includes an abstract model of Intel SGX-like enclaves, and show that the calculus provides meaningful security guarantees, even in the face of lowlevel attackers. We also model a translation scheme from an enclave-agnostic calculus to an enclave-aware calculus and show that the scheme ensures that enclaves are correctly placed, so that a translation of a well-typed program in the enclave-agnostic calculus results in a well-typed program in the enclave-aware calculus.
+            </div> 
         </div>
-	</div>
-
-    <div id="experience">
-        <div class="container">
-            <h2>Experience</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="media">
-                          <div class="media-left">
-                              <img class="media-object" src="assets/img/palantir.png" height="48px" width="48px">
-                          </div>
-                          <div class="media-body">
-                              <h4 class="media-heading">Palantir Technologies</h4>
-                              <i>Software Engineering Intern – Summer 2017</i><br>
-                          </div>
-                        </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="media">
-                      <div class="media-left">
-                          <img class="media-object" src="assets/img/harvard.png" height="56px" width="48px">
-                      </div>
-                      <div class="media-body">
-                          <h4 class="media-heading">Stephen Chong Research Group, Harvard University</h4>
-                          <i>Undergraduate Researcher - 2016 - Present</i><br>
-                          <ul>
-                            <li>Worked on <a href="http://shill.seas.harvard.edu/">Shill</a>, a secure shell scripting language designed on the Principle of Least Privilege.</li>
-                            <li>Designed a capability-based API for interacting with relational databases in Shill.</li>
-                          </ul>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="media">
-                          <div class="media-left">
-                              <img class="media-object" src="assets/img/google.png" height="48px" width="48px">
-                          </div>
-                          <div class="media-body">
-                              <h4 class="media-heading">Google, Inc.</h4>
-                              <i>Software Engineering Intern, Gmail Spam Team – Summer 2016</i><br>
-                               <ul>
-                                   <li>Improved spam classification throughput by 20% by batching together inference requests.</li>
-                                   <li>Integrated spam deep neural network with hyperparameter search infrastructure for automated model tuning. Used tuning results to decrease training time by 4x.</li>
-                                   <li>Designed and implemented a data-processing pipeline for finding features causing false positives.
-                                   <li>Collaborated with industry machine learning experts to design a new objective function for the spam model and experiment with serving the model on <a href="https://cloudplatform.googleblog.com/2016/05/Google-supercharges-machine-learning-tasks-with-custom-chip.html">Tensor processing units</a></li>
-                               </ul>
-                          </div>
-                        </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="media">
-                      <div class="media-left">
-                          <img class="media-object" src="assets/img/harvard.png" height="56px" width="48px">
-                      </div>
-                      <div class="media-body">
-                          <h4 class="media-heading">Barbara Grosz Research Group, Harvard University</h4>
-                          <i>Undergraduate Research Assistant - 2015 - 2016</i><br>
-                          Contributed to the group's research on developing intelligent information sharing algorithms for supporting distributed teamwork.
-
-                          <ul>
-                          	<li>Developed a Google Chrome extension and a Google Docs add-on for surrpoting collaborative editing of documents.</li>
-                          	<li> Built a back-end using Flask to connect the Docs add-on to the group's algorithms and store revision information.</li>
-                          </ul>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                        <div class="media">
-                          <div class="media-left">
-                              <img class="media-object" src="assets/img/hyland.jpg" height="37px" width="100px">
-                          </div>
-                          <div class="media-body">
-                              <h4 class="media-heading">Hyland, Creator of OnBase</h4>
-                              <i>Software Development Intern – Summer 2015</i><br>
-                              Hyland creates enterprise content management software to help businesses manage documents, information, and everyday tasks.
-                              I worked on the image upload components of OnBase for iPad.
-                              <ul>
-                                  <li>Implemented <a href="https://en.wikipedia.org/wiki/Canny_edge_detector">Canny edge detection</a> in Objective-C to identify
-                                  document borders in images. </li>
-                                  <li>Used OpenGL ES to allow users to crop, de-skew, and adjust contrast/brightness levels of captured images.</li>
-                                  <li>Integrated mobile app with server-side optical character recognition (OCR) engine so mobile users could upload documents for text recognition.</li>
-                                  <li>Integrated client-side OCR with <a href="https://code.google.com/p/tesseract-ocr/">Tesseract</a> to compare the experience with server-side OCR.</li>
-                              </ul>
-                          </div>
-                        </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="media">
-                          <div class="media-left">
-                              <img class="media-object" src="assets/img/harvard.png" height="56px" width="48px">
-                          </div>
-                          <div class="media-body">
-                              <h4 class="media-heading">Digital Atlas of Roman and Medieval Civilization (DARMC)</h4>
-                              <i>Undergraduate Research Assistant – 2015</i><br>
-                              DARMC is a digital humanities project at Harvard that makes freely available maps and geodatabases created from
-                               historical data on Roman and medieval civilization. A common task in the project was manually looking up and filling in coordinates for
-                               large CSV files of historical place names. I improved on an existing effort to automate this process.
-                               <ul>
-                                   <li>Designed a relational data model to replace the existing flat caching system and migrated old caches to the new model.</li>
-                                   <li>Overhauled and refactored existing Python scripts to make it easier to integrate more web geocoding services and output formats.</li>
-                                   <li>Added support for geocoding using Wikipedia, OpenStreetMap.</li>
-                                   <li>Made configuring and using the command line interface easier for non-technical project members.</li>
-                               </ul>
-                          </div>
-                        </div>
-                </div>
-            </div>
+        <div class="project-images">
         </div>
     </div>
-    <div id="projects">
-        <div class="container">
-            <h2>Projects</h2>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="media">
-                            <div class="media-left">
-                                 <img class="media-object" src="assets/img/amplifyicon.png" width="64px" height="64px">
-                            </div>
-                            <div class="media-body">
-                                <h3 class="media-heading">Amplify</h3>
-                                <ul class="list-inline">
-                                    <li><h4><a href="https://itunes.apple.com/us/app/amplify-for-spotify/id1025490895?ls=1&mt=12">Mac App Store</a></h4></li>
-                                    <li><h4><a href="https://github.com/ezig/amplify">GitHub</a></h4></li><br>
-                                </ul>
-                                Amplify is a convenient menu bar app to simplify the way you use Spotify. Amplify makes it easy to check the current track, adjust Spotify volume, and control playback without interrupting what you're working on.
-                                Amplify has been downloaded more than 60,000 times, peaking at the #4 free music app and the #53 free app overall on the Mac App Store.<br><br>
-                                
-                                Amplify is written in Objective-C and uses the <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ScriptingBridgeConcepts/Introduction/Introduction.html">
-                                Scripting Bridge Framework</a> to send Apple Script commands to the Spotify client, and the <a href="https://developer.apple.com/library/prerelease/mac/documentation/Cocoa/Reference/Foundation/Classes/NSDistributedNotificationCenter_Class/index.html">
-                                Distributed Notification Center</a> to detect when the Spotify track changes. 
-                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <img src="assets/img/amplify.png" class="image-responsive"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="media">
-                            <div class="media-left">
-                                <img class="media-object" src="assets/img/bblogo.jpg">
-                            </div>
-                            <div class="media-body">
-                        <h3 class="media-heading">Budget Butler</h3>
-                        <ul class="list-inline">
-                            <li><h4><a href="https://itunes.apple.com/us/app/budget-butler/id1013599349?ls=1&mt=8">App Store</a></h4></li>
-                            <li><h4><a href="https://github.com/ezig/cs50-final">GitHub</a><h4></li>
-                        </ul>
-                        A polite app to streamline your budget management experience. Available free on the app store.
-                         Budget Butler is designed to simplify keeping track of receipts and spending by making it easy
-                         to add new receipts as you get them and to view past spending in table or chart form.<br><br>
-
-                         Adding a picture of a new receipt automatically fills in the total amount using optical character
-                         recognition (OCR) powered by <a href="https://code.google.com/p/tesseract-ocr/">Tesseract</a>. Receipt pictures
-                         and information are then saved using Core Data. Budget Butler will even autocomplete payee names and expense categories
-                         based on previous saved purchases. In addition to the table-style log, the summary view generates a pie chart using
-                          <a href="https://github.com/core-plot/core-plot">Core Plot</a> to break down spending by category.
-                       </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                       <img src="assets/img/bb1.png" class="image-responsive" width="48%" height="50%"/>
-                       <img src="assets/img/bb2.png" class="image-responsive" width="48%" height="50%"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="media">
-                            <div class="media-left">
-                                 <img class="media-object" src="assets/img/clojure.png" width="64px" height="64px">
-                            </div>
-                            <div class="media-body">
-                                <h3 class="media-heading">NPuzzles</h3>
-                                <ul class="list-inline">
-                                    <li><h4><a href="https://github.com/ezig/npuzzles">GitHub</a></h4></li>
-                                    <li><h4><a href="https://ezig.github.io/npuzzles.pdf">Writeup of Results</a><h4></li><br>
-                                </ul>
-                                A sliding tile puzzles solver written in Clojure as a final project for CS51: Abstraction and Design in Computation.
-                                 The goal of the project was to compare
-                                 the effectiveness of a standard <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A*</a> strategy
-                                 with a genetic algorithm. After running tests on both square and non-square puzzles, we found 
-                                 our A* implementation about 30 times faster than the genetic algorithm. We also compared the effectiveness
-                                 of different heuristic functions for maximizing the speed of both algorithms, as well as for
-                                 increasing the accuracy of the genetic algorithm. Ultimately, we concluded that a genetic algorithm
-                                 was not well suited for a problem of this sort which involves planning and where partial solutions are not useful.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                       <img src="assets/img/scrambledcow.jpg" class="image-responsive" width="48%" height="50%"/>
-                       <img src="assets/img/solvedcow.png" class="image-responsive" width="48%" height="50%"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="media">
-                            <div class="media-left">
-                                <i class="fa fa-shield fa-4x"></i>
-                            </div>
-                            <div class="media-body">
-                                <h3 class="media-heading">Strategy Game Movement</h3>
-                                <ul class="list-inline">
-                                    <li><h4><a href="https://ezig.github.io/strategy-game">Live Demo</a><h4></li>
-                                    <li><h4><a href="https://github.com/ezig/strategy-game">GitHub</a><h4></li><br>
-                                </ul>
-                                An experiment with path-finding similar modeled on the way that movement works in turn-based strategy games
-                                    like Fire Emblem and Advance Wars. Determines valid movement range based on a character's movement range
-                                    and finds paths to tiles using a modified depth-limited breadth-first search that finds the shortest path to each tile.
-                                     Built using <a href="http://phaser.io/">Phaser.js</a> to draw grid and move sprites. <br><br>
-                                     To try out the demo, click on and move the pink or the green friendly sprites to a valid (blue-highlighted)
-                                      tile in movement range. Once you've moved both friendly sprites, the red enemy will make a move.
-                                       The red-highlighteds squares indicate spaces within the sprite's attack range but outside of its move
-                                      range
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <img src="assets/img/strategy.png" class="image-responsive"/>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="media">
-                            <div class="media-left">
-                                <img src="assets/img/tile.png" width="64px" height="64px"/>
-                            </div>
-                            <div class="media-body">
-
-                        <h3 class="media-heading">Flip</h3>
-                        <ul class="list-inline">
-                            <li><h4><a href="https://ezig.github.io/flip">Play Game</a><h4></li>
-                            <li><h4><a href="https://github.com/ezig/flip">GitHub</a><h4></li><br>
-                        </ul>
-                         A game about tiles. Flip is based on a simple goal (turn all of the red tiles white) and a simple mechanic
-                          (flipping over a tile also flips the adjacent tiles). Built using <a href="http://phaser.io/">Phaser.js</a>. <br><br>
-                          There are currently two different modes:
-                          <ul>
-                              <li>Classic: randomly generate square levels from 3x3 up to 5x5</li>
-                              <li>Adventure: hand-made levels of varying shape (shown on the right)</li>
-                          </ul>
-                   </div>
-                    </div>
-                    </div>
-                    <div class="col-md-4">
-                        <img src="assets/img/flip.png" width="75%"/>
-                    </div>
-                </div>
+    <div class="project-item">
+        <div class="project-info">
+            <div class="project-icon">
+                    <img src="assets/img/spy.png"
+                        width="64px"
+                        height="64px"/>
             </div>
+            <div class="project-content">
+                <h3>Accelerating Good (and Evil): Using Accelerometer Data to Catch Spam (and Spy on People) </h3>
+                <ul class="list-inline">
+                    <li><h4><a href="https://ezig.github.io/acceleratinggood.pdf">Read the Paper</a></h4></li>
+                    <li><h4><a href="https://github.com/ankitvgupta/reCAPTCHA-mobile">GitHub</a></h4></li>
+                </ul>
+                <p>A final project for System Security at Harvard.</p><p>To prevent automated systems from accessing certain webpages pages, website developers often add techniques to verify that a user is a human. These techniques generally involve tasks that are relatively easy for humans but difficult for automated systems. One of the most popular such methods is CAPTCHA. However, these tasks can still be difficult or unpleasant to complete for humans. In general, they can reduce the quality of user experience, which may make a user frustrated when interacting with a system, particularly for those with disabilities.</p><p>To address these issues, we explore a replacement for CAPTCHA that uses a mobile client’s motion data to determine whether the client is an automated system. We also explore the privacy implications of websites clandestinely collecting accelerometer data.</p>
+            </div> 
+        </div>
+        <div class="project-images">
+                <img src="assets/img/captcha.png" 
+                    class="image-responsive"
+                    width="300px"
+                    height="208px"/>
+        </div>
     </div>
-</body>
-
+    <div class="project-item">
+        <div class="project-info">
+            <div class="project-icon">
+                    <img src="assets/img/amplifyicon.png"
+                        width="64px"
+                        height="64px"/>
+            </div>
+            <div class="project-content">
+                <h3>Amplify </h3>
+                <ul class="list-inline">
+                    <li><h4><a href="https://github.com/ezig/amplify/releases/tag/v1.0">Download</a></h4></li>
+                    <li><h4><a href="https://github.com/ezig/amplify">GitHub</a></h4></li>
+                </ul>
+                <p>Amplify is a convenient menu bar app to simplify the way you use Spotify. Amplify makes it easy to check the current track, adjust Spotify volume, and control playback without interrupting what you're working on. Amplify has been downloaded more than 75,000 times, peaking at the #4 free music app and the #53 free app overall on the Mac App Store.</p><p>Amplify is written in Objective-C and uses the <a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ScriptingBridgeConcepts/Introduction/Introduction.html"> Scripting Bridge Framework</a> to send Apple Script commands to the Spotify client, and the <a href="https://developer.apple.com/library/prerelease/mac/documentation/Cocoa/Reference/Foundation/Classes/NSDistributedNotificationCenter_Class/index.html"> Distributed Notification Center</a> to detect when the Spotify track changes. 
+            </div> 
+        </div>
+        <div class="project-images">
+                <img src="assets/img/amplify.png" 
+                    class="image-responsive"
+                    width="380px"
+                    height="193px"/>
+        </div>
+    </div>
+    <div class="project-item">
+        <div class="project-info">
+            <div class="project-icon">
+                    <img src="assets/img/bblogo.jpg"
+                        width="64px"
+                        height="64px"/>
+            </div>
+            <div class="project-content">
+                <h3>Budget Butler </h3>
+                <ul class="list-inline">
+                    <li><h4><a href="https://github.com/ezig/cs50-final">GitHub</a></h4></li>
+                </ul>
+                <p>A polite app to streamline your budget management experience. Available free on the app store. Budget Butler is designed to simplify keeping track of receipts and spending by making it easy to add new receipts as you get them and to view past spending in table or chart form.</p><p>Adding a picture of a new receipt automatically fills in the total amount using optical character recognition (OCR) powered by <a href="https://code.google.com/p/tesseract-ocr/">Tesseract</a>. Receipt pictures and information are then saved using Core Data. Budget Butler will even autocomplete payee names and expense categories based on previous saved purchases. In addition to the table-style log, the summary view generates a pie chart using <a href="https://github.com/core-plot/core-plot">Core Plot</a> to break down spending by category.</p>
+            </div> 
+        </div>
+        <div class="project-images">
+                <img src="assets/img/bb1.png" 
+                    class="image-responsive"
+                    width="180px"
+                    height="334px"/>
+                <img src="assets/img/bb2.png" 
+                    class="image-responsive"
+                    width="180px"
+                    height="334px"/>
+        </div>
+    </div>
+    <div class="project-item">
+        <div class="project-info">
+            <div class="project-icon">
+                    <img src="assets/img/clojure.png"
+                        width="64px"
+                        height="64px"/>
+            </div>
+            <div class="project-content">
+                <h3>NPuzzles </h3>
+                <ul class="list-inline">
+                    <li><h4><a href="https://github.com/ezig/npuzzles">GitHub</a></h4></li>
+                    <li><h4><a href="https://ezig.github.io/npuzzles.pdf">Writeup of Results</a></h4></li>
+                </ul>
+                <p>A sliding tile puzzles solver written in Clojure as a final project for CS51: Abstraction and Design. The goal of the project was to compare the effectiveness of a standard A* strategy with a genetic algorithm. After running tests on both square and non-square puzzles, we found our A* implementation about 30 times faster than the genetic algorithm. We also compared the effectiveness of different heuristic functions for maximizing the  speed of both algorithms, as well as for increasing the accuracy of the genetic algorithm.  Ultimately, we concluded that a genetic algorithm was not well suited for a problem of this sort which involves planning and where partial solutions are not useful.</p>
+            </div> 
+        </div>
+        <div class="project-images">
+                <img src="assets/img/scrambledcow.jpg" 
+                    class="image-responsive"
+                    width="175px"
+                    height="141px"/>
+                <img src="assets/img/solvedcow.png" 
+                    class="image-responsive"
+                    width="175px"
+                    height="141px"/>
+        </div>
+    </div>
+    <div class="project-item">
+        <div class="project-info">
+            <div class="project-icon">
+                    <img src="assets/img/shield.jpg"
+                        width="60px"
+                        height="60px"/>
+            </div>
+            <div class="project-content">
+                <h3>Strategy Game Movement </h3>
+                <ul class="list-inline">
+                    <li><h4><a href="https://ezig.github.io/strategy-game">Live Demo</a></h4></li>
+                    <li><h4><a href="https://github.com/ezig/strategy-game">GitHub</a></h4></li>
+                </ul>
+                <p>An experiment with path-finding similar modeled on the way that movement works in turn-based strategy games like Fire Emblem and Advance Wars. Determines valid movement range based on a character's movement range and finds paths to tiles using a modified depth-limited breadth-first search that finds the shortest path to each tile. Built using <a href="http://phaser.io/">Phaser.js</a> to draw grid and animate movement.</p><p>To try out the demo, click on and move the pink or the green friendly sprites to a valid (blue-highlighted) tile in movement range. Once you've moved both friendly sprites, the red enemy will make a move. The red-highlighteds squares indicate spaces within the sprite's "attack" range but outside of its move range.</p>
+            </div> 
+        </div>
+        <div class="project-images">
+                <img src="assets/img/strategy.png" 
+                    class="image-responsive"
+                    width="320px"
+                    height="260px"/>
+        </div>
+    </div>
+    <div class="project-item">
+        <div class="project-info">
+            <div class="project-icon">
+                    <img src="assets/img/tile.png"
+                        width="64px"
+                        height="64px"/>
+            </div>
+            <div class="project-content">
+                <h3>Flip </h3>
+                <ul class="list-inline">
+                    <li><h4><a href="https://ezig.github.io/flip">Play Game</a></h4></li>
+                    <li><h4><a href="https://github.com/ezig/flip">GitHub</a></h4></li>
+                </ul>
+                <p>A game about tiles. Flip is based on a simple goal (turn all of the red tiles white) and a simple mechanic (flipping over a tile also flips the adjacent tiles). Built using <a href="http://phaser.io/">Phaser.js</a>.</p><p>There are currently two different modes:<ul><li>Classic: randomly generate square levels from 3x3 up to 5x5</li><li>Adventure: hand-made levels of varying shape (shown on the right)</li></ul></p>
+            </div> 
+        </div>
+        <div class="project-images">
+                <img src="assets/img/flip.png" 
+                    class="image-responsive"
+                    width="275px"
+                    height="275px"/>
+        </div>
+    </div>
+</div></body>
 </html>

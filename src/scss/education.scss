@@ -1,0 +1,36 @@
+.education {
+    margin-left: $mainleftmargin;
+    margin-right: $mainrightmargin;
+    margin-bottom: $sectionmarginbottom;
+
+    h1 {
+        text-align: center;
+    }
+
+    .education-section {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+
+        
+        img {
+            width: 48px;
+            height: 56px;
+        }
+    }
+
+    .education-description {
+        .date {
+            display: block;
+            font-style: italic;
+            margin-bottom: 0.5em;
+        }
+
+        flex: 0 0 55%;
+    }
+
+    .skill-h {
+        font-weight: 500;
+        font-style: italic;
+    }
+}

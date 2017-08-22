@@ -1,0 +1,22 @@
+<div class="teaching">
+    <h1>Teaching</h1>
+    <hr>
+    <div class="teaching-container">
+        {% for teach in teaching %}
+        <div class="teaching-item">
+            <div class="teaching-icon">
+                <img class="teaching-icon" src="{{ imgDir }}{{ teach.image }}"/>
+            </div>
+            <div class="teaching-description">
+                <h4>{{ teach.employer }}</h4>
+                <i>{{ teach.title }} – {{ teach.timeline }}</i>
+                <ul>
+                    {% for d in teach.details %}
+                    <li>{{ d }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

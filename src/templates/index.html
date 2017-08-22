@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href="css/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+  {% include "partials/lead.html" %}
+  {% include "partials/education.html" %}
+  {% include "partials/teaching.html" %}
+
+  <div style="background: #EEEEEE">
+    {% include "partials/experience.html" %}
+  </div>
+
+  {% include "partials/projects.html" %}
+</body>
+</html>

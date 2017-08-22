@@ -1,0 +1,41 @@
+.teaching {
+    margin-left: $mainleftmargin;
+    margin-right: $mainrightmargin;
+    margin-bottom: calc(#{$sectionmarginbottom} / 2);
+
+    h1 {
+        text-align: center;
+    }
+
+    .teaching-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .teaching-item {
+        flex: 0 0 50%;
+        display: flex;
+        justify-content: space-between;
+        align-items: top;
+    }
+    .teaching-icon {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .teaching-description {
+        h4 {
+            margin-top: 0px;
+        }
+
+        li {
+            margin-left: 0px;
+        }
+
+        ul {
+            padding-left: 0px;
+        }
+
+        flex: 0 0 83%;
+    }
+}

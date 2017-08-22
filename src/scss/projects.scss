@@ -1,0 +1,40 @@
+.projects {
+    margin-left: $mainleftmargin;
+    margin-right: $mainrightmargin;
+    margin-bottom: $sectionmarginbottom;
+
+    h1 {
+        text-align: center;
+    }
+
+    .project-item {
+        margin-bottom: 20px;
+
+        h3 {
+            margin-top: 0px;
+        }
+
+        display: flex;
+        align-items: center;
+
+        .project-info {
+            display: flex;
+
+            .project-content {
+                flex: 0 0 80%;
+            }
+
+            .project-icon {
+                margin-right: 15px;
+            }
+        }
+
+        .project-images {
+            display: flex;
+            justify-content: flex-start;
+            img {
+                margin-right: 10px;
+            }
+        }
+    }
+}

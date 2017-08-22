@@ -1,0 +1,50 @@
+#lead {
+    background: $primary-color;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    .social {
+        padding-right: 20px;
+
+        a:hover {
+            transition: 0.30s;
+            color: #A67EC3;
+        }
+
+        a:not(:hover) {
+            transition: 0.30s;
+            color: #444444; 
+        }
+    }
+
+    .pic-and-social {
+        margin-left: 10%;
+    }
+
+    .profilePic {
+        margin-left: -10px;
+        margin-bottom: 10px;
+    }
+
+    .description {
+        margin-right: 10%;
+        max-width: 30%;
+        
+        a {
+          padding-left: 4px;
+          padding-right: 4px;
+          color: #333333; 
+          text-decoration: none;
+        }
+        a:hover {
+            transition: 0.15s;
+            background: #25bbfa;
+        }
+
+        a:not(:hover) {
+            transition: 0.15s;
+            background: #50aacf;
+        }
+    }
+}

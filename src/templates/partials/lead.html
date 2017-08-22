@@ -1,0 +1,22 @@
+<div class="jumbotron" id="lead">
+    <div class="pic-and-social">
+        <img class="profilePic" src="{{ imgDir }}{{ profilePic }}"/>
+        <table>
+            <tr>
+                {% for social in socials %}
+                <td class="social">
+                    <a href="{{ social.link }}"><i class="fa {{ social.icon }} fa-3x"></i></a>
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <div class="description">
+        <div class="title">
+            <h1>{{ title }}</h1>
+        </div>
+        <div>
+            {{ description }}
+        </div>
+    </div>
+</div>

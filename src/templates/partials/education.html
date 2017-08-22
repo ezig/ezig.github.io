@@ -1,0 +1,29 @@
+<div class="education">
+    <h1>Education</h1>
+    <hr>
+    <div>
+        <div class="education-section">
+            <div class="education-title">
+                <h3>{{ education.title }}</h3>
+                <img src="{{ imgDir }}{{ education.image }}"/>
+            </div>
+            <div class="education-description">
+                <h4>{{ education.degree }}</h4>
+                <span class="date"> {{ education.date }} </span>
+                <h5>Honors:</h5> {{ education.honors | join: ", " }}
+                <h5>Relevant Coursework:</h5>
+                {{ education.courses | join: ", " }}.
+            </div>
+        </div>
+        <div class="education-section">
+            <div class="education-title">
+                <h3>Skills</h3>
+            </div>
+            <div class="education-description">
+                <span class="skill-h">Proficient in:</span> {{ skills.proficient | join: ", " }}
+                <br>
+                <span class="skill-h">Experience in:</span> {{ skills.experience | join: ", "}}
+            </div>
+        </div>
+    </div>
+</div>
