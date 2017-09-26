@@ -5,7 +5,8 @@ exports.description = "Senior at Harvard studying Computer Science. " +
     "I'm writing a thesis with <a href=\"https://people.seas.harvard.edu/~chong/\">Prof. Stephen Chong</a> " +
     "on a capability-based interface for controlling access to SQL databases. " +
     "I am also a Head Teaching Fellow for CS51, <a href=\"http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/\"> " +
-    "one of the largest courses</a> at Harvard.";
+    "one of the largest courses</a> at Harvard.<br>" +
+    "In 2018, I will be joining <a href=\"https://www.palantir.com/\">Palantir</a> full-time as a software engineer.";
 exports.imgDir = "assets/img/";
 exports.profilePic = "me.gif";
 exports.socials = [
@@ -36,13 +37,13 @@ exports.education = {
     degree: "A.B. in Computer Science, Secondary Field in Linguistic Theory",
     date: "Expected 2018",
     honors: [
-        "Phi Beta Kappa Junior 24", "Detur Prize", "John Harvard Scholar (2015, 2016)"
+        "Phi Beta Kappa Junior 24", "Detur Prize", "Bok Center Certificate of Distinction in Teaching", "John Harvard Scholar (2015, 2016)"
     ],
     courses: [
-        "Abstraction and Design", "Data Structures and Algorithms", "Programming Languages",
-        "Systems Programming", "Operating Systems", "Data Systems", "Systems Security",
+        "Data Structures and Algorithms", "Programming Languages", "Advanced Topics in Programming Languages",
+        "Operating Systems", "Data Systems", "Systems Security", "Computer Graphics",
         "Verified Systems", "Theory of Computation", "Linear Algebra and Real Analysis",
-        "Intro to Probability",
+        "Intro Probability", "Probabilistic Understanding of Language", "Formal Semantics"
     ]
 };
 exports.teaching = [
@@ -128,7 +129,7 @@ exports.experiences = [
             heightPx: 56
         },
         employer: "Barbara Grosz Research Group, Harvard University",
-        title: "Undergraduate Researcher",
+        title: "Undergraduate Research Assistant",
         timeline: "2015 - 2016",
         description: "Contributed to the group's research on developing intelligent information sharing algorithms for supporting distributed teamwork.",
         details: [
