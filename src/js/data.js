@@ -68,7 +68,7 @@ exports.teaching = [
         description: undefined,
         details: [
             "Led a weekly section for 20 students and graded problem sets.",
-            "Held office hours and answeredf questions via email and the course discussion site.",
+            "Held office hours and answered questions via email and the course discussion site.",
             "Advised groups of students working on final projects.",
         ]
     }
@@ -176,6 +176,28 @@ exports.experiences = [
     }
 ];
 exports.projects = [
+    {
+        icon: {
+            name: "reaper.png",
+            heightPx: 95,
+            widthPx: 90
+        },
+        name: "Reaper: Synthesizing SQL Data Modification Queries from Input-Output Examples",
+        links: [
+            {
+                text: "Read the Paper",
+                url: "https://ezig.github.io/reaper.pdf"
+            },
+            {
+                text: "GitHub",
+                url: "https://github.com/ezig/reaper"
+            }
+        ],
+        description: "<p>A final project for Advanced Topics in Programming Languages at Harvard.</p>" +
+            "<p>Users of relational databases often have trouble constructing SQL queries to perform their desired tasks. However, users are often able to provide input-output examples that provide a partial specification for their desired outcome. Accordingly, prior work has developed programming-by-example systems to help users craft database SELECT queries. A natural and useful extension of this technique is to automatically synthesize queries that modify data (that is, UPDATE and DELETE queries), as even users who are proficient in writing SELECT queries may struggle to write these modification queries.</p>" +
+            "<p>In this paper, we present the first system for synthesizing SQL data modification queries from input-output examples. Our key insight is that it is possible to solve SQL data modification query synthesis problems by issuing multiple, independent calls to an existing SELECT synthesizer, which we can treat as a black box. This results in a simple synthesis algorithm that will benefit from future advances in SELECT synthesis technology. We have implemented our algorithm in a new tool called REAPER which can solve a variety of interesting update problems in a few seconds.</p>",
+        images: []
+    },
     {
         icon: {
             name: "coq.jpg",
