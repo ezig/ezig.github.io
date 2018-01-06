@@ -92,10 +92,7 @@ export const education = {
     "Phi Beta Kappa Junior 24", "Detur Prize", "Bok Center Certificate of Distinction in Teaching", "John Harvard Scholar (2015, 2016, 2017)"
   ],
   courses: [
-    "Data Structures and Algorithms", "Programming Languages", "Advanced Topics in Programming Languages",
-     "Operating Systems", "Data Systems", "Systems Security", "Computer Graphics",
-      "Verified Systems", "Theory of Computation", "Linear Algebra and Real Analysis",
-       "Intro Probability", "Probabilistic Understanding of Language", "Formal Semantics"
+    "Programming Languages", "Advanced Topics in Programming Languages", "Compilers", "Operating Systems", "Systems Security", "Verified Systems", "Data Systems", "Data Structures and Algorithms", "Theory of Computation", "Computer Graphics", "Linear Algebra and Real Analysis", "Intro Probability", "Probabilistic Understanding of Language", "Formal Semantics"
   ]
 }
 
