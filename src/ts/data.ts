@@ -39,7 +39,7 @@ interface social {
 
 export const title: string = "Ezra Zigmond";
 
-export const description: string = "I am a software engineer at Senior at <a href=\"https://www.palantir.com/\">Palantir</a> in London.<br><br> Previously, I was a student at Harvard where I wrote a <a href=\"https://ezig.github.io/thesis.pdf\">thesis on language-based database security</a> with <a href=\"https://people.seas.harvard.edu/~chong/\">Prof. Stephen Chong</a> and was a Head Teaching Fellow for CS51, <a href=\"http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/\">one of the largest courses</a> at Harvard.<br>"
+export const description: string = "I am a software engineer at <a href=\"https://www.palantir.com/\">Palantir</a> in London.<br><br> Previously, I was an undergraduate at Harvard where I wrote a <a href=\"https://ezig.github.io/thesis.pdf\">thesis on language-based database security</a> with <a href=\"https://people.seas.harvard.edu/~chong/\">Prof. Stephen Chong</a> and was a Head Teaching Fellow for CS51, <a href=\"http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/\">one of the largest courses</a> at Harvard.<br>"
 
 export const imgDir: string = "assets/img/";
 
@@ -474,13 +474,13 @@ export const projects: IProject[] = [
         url: "https://github.com/ezig/strategy-game",
       }
     ],
-    description: "<p>An experiment with path-finding similar based on the style of movement found in turn-based strategy games " +
+    description: "<p>A prototype based on the style of movement found in turn-based strategy games " +
       "like Fire Emblem and Advance Wars. Determines valid movement ranges and paths based on a character's movement range " +
       "and finds paths to tiles using a modified depth-limited breadth-first search. " +
       "Built using <a href=\"http://phaser.io/\">Phaser.js</a> to draw grid and animate movement.</p>" +
       "<p>To try out the demo, click on and move the pink or the green friendly sprites to a valid (blue-highlighted) " +
       "tile in movement range. Once you've moved both friendly sprites, the red enemy will make a move. " +
-      "The red-highlighted squares indicate spaces within the sprite's \"attack\" range but outside of its move range.</p>",
+      "Spaces marked with x's indicate difficult terrain that costs double to cross. The red-highlighted squares indicate spaces within the sprite's \"attack\" range but outside of its move range.</p>",
     images: [
       {
         name: "strategy.png",
