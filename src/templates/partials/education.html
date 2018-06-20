@@ -9,8 +9,8 @@
             </div>
             <div class="education-description">
                 <h4>{{ education.degree }}</h4>
-                <span class="date"> {{ education.date }} </span>
-                <h5>Honors:</h5> {{ education.honors | join: ", " }}
+                <span class="minor"> {{ education.minor}} </span>
+                <h5>Honors and Awards:</h5> {{ education.honors | join: "<br>" }}
                 <h5>Relevant Coursework:</h5>
                 {{ education.courses | join: ", " }}.
             </div>

@@ -1,12 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.title = "Ezra Zigmond";
-exports.description = "Senior at Harvard studying Computer Science. " +
-    "I'm writing a thesis with <a href=\"https://people.seas.harvard.edu/~chong/\">Prof. Stephen Chong</a> " +
-    "on a capability-based interface for controlling access to SQL databases. " +
-    "I am also a Head Teaching Fellow for CS51, <a href=\"http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/\"> " +
-    "one of the largest courses</a> at Harvard.<br>" +
-    "In 2018, I will be joining <a href=\"https://www.palantir.com/\">Palantir</a> full-time as a software engineer.";
+exports.description = "I am a software engineer at Senior at <a href=\"https://www.palantir.com/\">Palantir</a> in London.<br><br> Previously, I was a student at Harvard where I wrote a <a href=\"https://ezig.github.io/thesis.pdf\">thesis on language-based database security</a> with <a href=\"https://people.seas.harvard.edu/~chong/\">Prof. Stephen Chong</a> and was a Head Teaching Fellow for CS51, <a href=\"http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/\">one of the largest courses</a> at Harvard.<br>";
 exports.imgDir = "assets/img/";
 exports.profilePic = "me.gif";
 exports.socials = [
@@ -34,10 +29,10 @@ exports.skills = {
 exports.education = {
     title: "Harvard College",
     image: "harvard.png",
-    degree: "A.B. in Computer Science, Secondary Field in Linguistic Theory",
-    date: "Expected 2018",
+    degree: "A.B. summa cum laude in Computer Science (2018)",
+    minor: "Secondary Field in Language and Linguistic Theory",
     honors: [
-        "Phi Beta Kappa Junior 24", "Detur Prize", "Bok Center Certificate of Distinction in Teaching", "John Harvard Scholar (2015, 2016, 2017)"
+        "2nd Prize in the undergraduate Student Research Competetition at <a href=\"https://programming-conference.org/\">&lt;Programming&gt;</a> (2018)", "Phi Beta Kappa Junior 24 (2017)", "Bok Center Certificate of Distinction in Teaching (2017)", "Detur Prize (2015)"
     ],
     courses: [
         "Programming Languages", "Advanced Topics in Programming Languages", "Compilers", "Operating Systems", "Systems Security", "Verified Systems", "Data Systems", "Data Structures and Algorithms", "Theory of Computation", "Computer Graphics", "Linear Algebra and Real Analysis", "Intro Probability", "Probabilistic Understanding of Language", "Formal Semantics"
@@ -47,11 +42,11 @@ exports.teaching = [
     {
         image: "ocaml.png",
         employer: "CS51: Abstraction and Design",
-        title: "Teaching Fellow",
-        timeline: "2016 - Present (Head Teaching Fellow, 2017)",
-        description: "I have been a teaching fellow for two years and currently serve as the head teaching fellow.",
+        title: "Teaching Fellow (S16, S17), Head Teaching Fellow (S18)",
+        timeline: undefined,
+        description: undefined,
         details: [
-            "Designed system for automatically grading correctness of assignments.",
+            "Designed system for automatically grading correctness of student assignments.",
             "Contributed to problem set development and course planning.",
             "Led code review section for 16 students, graded problem sets.",
             "Held office hours and fielded questions via email and Piazza."
@@ -60,17 +55,30 @@ exports.teaching = [
     {
         image: "cs50.png",
         employer: "CS50: Introduction to Computer Science",
-        title: "Teaching Fellow",
-        timeline: "Fall 2015",
+        title: "Teaching Fellow (F15)",
+        timeline: undefined,
         description: undefined,
         details: [
             "Led a weekly section for 20 students and graded problem sets.",
             "Held office hours and answered questions via email and the course discussion site.",
             "Advised groups of students working on final projects.",
+            "Taught a <a href=\"https://www.youtube.com/watch?v=qla-KaMF-2Q\">publicly available seminar</a> on creating web apps with Flask."
         ]
     }
 ];
 exports.experiences = [
+    {
+        image: {
+            name: "palantir.png",
+            widthPx: 48,
+            heightPx: 48
+        },
+        employer: "Palantir Technologies, Inc.",
+        title: "Software Engineer",
+        timeline: "2018 - Present",
+        description: undefined,
+        details: []
+    },
     {
         image: {
             name: "harvard.png",
@@ -79,7 +87,7 @@ exports.experiences = [
         },
         employer: "Stephen Chong Research Group, Harvard University",
         title: "Undergraduate Researcher",
-        timeline: "2016 - Present",
+        timeline: "2016 - 2018",
         description: undefined,
         details: [
             "Worked on <a href=\"http://shill.seas.harvard.edu/\">Shill</a>, a secure shell scripting language.",
@@ -172,7 +180,37 @@ exports.experiences = [
         ]
     }
 ];
-exports.projects = [
+exports.research = [
+    {
+        icon: {
+            name: "shilldblogo.png",
+            heightPx: 99,
+            widthPx: 78
+        },
+        name: "Fine-Grained, Language-Based Access Control for Database-Backed Applications",
+        links: [
+            {
+                text: "Thesis",
+                url: "https://ezig.github.io/thesis.pdf"
+            },
+            {
+                text: "Extended Abstract",
+                url: "https://ezig.github.io/abstract.pdf"
+            },
+            {
+                text: "GitHub",
+                url: "https://github.com/ezig/shilldb"
+            }
+        ],
+        description: "<p>Database-backed applications often run queries with more authority than necessary. Since programs can access more data than they legitimately need, flaws in security checks at the application level can enable malicious or buggy code to view or modify data in violation of intended access control policies. Although database management systems provide tools for controlling access to data, these tools are not well-suited for modern web applications which often have many users and consist of many different software components. First, databases are unaware of application users, and creating a new database user for each application user is impractical for applications with many users. Second, different components of the same application require different levels of database access, which would require creating different database users for different software components. Thus, it is difficult to properly limit the authority an application has when executing queries.</p><p>I propose ShillDB, a language for writing secure, database-backed applications. ShillDB enables reasoning about database access at the language level through capabilities, which limit what database tables a program can access, and contracts, which limit what operations a program can perform on those tables. ShillDB contracts are expressed as part of function interfaces, making it easy to specify different access control policies for different components of an application. These contracts act as executable security documentation for consumers of ShillDB programs and are enforced by the language runtime. Further, ShillDB provides database access control guarantees independent of the security mechanisms of the underlying database management system.</p>",
+        images: [
+            {
+                name: "shilldboverview.png",
+                widthPx: 408,
+                heightPx: 150
+            }
+        ]
+    },
     {
         icon: {
             name: "reaper.png",
@@ -252,7 +290,9 @@ exports.projects = [
                 heightPx: 208
             }
         ]
-    },
+    }
+];
+exports.projects = [
     {
         icon: {
             name: "amplifyicon.png",

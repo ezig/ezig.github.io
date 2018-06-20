@@ -33,7 +33,7 @@
             <h1>Ezra Zigmond</h1>
         </div>
         <div>
-            Senior at Harvard studying Computer Science. I'm writing a thesis with <a href="https://people.seas.harvard.edu/~chong/">Prof. Stephen Chong</a> on a capability-based interface for controlling access to SQL databases. I am also a Head Teaching Fellow for CS51, <a href="http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/"> one of the largest courses</a> at Harvard.<br>In 2018, I will be joining <a href="https://www.palantir.com/">Palantir</a> full-time as a software engineer.
+            I am a software engineer at Senior at <a href="https://www.palantir.com/">Palantir</a> in London.<br><br> Previously, I was a student at Harvard where I wrote a <a href="https://ezig.github.io/thesis.pdf">thesis on language-based database security</a> with <a href="https://people.seas.harvard.edu/~chong/">Prof. Stephen Chong</a> and was a Head Teaching Fellow for CS51, <a href="http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/">one of the largest courses</a> at Harvard.<br>
         </div>
     </div>
 </div>  <div class="education">
@@ -46,9 +46,9 @@
                 <img src="assets/img/harvard.png"/>
             </div>
             <div class="education-description">
-                <h4>A.B. in Computer Science, Secondary Field in Linguistic Theory</h4>
-                <span class="date"> Expected 2018 </span>
-                <h5>Honors:</h5> Phi Beta Kappa Junior 24, Detur Prize, Bok Center Certificate of Distinction in Teaching, John Harvard Scholar (2015, 2016, 2017)
+                <h4>A.B. summa cum laude in Computer Science (2018)</h4>
+                <span class="minor"> Secondary Field in Language and Linguistic Theory </span>
+                <h5>Honors and Awards:</h5> 2nd Prize in the undergraduate Student Research Competetition at <a href="https://programming-conference.org/">&lt;Programming&gt;</a> (2018)<br>Phi Beta Kappa Junior 24 (2017)<br>Bok Center Certificate of Distinction in Teaching (2017)<br>Detur Prize (2015)
                 <h5>Relevant Coursework:</h5>
                 Programming Languages, Advanced Topics in Programming Languages, Compilers, Operating Systems, Systems Security, Verified Systems, Data Systems, Data Structures and Algorithms, Theory of Computation, Computer Graphics, Linear Algebra and Real Analysis, Intro Probability, Probabilistic Understanding of Language, Formal Semantics.
             </div>
@@ -74,9 +74,9 @@
             </div>
             <div class="teaching-description">
                 <h4>CS51: Abstraction and Design</h4>
-                <i>Teaching Fellow – 2016 - Present (Head Teaching Fellow, 2017)</i>
+                <i>Teaching Fellow (S16, S17), Head Teaching Fellow (S18)</i>
                 <ul>
-                    <li>Designed system for automatically grading correctness of assignments.</li>
+                    <li>Designed system for automatically grading correctness of student assignments.</li>
                     <li>Contributed to problem set development and course planning.</li>
                     <li>Led code review section for 16 students, graded problem sets.</li>
                     <li>Held office hours and fielded questions via email and Piazza.</li>
@@ -89,11 +89,12 @@
             </div>
             <div class="teaching-description">
                 <h4>CS50: Introduction to Computer Science</h4>
-                <i>Teaching Fellow – Fall 2015</i>
+                <i>Teaching Fellow (F15)</i>
                 <ul>
                     <li>Led a weekly section for 20 students and graded problem sets.</li>
                     <li>Held office hours and answered questions via email and the course discussion site.</li>
                     <li>Advised groups of students working on final projects.</li>
+                    <li>Taught a <a href="https://www.youtube.com/watch?v=qla-KaMF-2Q">publicly available seminar</a> on creating web apps with Flask.</li>
                 </ul>
             </div>
         </div>
@@ -106,6 +107,20 @@
     <ul class="timeline timeline-centered">
         <li class="timeline-item">
             <div class="timeline-info">
+                <img class="teaching-icon" src="assets/img/palantir.png"
+                    width="48px"
+                    height="48px"/>
+            </div>
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+                <h4 class="timeline-title">Palantir Technologies, Inc.</h4>
+                <i class="timeline-subtitle">Software Engineer - 2018 - Present</i>
+                <ul>
+                </ul>
+            </div>
+        </li>
+        <li class="timeline-item">
+            <div class="timeline-info">
                 <img class="teaching-icon" src="assets/img/harvard.png"
                     width="48px"
                     height="56px"/>
@@ -113,7 +128,7 @@
             <div class="timeline-marker"></div>
             <div class="timeline-content">
                 <h4 class="timeline-title">Stephen Chong Research Group, Harvard University</h4>
-                <i class="timeline-subtitle">Undergraduate Researcher - 2016 - Present</i>
+                <i class="timeline-subtitle">Undergraduate Researcher - 2016 - 2018</i>
                 <ul>
                     <li>Worked on <a href="http://shill.seas.harvard.edu/">Shill</a>, a secure shell scripting language.</li>
                     <li>Designed a capability-based API for accessing SQL databases in Shill.</li>
@@ -208,9 +223,33 @@
     </ul>
 </div>  </div>
 
-<div class="projects">
-    <h1>Projects</h1>
+<div class="research">
+    <h1>Research</h1>
     <hr>
+    <div class="project-item">
+        <div class="project-info">
+            <div class="project-icon">
+                    <img src="assets/img/shilldblogo.png"
+                        width="78px"
+                        height="99px"/>
+            </div>
+            <div class="project-content">
+                <h3>Fine-Grained, Language-Based Access Control for Database-Backed Applications </h3>
+                <ul class="list-inline">
+                    <li><h4><a href="https://ezig.github.io/thesis.pdf">Thesis</a></h4></li>
+                    <li><h4><a href="https://ezig.github.io/abstract.pdf">Extended Abstract</a></h4></li>
+                    <li><h4><a href="https://github.com/ezig/shilldb">GitHub</a></h4></li>
+                </ul>
+                <p>Database-backed applications often run queries with more authority than necessary. Since programs can access more data than they legitimately need, flaws in security checks at the application level can enable malicious or buggy code to view or modify data in violation of intended access control policies. Although database management systems provide tools for controlling access to data, these tools are not well-suited for modern web applications which often have many users and consist of many different software components. First, databases are unaware of application users, and creating a new database user for each application user is impractical for applications with many users. Second, different components of the same application require different levels of database access, which would require creating different database users for different software components. Thus, it is difficult to properly limit the authority an application has when executing queries.</p><p>I propose ShillDB, a language for writing secure, database-backed applications. ShillDB enables reasoning about database access at the language level through capabilities, which limit what database tables a program can access, and contracts, which limit what operations a program can perform on those tables. ShillDB contracts are expressed as part of function interfaces, making it easy to specify different access control policies for different components of an application. These contracts act as executable security documentation for consumers of ShillDB programs and are enforced by the language runtime. Further, ShillDB provides database access control guarantees independent of the security mechanisms of the underlying database management system.</p>
+            </div> 
+        </div>
+        <div class="project-images">
+                <img src="assets/img/shilldboverview.png" 
+                    class="image-responsive"
+                    width="408px"
+                    height="150px"/>
+        </div>
+    </div>
     <div class="project-item">
         <div class="project-info">
             <div class="project-icon">
@@ -272,6 +311,9 @@
                     height="208px"/>
         </div>
     </div>
+</div>  <div class="projects">
+    <h1>Projects</h1>
+    <hr>
     <div class="project-item">
         <div class="project-info">
             <div class="project-icon">
