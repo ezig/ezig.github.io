@@ -48,19 +48,24 @@ export const profilePic: string = "me.gif";
 export const socials: social[] = [
   {
     link: "mailto:ezrazigmond@gmail.com",
-    icon: "fa-envelope",
+    icon: "fa fa-envelope fa-3x",
   },
   {
     link: "https://github.com/ezig",
-    icon: "fa-github",
+    icon: "fa fa-github fa-3x",
+  },
+  {
+    link: "https://scholar.google.com/citations?user=oPf2XJIAAAAJ",
+    icon: "ai ai-google-scholar ai-3x",
+  },
+
+  {
+    link: "https://www.linkedin.com/in/ezrazigmond",
+    icon: "fa fa-linkedin-square fa-3x",
   },
   {
     link: "http://stackoverflow.com/users/3183737/ezig",
-    icon: "fa-stack-overflow",
-  },
-  {
-    link: "https://www.linkedin.com/in/ezrazigmond",
-    icon: "fa-linkedin-square",
+    icon: "fa fa-stack-overflow fa-3x",
   },
 ]
 
