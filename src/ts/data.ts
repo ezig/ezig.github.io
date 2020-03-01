@@ -89,7 +89,7 @@ export const education = {
   degree: "A.B. summa cum laude in Computer Science (2018)",
   minor: "Secondary Field in Language and Linguistic Theory",
   honors: [
-    "2nd Prize in the undergraduate Student Research Competetition at <a href=\"https://programming-conference.org/\">&lt;Programming&gt;</a> (2018)", "Phi Beta Kappa Junior 24 (2017)", "Bok Center Certificate of Distinction in Teaching (2017)", "Detur Prize (2015)"
+    "2nd Prize in the undergraduate Student Research Competition at <a href=\"https://programming-conference.org/\">&lt;Programming&gt;</a> (2018)", "Phi Beta Kappa Junior 24 (2017)", "Bok Center Certificate of Distinction in Teaching (2017)", "Detur Prize (2015)"
   ],
   courses: [
     "Programming Languages", "Advanced Topics in Programming Languages", "Compilers", "Operating Systems", "Systems Security", "Verified Systems", "Data Systems", "Data Structures and Algorithms", "Theory of Computation", "Computer Graphics", "Linear Algebra and Real Analysis", "Intro Probability", "Probabilistic Understanding of Language", "Formal Semantics"
