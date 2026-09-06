@@ -17,6 +17,14 @@
     font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     display:flex; flex-direction:column;
   }
+  body.hot{ box-shadow:inset 0 0 0 3px var(--accent); }
+  body.hot::after{
+    content:"Drop anywhere to add the card";
+    position:fixed; left:50%; top:18px; transform:translateX(-50%);
+    background:var(--accent); color:#3a2500; font-weight:600; font-size:13px;
+    padding:6px 14px; border-radius:999px; pointer-events:none; z-index:50;
+  }
+  body.hot #out{ pointer-events:none; }
   header{
     padding:14px 18px; border-bottom:1px solid var(--line);
     display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
@@ -39,7 +47,7 @@
     border-radius:5px; padding:1px 6px; font-size:12px; font-family:inherit;
   }
   #toast{
-    position:absolute; left:50%; bottom:14px; transform:translateX(-50%);
+    position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:60;
     background:var(--good); color:#062; font-weight:600; padding:6px 12px; border-radius:999px;
     font-size:12px; opacity:0; transition:opacity .2s; pointer-events:none; white-space:nowrap;
   }
@@ -107,8 +115,7 @@
 <main>
   <div id="drop">
     <div class="big">Drop Scryfall cards here</div>
-    <div>Drag a card image (or a card link) from a Scryfall tab onto this area.</div>
-    <div id="toast"></div>
+    <div>Drag a card image (or a card link) from a Scryfall tab anywhere onto this page.</div>
   </div>
 
   <div class="col">
@@ -122,6 +129,7 @@
     </div>
     <div id="list"></div>
     <textarea id="out" readonly spellcheck="false" placeholder="Your list appears here…"></textarea>
+    <div id="toast"></div>
     <details class="raw">
       <summary>Last drop payload</summary>
       <pre id="rawView">Nothing dropped yet.</pre>
@@ -152,17 +160,31 @@
   $("#clearBtn").onclick = () => { if (items.length && confirm("Clear the whole list?")) { items = []; commit(); } };
 
   // ---- drag & drop ----
-  ["dragenter","dragover"].forEach(ev =>
-    dropEl.addEventListener(ev, e => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; dropEl.classList.add("hot"); }));
-  ["dragleave","dragend"].forEach(ev =>
-    dropEl.addEventListener(ev, () => dropEl.classList.remove("hot")));
-  // allow drop anywhere on the page, not just the box
-  document.addEventListener("dragover", e => e.preventDefault());
-  document.addEventListener("drop", e => e.preventDefault());
-
-  dropEl.addEventListener("drop", e => {
-    e.preventDefault();
+  // The whole page is a dropzone. dragenter/dragleave desync when child
+  // elements cross the pointer, so drive the highlight off dragover (which
+  // fires continuously while a drag is in flight) plus a short idle timer.
+  let hotT;
+  function setHot() {
+    dropEl.classList.add("hot");
+    document.body.classList.add("hot");
+    clearTimeout(hotT);
+    hotT = setTimeout(clearHot, 150);
+  }
+  function clearHot() {
+    clearTimeout(hotT);
     dropEl.classList.remove("hot");
+    document.body.classList.remove("hot");
+  }
+  document.addEventListener("dragover", e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy";
+    setHot();
+  });
+  document.addEventListener("dragend", clearHot);
+
+  document.addEventListener("drop", e => {
+    clearHot();
+    e.preventDefault();
     // Sweep the payload SYNCHRONOUSLY — dataTransfer is dead after the first await.
     const payload = {};
     for (const t of e.dataTransfer.types) {
