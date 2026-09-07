@@ -1,0 +1,1895 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Removal vs Creatures</title>
+<style>
+  :root{
+    --bg:#14161a; --panel:#1c1f26; --panel-2:#21252e; --line:#2e333f;
+    --text:#e7e9ee; --muted:#9aa2b1; --accent:#f2a33c; --blue:#5aa9e6;
+    --good:#4caf7d; --danger:#e06c6c; --flag:#3a2b23;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--text); padding:0 0 80px;
+    font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  header{padding:30px 20px 24px; border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 8px; font-size:26px; font-weight:650; letter-spacing:-.01em; line-height:1.15}
+  header h1 em{font-style:normal; color:var(--accent)}
+  header .lead{margin:0 0 8px; font-size:15px; line-height:1.5; max-width:56ch}
+  header .meta{margin:0; color:var(--muted); font-size:12px}
+  section{border-bottom:1px solid var(--line); padding:16px 20px}
+  section > h2{
+    margin:0 0 4px; font-size:13px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted);
+    display:flex; align-items:baseline; gap:10px;
+  }
+  section > h2 .meta{font-size:12px; text-transform:none; letter-spacing:0; color:var(--muted)}
+  .sub{color:var(--muted); font-size:12px; margin:0 0 12px; max-width:90ch}
+  textarea{
+    width:100%; min-height:120px; resize:vertical; background:var(--panel); color:var(--text);
+    border:1px solid var(--line); border-radius:8px; padding:10px 12px;
+    font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  button{
+    background:var(--panel-2); color:var(--text); border:1px solid var(--line); border-radius:7px;
+    padding:7px 13px; font:inherit; font-size:13px; cursor:pointer;
+  }
+  button:hover{border-color:var(--muted)}
+  button.primary{background:var(--accent); color:#3a2500; border-color:transparent; font-weight:600}
+  button:disabled{opacity:.5; cursor:default}
+  select,input[type=number]{
+    background:var(--panel-2); color:var(--text); border:1px solid var(--line); border-radius:6px;
+    padding:3px 6px; font:inherit; font-size:12px;
+  }
+  input.cap{width:52px}
+  .row-controls{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px}
+  .status{color:var(--muted); font-size:12px; margin-top:8px; min-height:1.2em}
+  .mini{color:var(--muted); font-size:11px; display:inline-flex; align-items:center; gap:3px}
+  .tag{font-size:10px; padding:1px 5px; border-radius:4px; margin-left:6px; vertical-align:middle}
+  .tag.edited{background:#2d3550; color:#a9c1ee}
+  .tag.added{background:#2f4030; color:#a9d9ac}
+  .xbtn{background:none; border:0; color:var(--muted); font-size:14px; line-height:1; padding:2px 6px; cursor:pointer}
+  .xbtn:hover{color:var(--danger)}
+  tr.off td{opacity:.45}
+  tr.grouphdr td{
+    background:var(--panel); color:var(--muted); font-size:11px; text-transform:uppercase;
+    letter-spacing:.5px; padding:7px 9px; border-top:1px solid var(--line);
+  }
+  tr.grouphdr.attn td{color:var(--accent)}
+
+  .tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:8px}
+  table{border-collapse:collapse; width:100%; font-size:12.5px}
+  th,td{padding:5px 9px; text-align:left; white-space:nowrap}
+  thead th{
+    position:sticky; top:0; background:var(--panel-2); border-bottom:1px solid var(--line);
+    cursor:pointer; user-select:none; font-weight:600; color:var(--muted);
+  }
+  #reviewTable thead th{cursor:default}
+  tbody tr{border-bottom:1px solid var(--line)}
+  tbody tr:last-child{border-bottom:0}
+  td.num,th.num{text-align:right; font-variant-numeric:tabular-nums}
+  #creatureTable tbody tr{cursor:pointer}
+  #creatureTable tbody tr:hover{background:var(--panel)}
+  #creatureTable tbody tr.flag{background:var(--flag)}
+  #creatureTable tbody tr.detail{cursor:default}
+  td.namecell{display:flex; align-items:center; gap:5px}
+  .caret{color:var(--muted); font-size:9px; width:9px; display:inline-block; transition:transform .1s}
+  #creatureTable tbody tr:hover .caret{color:var(--text)}
+  .arrow{color:var(--accent)}
+  .cardlink{color:var(--blue); text-decoration:none}
+  .cardlink:hover{text-decoration:underline}
+  .restr{white-space:normal; max-width:280px}
+  .chip{
+    display:inline-block; background:var(--panel-2); border:1px solid var(--line); border-radius:4px;
+    padding:0 5px; margin:1px 3px 1px 0; font-size:11px; color:var(--muted);
+  }
+  .detail td{white-space:normal; background:var(--panel); padding:10px 14px}
+  .detailbox{display:flex; flex-direction:column; gap:8px}
+  .dgroup{}
+  .dhead{font-size:11px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px}
+  .dhead.k{color:var(--good)} .dhead.c{color:var(--accent)} .dhead.e{color:var(--blue)} .dhead.s{color:var(--muted)}
+  .dlist{display:flex; flex-wrap:wrap; gap:4px 12px}
+  .ditem{font-size:12px; border-left:3px solid transparent; padding-left:6px}
+  .ditem a{text-decoration:none}
+  .ditem a:hover{text-decoration:underline}
+  .dreason{color:var(--muted)}
+  .colorbd{display:flex; align-items:center; gap:6px; flex-wrap:wrap; padding-bottom:4px; border-bottom:1px solid var(--line)}
+  .colorbd .lbl{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px}
+  .cbd{font-size:12px; font-weight:700; padding:1px 8px; border-radius:10px; font-variant-numeric:tabular-nums}
+  .cbd.zero{opacity:.35; font-weight:400}
+  .cbd.W{background:#efe9cf; color:#3a3320} .cbd.U{background:#2f7dc4; color:#eaf3fb}
+  .cbd.B{background:#4b4b52; color:#e7e7ea} .cbd.R{background:#c8402c; color:#fbe9e5}
+  .cbd.G{background:#3a8b4a; color:#e7f5ea} .cbd.C{background:#3a4150; color:#cdd5e2}
+  #removalByColour{margin:0 0 16px; font-size:12.5px}
+  .ncr-row{display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:5px}
+  .ncr-lbl{color:var(--muted); min-width:150px}
+  .ncr-head{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-top:12px}
+  .ncr-head:first-child{margin-top:0}
+  .ncr-note{color:var(--muted); font-size:11px; margin-left:6px; text-transform:none; letter-spacing:0}
+  .cbd.has-pop{cursor:default}
+  .cbd.has-pop:hover{outline:1px solid var(--text); outline-offset:1px}
+  .bdpop{
+    position:fixed; z-index:80; background:var(--panel-2); border:1px solid var(--line);
+    border-radius:8px; padding:6px 4px; max-height:320px; overflow-y:auto;
+    box-shadow:0 8px 30px rgba(0,0,0,.5); min-width:150px;
+  }
+  .bdpop a{display:block; padding:2px 10px; font-size:12px; text-decoration:none; white-space:nowrap}
+  .bdpop a:hover{background:var(--panel); text-decoration:underline}
+
+  .assumptions{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px 14px 10px; margin-bottom:16px;
+  }
+  .ahead{font-size:12px; font-weight:600; margin-bottom:10px}
+  .ahead span{font-weight:400; color:var(--muted); margin-left:8px}
+  .afields{display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px 20px}
+  .field{display:flex; flex-direction:column; gap:4px}
+  .field label{font-size:12px; color:var(--text)}
+  .field input{width:64px; font-size:13px; padding:4px 7px}
+  .hint{font-size:11px; color:var(--muted); line-height:1.4}
+  .aff{color:var(--blue); cursor:default; border-bottom:1px dotted var(--blue)}
+  .atoggles{display:flex; gap:8px 28px; flex-wrap:wrap; margin-top:12px; padding-top:10px; border-top:1px solid var(--line)}
+  .check{display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text); flex-wrap:wrap}
+  .check .hint{margin-left:2px}
+
+    .chart{display:flex; flex-direction:column; gap:5px; margin-bottom:16px; max-width:820px}
+  .crow{display:grid; grid-template-columns:28px 1fr 96px auto; align-items:center; gap:10px}
+  .crow-cbd{display:flex; gap:4px; flex-wrap:wrap}
+  .clabel{font-size:12px; color:var(--muted); text-align:right}
+  .cbar{background:var(--panel-2); border-radius:4px; height:20px; overflow:hidden}
+  .cfill{
+    background:var(--good); height:100%; min-width:18px; border-radius:4px;
+    color:#062; font-size:11px; font-weight:700; display:flex; align-items:center; padding-left:6px;
+  }
+  .cfill.low{background:var(--accent); color:#3a2500}
+  .cmeta{font-size:11px; color:var(--muted)}
+
+  .peek{
+    position:fixed; width:240px; border-radius:12px; pointer-events:none; z-index:99;
+    box-shadow:0 8px 30px rgba(0,0,0,.6); border:1px solid var(--line);
+  }
+  details.audit{margin-top:8px}
+
+  input.text{
+    background:var(--panel-2); color:var(--text); border:1px solid var(--line); border-radius:6px;
+    padding:5px 8px; font:inherit; font-size:12px; width:220px;
+  }
+  .or{color:var(--muted); font-size:12px}
+  .push{margin-left:auto}
+  .tag.cat{background:#4a3a1e; color:#f2c179}
+  .tag.off{background:#3a2b23; color:#d9b8a9}
+  .tag.tagonly{background:#26343f; color:#9cc4dd}
+
+  /* review table: quiet controls until you point at the row */
+  #reviewTable select, #reviewTable input.cap{background:transparent; border-color:transparent}
+  #reviewTable tr:hover select, #reviewTable tr:hover input.cap,
+  #reviewTable select:focus, #reviewTable input.cap:focus{background:var(--panel-2); border-color:var(--line)}
+  #reviewTable select:disabled{opacity:.4}
+  #reviewTable td.mini{font-size:11px}
+
+  .stats{display:flex; gap:10px; flex-wrap:wrap; margin:0 0 18px}
+  .stat{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:8px 14px; min-width:120px;
+  }
+  .stat b{display:block; font-size:22px; font-weight:600; line-height:1.15; font-variant-numeric:tabular-nums}
+  .stat span{font-size:11px; color:var(--muted)}
+  .stat.warn{border-color:var(--accent)} .stat.warn b{color:var(--accent)}
+  .stat.zero b{color:var(--muted)}
+  .stats .note{flex-basis:100%; font-size:12px; color:var(--accent); margin:-4px 0 0}
+  .stats .note a{color:inherit}
+
+  .ncr-sub{font-size:11px; color:var(--muted); text-transform:none; letter-spacing:0; margin-left:8px}
+  .tablebar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 6px}
+  details.legend{margin-top:18px}
+  details.legend summary, details.audit summary{cursor:pointer; color:var(--muted); font-size:12px; margin-bottom:8px}
+  details.legend dl{margin:0; max-width:80ch; font-size:12.5px; display:grid; grid-template-columns:max-content 1fr; gap:4px 14px}
+  details.legend dt{color:var(--text); font-weight:600}
+  details.legend dd{margin:0; color:var(--muted)}
+  .btnrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+  code{background:var(--panel-2); padding:1px 4px; border-radius:4px; font-size:12px}
+  a{color:var(--blue)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Removal <em>vs</em> Creatures</h1>
+  <p class="lead">Paste a cube list and see, for every creature in it, how many of the cube's removal spells can kill it.</p>
+  <p class="meta">Card data and removal tags from Scryfall · runs in your browser · your list and edits are saved locally</p>
+</header>
+
+<section id="input">
+  <h2>1 · Cube list</h2>
+  <p class="sub">One card per line. Counts like <code>3 Card Name</code>, set codes, and <code>[tags]</code> are ignored. For split and adventure cards, use the front name.</p>
+  <textarea id="listInput" placeholder="Swords to Plowshares&#10;Lightning Bolt&#10;Grave Titan&#10;..."></textarea>
+  <div class="row-controls">
+    <button id="fetchBtn" class="primary">Fetch &amp; analyze</button>
+    <span class="or">or</span>
+    <input id="ccInput" class="text" placeholder="CubeCobra URL or cube id">
+    <button id="ccBtn">Load from CubeCobra</button>
+    <span class="mini push">Scryfall data is cached for 14 days.</span>
+  </div>
+  <div class="status" id="fetchStatus"></div>
+</section>
+
+<section id="review" hidden>
+  <h2>2 · Review removal <span class="meta" id="reviewCount"></span> <span class="meta" id="reviewEdited"></span></h2>
+  <p class="sub">Scryfall's community tags decide which cards are removal. How each one removes is parsed from the oracle text,
+     and that guess is <strong>sometimes wrong</strong>. Fix it here: change the method, tick <em>ignore</em> to drop a restriction,
+     or use <em>×</em> to drop a card that isn't really removal.</p>
+  <div class="tablewrap">
+    <table id="reviewTable">
+      <thead><tr>
+        <th></th><th>Card</th><th>Method</th><th>Amount</th><th>Scope</th><th>Speed</th><th>Restrictions</th><th>Notes</th>
+      </tr></thead>
+      <tbody id="reviewBody"></tbody>
+    </table>
+  </div>
+  <div class="row-controls">
+    <label class="mini">Add a missed card
+      <input id="addInput" class="text" list="addList" placeholder="card name">
+      <datalist id="addList"></datalist>
+    </label>
+    <button id="addBtn">Add</button>
+    <button id="refetchTags" class="push" title="Ask Scryfall again which of these cards are tagged as removal">Re-fetch removal tags</button>
+    <button id="clearOverrides">Reset edits</button>
+  </div>
+</section>
+
+<section id="analysis" hidden>
+  <h2>3 · Analysis</h2>
+  <div class="assumptions">
+    <div class="ahead">Assumptions <span>Every number below is computed from these. Hover a count to see which cards it reaches.</span></div>
+    <div class="afields">
+      <div class="field">
+        <label for="asVarX">X</label>
+        <input type="number" id="asVarX" min="0">
+        <span class="hint">Stands in for X, and for anything the spell counts up (cards in your graveyard, creatures you control).<br><span id="affX"></span></span>
+      </div>
+      <div class="field">
+        <label for="asFightPower">Your creature's power</label>
+        <input type="number" id="asFightPower" min="0">
+        <span class="hint">Fights and bites deal this much. The fight counts as a kill if it's at least the target's toughness.<br><span id="affPower"></span></span>
+      </div>
+      <div class="field">
+        <label for="asStar">Power and toughness for *</label>
+        <input type="number" id="asStar" min="0">
+        <span class="hint">Used where the printed value is * or unknown.<br><span id="affStar"></span></span>
+      </div>
+      <div class="field">
+        <label for="asThreshold">Flag under</label>
+        <input type="number" id="asThreshold" min="0">
+        <span class="hint">Creatures with fewer clean kills than this are highlighted.</span>
+      </div>
+    </div>
+    <div class="atoggles">
+      <label class="check"><input type="checkbox" id="asSweepers"> Sweepers count as conditional answers <span class="hint" id="affSweep"></span></label>
+      <label class="check"><input type="checkbox" id="asNeutralize"> Neutralize counts as a kill <span class="hint">Pacifism, Lignify. <span id="affNeut"></span></span></label>
+      <label class="check"><input type="checkbox" id="asSteal"> Steal counts as a kill <span class="hint">Control Magic. <span id="affSteal"></span></span></label>
+    </div>
+  </div>
+
+  <div id="summary" class="stats"></div>
+
+  <div id="removalByColour"></div>
+
+  <div class="chart" id="chart"></div>
+
+  <div class="tablebar">
+    <span class="sub" style="margin:0">Click a creature to see the spells that answer it.</span>
+    <label class="check"><input type="checkbox" id="flaggedOnly"> show only flagged</label>
+  </div>
+  <div class="tablewrap" style="max-height:70vh;overflow-y:auto">
+    <table id="creatureTable"></table>
+  </div>
+  <div class="btnrow">
+    <span class="mini" id="tableMeta"></span>
+    <button id="copyFlagged">Copy flagged list</button>
+    <button id="copyCsv">Copy table (CSV)</button>
+  </div>
+
+  <details class="legend">
+    <summary>How the columns are counted</summary>
+    <dl>
+      <dt>Clean kills</dt><dd>Spells that destroy or exile the creature unconditionally, at any size.</dd>
+      <dt>Conditional</dt><dd>Sweepers, and spells with a board-state condition such as "attacking creature".</dd>
+      <dt>Edicts</dt><dd>Sacrifice effects. They get past hexproof and protection, but the opponent picks what dies.</dd>
+      <dt>Soft</dt><dd>Bounce, tap, steal, or neutralize. Answers the creature without killing it. The toggles above can promote neutralize and steal to kills.</dd>
+      <dt>Exile</dt><dd>The clean kills that exile, so they also beat indestructible, recursion, and death triggers.</dd>
+      <dt>Artifact and enchantment removal</dt><dd>Counts only against creatures that also have that type, and is labelled
+        "hits it as an artifact" or "as an enchantment" in the creature's spell list.</dd>
+      <dt>Counterspells</dt><dd>Listed in Review and in Removal by colour, but never counted per creature. They answer the
+        spell on the stack, not the creature on the board.</dd>
+      <dt>*</dt><dd>On a P/T means the value was assumed, using the setting above.</dd>
+    </dl>
+  </details>
+
+  <details class="audit">
+    <summary>Removal audit: what each spell answers</summary>
+    <div class="tablewrap">
+      <table><thead><tr><th>Card</th><th>Method</th><th>Answers</th><th>Speed</th><th>Restrictions</th></tr></thead>
+      <tbody id="auditBody"></tbody></table>
+    </div>
+  </details>
+</section>
+
+<script>
+/* Removal-vs-creatures engine. Dependency-free. Shared by the page (inlined) and node tests. */
+(function (root) {
+"use strict";
+
+const COLORWORD = { white:"W", blue:"U", black:"B", red:"R", green:"G" };
+
+/* ---------------- permanent types a removal spell can point at ----------------
+   `hits` on a removal profile is the set of permanent types the spell can legally
+   target/affect. Almost everything the tool sees is ["creature"]; the interesting
+   cases are "destroy target artifact or enchantment" (Reclamation Sage), which
+   never hits a vanilla creature but does kill an Enchantment Creature — God, and
+   "destroy target permanent" (Vindicate), which hits everything. */
+const ALL_TYPES     = ["creature","artifact","enchantment","planeswalker","land","battle"];
+const NONLAND_TYPES = ["creature","artifact","enchantment","planeswalker","battle"];
+
+// reminder text in parentheses is dropped: annihilator reads as an edict and deathtouch as "destroy" otherwise
+function norm(s){ return (s||"").toLowerCase().replace(/\s*\([^()]*\)/g,"").replace(/[—–]/g,"-").replace(/−/g,"-"); }
+
+/* ---------------- oracle text for the "removal face" of a card ---------------- */
+function removalText(card){
+  if(card.card_faces && card.card_faces.length){
+    return card.card_faces.map(f => f.oracle_text||"").join("\n// ");
+  }
+  return card.oracle_text||"";
+}
+function typeText(card){
+  if(card.type_line) return card.type_line;
+  if(card.card_faces) return card.card_faces.map(f=>f.type_line||"").join(" // ");
+  return "";
+}
+
+/* ---------------- restriction detection (returns array) ---------------- */
+function detectRestrictions(t){
+  const R = [];
+  let m;
+  if(m = t.match(/mana value (\d+) or less/))        R.push({kind:"mv",op:"<=",n:+m[1]});
+  if(m = t.match(/mana value (\d+) or greater/))     R.push({kind:"mv",op:">=",n:+m[1]});
+  if(/mana value .*less than or equal to the number of colors/.test(t)) R.push({kind:"mv",op:"<=",variable:true});
+  const ptTotal = t.match(/total power and toughness (\d+) or less/);
+  if(ptTotal) R.push({kind:"ptTotal",op:"<=",n:+ptTotal[1]});
+  if(!ptTotal){
+    if(m = t.match(/(?:with )?power (\d+) or greater/)) R.push({kind:"power",op:">=",n:+m[1]});
+    if(m = t.match(/(?:with )?power (\d+) or less/))    R.push({kind:"power",op:"<=",n:+m[1]});
+    if(m = t.match(/(?:with )?toughness (\d+) or greater/)) R.push({kind:"toughness",op:">=",n:+m[1]});
+    if(m = t.match(/(?:with )?toughness (\d+) or less/))    R.push({kind:"toughness",op:"<=",n:+m[1]});
+  }
+
+  // color: "nonblack creature", "nonwhite creature", possibly compound
+  const colEx = [...t.matchAll(/non-?(white|blue|black|red|green)\b/g)].map(x => COLORWORD[x[1]]);
+  if(colEx.length && /\bcreature\b|\bpermanent\b/.test(t)) R.push({kind:"colorExclude",colors:[...new Set(colEx)]});
+  if(/target colorless creature/.test(t)) R.push({kind:"colorless"});
+  if(/target monocolored creature/.test(t)) R.push({kind:"monocolored"});
+  if(/target multicolored creature/.test(t)) R.push({kind:"multicolored"});
+
+  // common non-adjectives
+  if(/nonlegendary creature/.test(t)) R.push({kind:"nonlegendary"});
+  if(/nonartifact creature/.test(t) || /creature that isn'?t an artifact/.test(t)) R.push({kind:"nonartifact"});
+  if(/nontoken creature/.test(t)) R.push({kind:"nontoken"});
+
+  // hyphenated proper-noun type exclusions: "non-Angel, non-Demon..."
+  const typeEx = [...t.matchAll(/non-([a-z]+)/g)].map(x=>x[1])
+      .filter(w => !["white","blue","black","red","green","land"].includes(w));
+  if(typeEx.length) R.push({kind:"notSubtype",subtypes:typeEx.map(cap)});
+
+  // required keyword: "target creature with flying"
+  if(m = t.match(/target creature with (flying|defender|shroud|hexproof)/)) R.push({kind:"needKeyword",kw:cap(m[1])});
+
+  // situational board state
+  if(/target attacking or blocking creature/.test(t)) R.push({kind:"situational",what:"attacking or blocking"});
+  else if(m = t.match(/target (attacking|blocking|tapped|untapped) creature/)) R.push({kind:"situational",what:m[1]});
+
+  return R;
+}
+function cap(s){ return s ? s[0].toUpperCase()+s.slice(1) : s; }
+
+/* when can this card's removal effect happen? */
+function speedOf(card){
+  const t = norm(removalText(card));
+  const type = norm(typeText(card));
+  let speed = /\binstant\b/.test(type) ? "instant"
+    : /\bsorcery\b/.test(type) ? "sorcery"
+    : /\bplaneswalker\b/.test(type) ? "loyalty"
+    : /\b(creature|artifact|enchantment|land|battle)\b/.test(type) ? "permanent" : "other";
+  if(speed === "permanent"){
+    if(/when [^.]*enters/.test(t)) speed = "etb";
+    else if(/\{t\}|\{\d[^}]*\}[^:]*:|^[+\-−]?\d?:/.test(t)) speed = "activated";
+  }
+  return speed;
+}
+
+/* ---------------- classify a card into a removal profile (or null) ---------------- */
+function classify(card){
+  // strip Class / level-up upgrade text so a later level's "power 4 or greater" etc. doesn't
+  // leak into the base removal effect (base effect is always the top clause). Sagas keep chapters.
+  let t = norm(removalText(card)).split(/\{[^}]*\}\s*:\s*level \d|\blevel \d\b/)[0];
+  const type = norm(typeText(card));
+  if(!t) return null;
+  t = selfRef(t, card.name);
+
+  let speed = speedOf(card);
+
+  // sweeper: a mass subject in the same clause as a kill verb (ignores "for each creature card…" counters)
+  const sweeperSubj = /\b(all creatures|all other creatures|all nontoken creatures|each creature|each other creature|every creature|creatures your opponents control|creatures target opponent controls|all attacking creatures|all blocking creatures|each [a-z\-]+ creature|all permanents|all nonland permanents|all artifacts|all enchantments|all artifacts and enchantments)\b/;
+  const killVerb = /\b(destroy|exile|sacrifices?|deals? \d+ damage|deals? x damage|deals? damage equal to)\b|get(?:s)? [+-]?[\dx]+\/-[\dx]/;
+  const isSweeper = t.split(/[.\n]/).some(seg => sweeperSubj.test(seg) && killVerb.test(seg));
+
+  const R = detectRestrictions(t);
+  const prof = { method:null, capacity:null, variable:false, restrictions:R,
+                 scope:isSweeper ? "sweeper" : "single", speed, note:"", modal:false };
+  prof.modal = /choose (one|two|three)[ —-]/.test(t) || /choose one or more/.test(t);
+
+  // "choose one/two" — classify each bullet on its own; evaluate() takes whichever mode best
+  // answers the creature at hand, so Abrade (damage OR destroy artifact) works both ways.
+  if(prof.modal){
+    const bullets = norm(removalText(card)).split("•").slice(1);
+    const modes = [];
+    for(const b of bullets){
+      const sub = classify({ oracle_text: b, type_line: typeText(card) });
+      if(sub && sub.method)
+        modes.push({ method:sub.method, capacity:sub.capacity, variable:sub.variable,
+                     restrictions:sub.restrictions, hits:sub.hits, scope:sub.scope, targets:sub.targets });
+    }
+    if(modes.length){
+      prof.modes = modes;
+      prof.hits = [...new Set(modes.flatMap(m => m.hits || ["creature"]))];
+      const uniq = [...new Set(modes.map(m => m.method))];
+      if(uniq.length > 1 || modes.length > 1) prof.note = "modal (" + uniq.join(" / ") + ")";
+    }
+  }
+
+  const TY = "creature|permanent|artifact|enchantment|planeswalker";
+  const targetsPermanent =
+    new RegExp(`\\b(?:target|another target|up to \\w+ target)\\s+(?:[a-z,\\-]+\\s+){0,6}?(?:${TY})s?\\b`).test(t)
+    || new RegExp(`\\benchant (?:${TY})\\b`).test(t)
+    || /\bany target\b/.test(t);        // Bolt-style: still a target, so hexproof/protection apply
+  const done = (method, extra) => {
+    prof.method = method;
+    prof.targets = method !== "edict" && prof.scope !== "sweeper" && targetsPermanent;
+    Object.assign(prof, extra || {});
+    // everything the parser recognises other than the destroy/exile branches is creature-only
+    if(!prof.hits || !prof.hits.length) prof.hits = ["creature"];
+    // surfaces in Review's note column without any app.js change
+    if(!prof.hits.includes("creature")){
+      const only = prof.hits.filter(h => h !== "land" && h !== "battle").join("/") + " creatures only";
+      prof.note = prof.note ? prof.note + " · " + only : only;
+    }
+    return prof;
+  };
+  const destroyTypes = verbHitTypes(t, "destroy");
+  const exileTypes   = verbHitTypes(t, "exile");
+
+  // graveyard-hate / self-blink: these say "exile"/"destroy" but aren't removal
+  const notRemoval =
+    /exile [^.]*from (?:a|your|target|their|each|its owner'?s) graveyard/.test(t) ||
+    /exile target creature you control/.test(t) ||
+    /exile target (?:card|creature card|instant or sorcery)/.test(t) ||
+    /exile (?:up to \w+ )?(?:another |other )?target [^.]*\.\s*(?:[^.]*\.\s*)?(?:at the beginning of [^.,]*, |i{1,3} - )?return (?:it|that card|the exiled card|those cards|them) to the battlefield/.test(t) ||
+    /enchant creature card in a graveyard/.test(t);
+
+  if(/enchant creature card in a graveyard/.test(t)) return null;
+
+  // edict — must have a player/opponent sacrificing (a bare "Sacrifice a creature" is a cost you pay)
+  if((/\b(each opponent|each player|target opponent|target player|its controller|that player|defending player)\s+sacrifices?\b/.test(t)
+      || /\b(each opponent|each player|target opponent|target player)\b[^.]{0,80}?\bsacrifices? (?:a|an|one|two|three|x) creatures?\b/.test(t))
+     && /creature/.test(t)){
+    return done("edict", { scope: /each opponent|each player/.test(t) ? "each" : "single", restrictions:[] });
+  }
+
+  // A destroy/exile clause that can't point at a creature (Disenchant) is held back rather than
+  // returned, so a card that ALSO answers creatures some other way keeps the creature-facing
+  // method: Kogla fights on ETB and Naturalizes on attack — it should still read as "fight".
+  let noncreature = null;
+  const take = (method, extra) => {
+    if(extra.hits.includes("creature")) return done(method, extra);
+    // land / battle destruction never reaches a creature
+    if(!extra.hits.some(h => ["artifact","enchantment","planeswalker"].includes(h))) return null;
+    if(!noncreature) noncreature = [method, extra];
+    return null;
+  };
+
+  // exile
+  if(isSweeper && /\bexile (all|each|every) (?:creature|other creature|nontoken creature|attacking creature)/.test(t)) return done("exile");
+  if(!notRemoval && exileTypes.size){
+    const p = take("exile", { hits:[...exileTypes] });
+    if(p) return p;
+  }
+
+  // destroy — an unconditional clause anywhere beats a conditional one
+  if(isSweeper && /\bdestroy (all|each|every)\b/.test(t) && destroyTypes.size){
+    const p = take("destroy", { hits:[...destroyTypes] });
+    if(p) return p;
+  }
+  const destroyClause = /\bdestroy (?:up to \w+ )?(?:another |other |each |all |every |that )*(?:target )?([a-z,\-\s]{0,80}?)\b(creature|permanent|artifact|enchantment)s?\b(?! you (?:own|control))/g;
+  let dm, matchedDestroy = false, unconditional = false;
+  if(destroyTypes.size){
+    while((dm = destroyClause.exec(t))){
+      matchedDestroy = true;
+      const adj = dm[1].trim();
+      if(!adj || adj === "nonland" || adj === "target") unconditional = true;
+    }
+  }
+  if(matchedDestroy){
+    const hits = [...destroyTypes];
+    const extra = (unconditional && !hasHardRestriction(R))
+      ? { hits, restrictions: R.filter(r=>r.kind==="situational") } : { hits };
+    const p = take("destroy", extra);
+    if(p) return p;
+  }
+
+  // damage  ("deals" / "deal N damage to target creature", incl. "have it deal …")
+  if(m2(t, /deals? (\d+) damage to (?:target creature|any target|target creature or planeswalker|target attacking creature|target attacking or blocking creature|target blocking creature|up to (?:one|two|three|x) target creatures?|each creature|each other creature|each [a-z\-]+ creature|it)\b/,
+        m => done("damage", { capacity:+m[1] }))) return prof;
+  // "4 damage divided as you choose among any number of target creatures" — all of it can go to one
+  if(m2(t, /deals? (\d+) damage divided as you choose among/, m => done("damage", { capacity:+m[1] }))) return prof;
+  if(/deals? (?:twice )?x damage to (?:target creature|any target|each creature)/.test(t)) return done("damage",{variable:true});
+  // its own power, printed on the card: Murderous Redcap ETB, Legolas
+  if(/(?:~|it|this creature) deals damage equal to its power to (?:any target|target creature|up to \w+ target creatures?|target creature or planeswalker)/.test(t)){
+    const p = parseInt(card.power, 10);
+    if(!isNaN(p)) return done("damage", { capacity:p });
+    return done("bite", { variable:true });
+  }
+  if(/deals? damage to (?:target creature|any target|each creature) equal to/.test(t)) return done("damage",{variable:true});
+
+  // -X/-X  (a -N/-0 only shrinks power → treat as neutralize, not a kill)
+  const selfShrink = /(?:~|this creature|equipped creature) gets [+-]?[\dx]*\/-/.test(clauseWith(t, /gets? [+-]?[\dx]*\/-/));
+  if(!selfShrink && m2(t,/get(?:s)? [+-](\d+)\/-(\d+)/, m => +m[2] > 0 ? done("minusxx", { capacity:+m[2] }) : done("neutralize"))) return prof;
+  if(m2(t,/put (a|an|one|two|three|four|x) -1\/-1 counters? on (?:up to \w+ )?(?:another )?target creature/,
+        m => m[1] === "x" ? done("minusxx", { variable:true }) : done("minusxx", { capacity:{a:1,an:1,one:1,two:2,three:3,four:4}[m[1]] }))) return prof;
+  if(!selfShrink && /get(?:s)? -x\/-x/.test(t)) return done("minusxx", { variable:true });
+  if(/get(?:s)? -\d+\/-x/.test(t)) return done("minusxx", { variable:true });
+
+  // fight / bite  (bite = one creature deals its power in damage to another; capacity = assumed power)
+  if(/\bfights?\b/.test(t) && /target creature/.test(t)) return done("fight", { variable:true });
+  if(/(?:target creature you control|creature you control|target \w+ you control|it|that creature|this creature|~) deals damage equal to its power to (?:target creature|another target creature|up to \w+ target creatures?|target creature you don'?t control|target creature with|the other creature|each other creature|any target)/.test(t))
+    return done("bite", { variable:true });
+  if(/deals damage equal to (?:the sacrificed creature'?s|that creature'?s|its) power to (?:any target|target creature)/.test(t))
+    return done("bite", { variable:true });
+
+  // steal
+  if(/gain control of target creature/.test(t) || /gains? control of enchanted creature/.test(t) || /you control enchanted creature/.test(t))
+    return done("steal");
+
+  // bounce / tuck
+  const bounceRe = /return (?:up to \w+ )?(?:another |other |each |all )?(?:target )?(?:[a-z,\-]+\s+){0,6}?(?:creatures?|permanents?)\b[^.]{0,60}?to (?:its|their) owners?'?s? hands?/;
+  {
+    const bc = clauseWith(t, bounceRe);
+    // "return target nonland permanent you control" is tempo for you, not an answer
+    if(bc && !(/you control/.test(bc) && !/don'?t control|opponent/.test(bc)) && !/return (?:~|this creature|this permanent) to/.test(bc)) return done("bounce");
+  }
+  if(/return (?:those creatures|that creature|those permanents) to (?:its|their) owners?'?s? hands?/.test(t)) return done("bounce");
+  if(/owner puts it (?:on|into) [^.]{0,40}(?:top|bottom) of (?:their|its owner'?s) library/.test(t)) return done("bounce", { note:"tuck" });
+  if(/put target (?:creature|nonland permanent|permanent)[^.]{0,60}?(?:into|on top of|on the bottom of) (?:its|their) owner'?s library/.test(t))
+    return done("bounce", { note:"tuck" });
+  if(/shuffles? (?:it|target creature|target nonland permanent) into (?:its|their) owner'?s library/.test(t))
+    return done("bounce", { note:"tuck" });
+  if(isSweeper && /return (all|each) (?:creature|nontoken creature)/.test(t)) return done("bounce");
+
+  // neutralize — turn the creature off / shrink it / turn it into a non-threat
+  if(/enchanted creature can'?t attack or block/.test(t)
+     || /target creature can'?t attack or block/.test(t)
+     || /enchanted (?:permanent|creature) (?:is a|loses all abilities|can'?t)/.test(t)
+     || /(?:enchanted|target) creature[^.]*base power and toughness [0-2]\/[0-2]/.test(t)
+     || /(?:enchanted|target) (?:permanent|creature)[^.]*loses all abilities and (?:is|becomes) a/.test(t)
+     || /(?:enchanted|target) permanent is a (?:colorless )?(?:forest|island|swamp|mountain|plains|land)\b/.test(t))
+    return done("neutralize");
+
+  // tap-lock
+  if(/tap target (?:artifact, creature, or land|creature)\b/.test(t) && /\{t\}/.test(t)) return done("tap");
+  if(/doesn'?t untap during its controller'?s untap step/.test(t) && /tap (?:target|enchanted) creature/.test(t)) return done("tap");
+
+  // nothing creature-facing matched — fall back to the artifact/enchantment removal we held
+  if(noncreature) return done(noncreature[0], noncreature[1]);
+  return null;
+}
+// "Legolas deals damage equal to its power" -> "~ deals damage equal to its power"
+function selfRef(t, name){
+  if(!name) return t;
+  const esc = x => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  for(const n of [name, name.split(" // ")[0], name.split(",")[0]]){
+    const k = norm(n).trim();
+    if(k.length >= 4) t = t.replace(new RegExp("\\b" + esc(k) + "\\b", "g"), "~");
+  }
+  return t;
+}
+function m2(t, re, fn){ const m = t.match(re); if(m){ fn(m); return true; } return false; }
+function hasHardRestriction(R){ return R.some(r => r.kind!=="situational"); }
+
+// which permanent types does a "destroy/exile <quantifier> ___" clause name?
+// Requires target/all/each/every so it ignores self-exile ("exile this creature", Warp/Foretell reminders).
+// Returns a Set — empty means the verb never points at a permanent (graveyard exile, etc).
+function verbHitTypes(t, verb){
+  // "/" is in the object class so "artifacts and/or enchantments" (Force of Vigor) keeps both types
+  const re = new RegExp("\\b" + verb + "s? (?:up to \\w+ |another |other |that )*(target|all|each|every|any number of target) ([a-z,'\\-/ ]{1,70})", "g");
+  const out = new Set();
+  let m;
+  while((m = re.exec(t))){
+    const obj = m[2];
+    if(/^(this|it|that|those|them|the exiled|the top|the chosen)\b/.test(obj.trim())) continue;
+    typesInObject(obj).forEach(x => out.add(x));
+  }
+  return out;
+}
+
+// the permanent types named by a target clause's object ("nonland permanent", "artifact or enchantment", …)
+function typesInObject(obj){
+  const excluded = new Set();
+  // strip "noncreature" / "non-land" style qualifiers first, remembering what they rule out
+  obj = obj.replace(/\bnon-?(creature|artifact|enchantment|land|token|legendary)\b/g,
+                    (_, w) => { excluded.add(w); return " "; });
+  const set = new Set();
+  if(/\bpermanents?\b/.test(obj))
+    (excluded.has("land") ? NONLAND_TYPES : ALL_TYPES).forEach(x => set.add(x));
+  for(const ty of ALL_TYPES) if(new RegExp("\\b" + ty + "s?\\b").test(obj)) set.add(ty);
+  for(const w of excluded) set.delete(w);
+  return set;
+}
+
+function verbHitsCreature(t, verb){ return verbHitTypes(t, verb).has("creature"); }
+
+// the sentence/line that mentions `re` (so text elsewhere on the card doesn't leak in)
+function clauseWith(text, re){
+  for(const seg of text.split(/[\n.;]/)) if(re.test(seg)) return seg;
+  return "";
+}
+// a keyword is only *innate* if it's printed as a bare keyword — not granted by an
+// ability ("gains … until end of turn"), a cost (":"), an Aura, or an anthem.
+const GRANTED_RE = /:|\b(gains?|gain|has|have|had|becomes?|get|gets|target|whenever|each other|other creatures?|creatures? you control|equipped creature|enchanted creature|until end of turn|this turn|activate|when .* (?:enters|attacks|blocks|dies))\b/;
+const SELF_COND_RE = /\b(as long as|while |during your|during each|during combat|if it'?s your turn|when(?:ever)? .* (?:attacks|blocks))\b/;
+function hasStatic(t, kwRe){
+  if(!kwRe.test(t)) return false;
+  const seg = clauseWith(t, kwRe);
+  return !GRANTED_RE.test(seg) && !SELF_COND_RE.test(seg) && !/loses|lose |isn'?t|can'?t have/.test(seg);
+}
+function isConditional(t, kwRe){
+  if(!kwRe.test(t)) return false;
+  const seg = clauseWith(t, kwRe);
+  // innate but state-dependent (e.g. "has indestructible as long as it's your turn"),
+  // NOT something the controller activates or pays for
+  return SELF_COND_RE.test(seg) && !/:/.test(seg) && !/gains?|activate/.test(seg);
+}
+
+/* ---------------- parse a creature card into props ---------------- */
+function parseCreature(card){
+  const full = norm(card.oracle_text || (card.card_faces? card.card_faces[0].oracle_text : "") || "");
+  // Only the "base" state is on the battlefield by default — drop level-up / class upgrades.
+  const t = full.split(/\nlevel \d/)[0].split(/\n\(?\s*level up/)[0];
+  const type = card.type_line || (card.card_faces? card.card_faces[0].type_line : "") || "";
+  const face = card.card_faces && !card.power ? card.card_faces[0] : card;
+  const numOr = (v) => { const n = parseInt(v,10); return isNaN(n) ? null : n; };
+  const prot = [...t.matchAll(/protection from ([a-z]+)/g)].map(x => x[1])
+    .filter(w => ["white","blue","black","red","green","everything","artifacts","creatures","multicolored","monocolored"].includes(w));
+  if(/protection from (?:all colou?rs|colou?red|spells that are one or more colou?rs|everything)/.test(t)) prot.push("colored");
+  if(/protection from everything/.test(t)) prot.push("everything");
+  const protUniq = [...new Set(prot)];
+  const protectionFromPlayer = /protection from (?:the chosen player|the player|each opponent|its owner|all players|opponents|the player of your)/.test(t);
+
+  // "enters with N +1/+1 counters" — count these toward its real size
+  const WORDNUM = { a:1, an:1, one:1, two:2, three:3, four:4, five:5, six:6, seven:7, eight:8, nine:9, ten:10 };
+  let bump = 0;
+  const em = t.match(/enters(?: the battlefield)?(?: tapped)?(?: and\/or [^.]*)? with ([a-z]+|\d+) \+1\/\+1 counters?/);
+  if(em) bump = WORDNUM[em[1]] ?? (parseInt(em[1],10) || 0);
+  const bp = numOr(face.power), bt = numOr(face.toughness);
+
+  return {
+    name: card.name,
+    power: bp==null?null:bp+bump, toughness: bt==null?null:bt+bump,
+    powerRaw: (bp!=null && bump) ? (bp+bump)+"*" : face.power,
+    toughnessRaw: (bt!=null && bump) ? (bt+bump)+"*" : face.toughness,
+    counterBump: bump,
+    mv: card.cmc != null ? card.cmc : 0,
+    colors: card.colors || (card.card_faces? (card.card_faces[0].colors||[]) : []),
+    legendary: /^legendary/i.test(type) || /legendary/i.test(type.split("—")[0]||""),
+    subtypes: (type.split("—")[1]||"").trim().split(/\s+/).filter(Boolean),
+    // a creature that is ALSO an artifact/enchantment is reachable by Disenchant-style removal
+    isArtifact: /\bartifact\b/i.test(type.split("—")[0] || type),
+    isEnchantment: /\benchantment\b/i.test(type.split("—")[0] || type),
+    indestructible: hasStatic(t, /\bindestructible\b/),
+    indestructibleConditional: isConditional(t, /\bindestructible\b/),
+    hexproof: /\bhexproof\b/.test(t) && !/hexproof from/.test(clauseWith(t, /\bhexproof\b/)) && hasStatic(t, /\bhexproof\b/),
+    hexproofConditional: isConditional(t, /\bhexproof\b/),
+    hexproofFrom: [...t.matchAll(/hexproof from (\w+)/g)].map(x=>x[1]),
+    protectionFromPlayer,
+    // same innateness test as hexproof: "Sacrifice a land: target creature you control gains shroud" (Sylvan Safekeeper) isn't shroud
+    shroud: hasStatic(t, /\bshroud\b/),
+    shroudConditional: isConditional(t, /\bshroud\b/),
+    ward: hasStatic(t, /\bward\b/),
+    protection: protUniq,
+    typeLine: type,
+    oracle: card.oracle_text || "",
+  };
+}
+
+/* ---------------- evaluate one spell vs one creature ---------------- */
+// A = { assumedPower, assumedX, starPT, countSweepers, hardNeutralize, hardSteal }
+// returns { verdict: 'kill'|'conditional'|'soft'|'edict'|null, reason }
+const VERDICT_RANK = { kill:4, edict:3, conditional:2, soft:1 };
+function evaluate(spell, c, A){
+  // modal — try every mode, keep the best result (a clean kill via one mode beats "it's modal")
+  if(spell.modes && spell.modes.length){
+    let best = { verdict:null, reason:"no mode answers it" };
+    for(const md of spell.modes){
+      const r = evaluate(Object.assign({}, spell, md, { modes:null, modal:false, colors:spell.colors }), c, A);
+      if((VERDICT_RANK[r.verdict] || 0) > (VERDICT_RANK[best.verdict] || 0)) best = r;
+    }
+    if(best.verdict && spell.modes.length > 1)
+      best = { verdict:best.verdict, reason:(best.reason ? best.reason + "; " : "") + `best of ${spell.modes.length} modes` };
+    return best;
+  }
+
+  const T = num(c.toughness, c.toughnessRaw, A.starPT);
+  const P = num(c.power, c.powerRaw, A.starPT);
+  const targeted = spell.method !== "edict" && spell.scope !== "sweeper" && spell.targets !== false;
+
+  // permanent-type gate: the spell has to be able to point at something this creature IS.
+  // Reclamation Sage hits nothing on a vanilla creature, but kills an Enchantment Creature — God.
+  const hits = spell.hits && spell.hits.length ? spell.hits : ["creature"];
+  const myTypes = ["creature"];
+  if(c.isArtifact) myTypes.push("artifact");
+  if(c.isEnchantment) myTypes.push("enchantment");
+  const via = hits.filter(h => myTypes.includes(h));
+  if(!via.length) return { verdict:null, reason: hits.join("/") + " only" };
+  // reaches this creature only through its artifact/enchantment half — a real kill, but
+  // one that evaporates if the creature stops being an artifact/enchantment
+  const typeDep = !hits.includes("creature") ? via.join("/") : null;
+
+  // untargetable
+  if(targeted && (c.hexproof || c.shroud)) return { verdict:null, reason:"can't be targeted" };
+
+  // restrictions
+  let situational = false;
+  if(targeted && (c.hexproofConditional || c.shroudConditional)) situational = true;   // hexproof/shroud only sometimes
+  for(const r of (spell.restrictions||[])){
+    switch(r.kind){
+      case "mv": {
+        const n = r.variable ? (A.assumedX ?? 3) : r.n;
+        if(r.op==="<=" && !(c.mv <= n)) return no(`MV ${c.mv} > ${n}`);
+        if(r.op===">=" && !(c.mv >= n)) return no(`MV ${c.mv} < ${n}`);
+        break; }
+      case "power":
+        if(r.op===">=" && !(P >= r.n)) return no(`power ${P} < ${r.n}`);
+        if(r.op==="<=" && !(P <= r.n)) return no(`power ${P} > ${r.n}`);
+        break;
+      case "toughness":
+        if(r.op===">=" && !(T >= r.n)) return no(`toughness ${T} < ${r.n}`);
+        if(r.op==="<=" && !(T <= r.n)) return no(`toughness ${T} > ${r.n}`);
+        break;
+      case "ptTotal":
+        if(!((P+T) <= r.n)) return no(`P+T ${P+T} > ${r.n}`);
+        break;
+      case "colorExclude":
+        if(c.colors.some(col => r.colors.includes(col))) return no(`is ${c.colors.join("")}`);
+        break;
+      case "colorless": if(c.colors.length) return no("not colorless"); break;
+      case "monocolored": if(c.colors.length !== 1) return no("not monocolored"); break;
+      case "multicolored": if(c.colors.length < 2) return no("not multicolored"); break;
+      case "nonlegendary": if(c.legendary) return no("legendary"); break;
+      case "nonartifact": if(/artifact/i.test(c.typeLine)) return no("artifact creature"); break;
+      case "notSubtype":
+        if(r.subtypes.some(s => c.subtypes.map(x=>x.toLowerCase()).includes(s.toLowerCase()))) return no(`is a ${r.subtypes.join("/")}`);
+        break;
+      case "needKeyword":
+        if(!new RegExp(r.kw,"i").test(c.oracle) && !(c.name && false)) situational = true; // can't verify -> situational
+        break;
+      case "situational": situational = true; break;
+    }
+  }
+
+  // protection / hexproof-from vs the spell
+  const CMAP = { white:"W", blue:"U", black:"B", red:"R", green:"G" };
+  const spellColors = spell.colors || [];
+  const matchesProt = (p) => {
+    if(["all","everything","each"].includes(p)) return true;
+    if(["colored","colors"].includes(p)) return spellColors.length > 0;
+    if(p === "monocolored") return spellColors.length === 1;
+    if(p === "multicolored") return spellColors.length >= 2;
+    return spellColors.includes(CMAP[p]);
+  };
+  const protBlocks = c.protection.some(matchesProt);
+  if(targeted){
+    if(c.protectionFromPlayer) return no("protection from you");
+    if(protBlocks) return no("protection");
+    if(c.hexproofFrom.some(p => matchesProt(p) ||
+        (["instant","instants","sorcery","sorceries"].includes(p) && /instant|sorcery/.test(spell.speed))))
+      return no("hexproof from " + c.hexproofFrom.join("/"));
+  } else if(protBlocks && spell.method === "damage"){
+    return no("protection (damage prevented)");
+  }
+
+  const cap = (spell.variable
+      ? (spell.method==="fight" || spell.method==="bite" ? (A.assumedPower ?? 4) : (A.assumedX ?? 3))
+      : spell.capacity);
+
+  const dep = typeDep ? `hits it as an ${typeDep}` : "";
+  const join = (r) => r && dep ? `${r}; ${dep}` : (r || dep);
+  const grade = (base) => {
+    if(spell.scope === "sweeper") return { verdict:"conditional", reason:join("sweeper (symmetric)") };
+    if(spell.modal) return { verdict:"conditional", reason:join("modal — one mode") };
+    if(situational) return { verdict:"conditional", reason:join(c.indestructibleConditional && ["destroy","damage","fight","bite"].includes(spell.method) ? "indestructible sometimes" : "restricted board state") };
+    return { verdict:base, reason:join("") };
+  };
+
+  switch(spell.method){
+    case "edict":
+      return { verdict:"edict", reason:"opponent chooses" };
+    case "exile":
+      return grade("kill");
+    case "destroy":
+      if(c.indestructible) return no("indestructible");
+      if(c.indestructibleConditional) situational = true;      // indestructible only sometimes
+      return grade("kill");
+    case "minusxx":
+      if(cap == null) return no("no value");
+      return (cap >= T) ? grade("kill") : no(`-${cap}/-${cap} vs ${T} toughness`);
+    case "damage":
+      if(c.indestructible) return no("indestructible");
+      if(c.indestructibleConditional) situational = true;
+      if(cap == null) return no("no value");
+      return (cap >= T) ? grade("kill") : no(`${cap} dmg vs ${T} toughness`);
+    case "fight": {
+      if(c.indestructible) return no("indestructible");
+      if(c.indestructibleConditional) situational = true;
+      const myP = A.assumedPower ?? 4;
+      if(!(myP >= T)) return no(`${myP} power vs ${T} toughness`);
+      return grade("kill");
+    }
+    case "bite": {
+      if(c.indestructible) return no("indestructible");
+      if(c.indestructibleConditional) situational = true;
+      const myP = A.assumedPower ?? 4;
+      return (myP >= T) ? grade("kill") : no(`${myP} power vs ${T} toughness`);
+    }
+    case "bounce":  return { verdict:"soft", reason:"temporary (bounce)" };
+    // Pacifism / Control Magic leave the body on the table; the toggles let you count them as kills anyway
+    case "steal":   return A.hardSteal ? grade("kill") : { verdict:"soft", reason:"steal" };
+    case "neutralize": return A.hardNeutralize ? grade("kill") : { verdict:"soft", reason:"neutralized, not killed" };
+    case "tap":     return { verdict:"soft", reason:"tap-lock" };
+    case "counter": return no("counters on the stack — not a battlefield answer");
+  }
+  return no("unclassified");
+
+  function no(reason){ return { verdict:null, reason }; }
+}
+function num(n, raw, star){ if(n != null) return n; if(raw && /[*x]/i.test(raw)) return star ?? 4; return star ?? 4; }
+
+/* ---------------- resolve one card to a removal profile (or null) ----------------
+   ov          : override object for this card, or null/undefined
+   removalTag  : true  = a removal oracle tag says it IS removal
+                 false = tag data exists and this card is NOT tagged
+                 null  = no tag data available -> the classifier decides inclusion   */
+const BASE_PROF = { method:null, capacity:null, variable:false, restrictions:[], scope:"single", speed:"other", modal:false, note:"", hits:["creature"] };
+function spellProfile(card, ov, removalTag){
+  ov = ov || null;
+  if(ov && ov.excluded) return null;
+  const auto = classify(card);
+  const counter = (ov && ov.method) ? null : classifyCounter(card);
+
+  const included = (ov && ov.method) ? true
+                 : removalTag === true ? true
+                 : removalTag === false ? false
+                 : (!!auto || !!counter);
+  if(!included) return null;
+
+  let prof;
+  if(ov && ov.method)      prof = Object.assign({}, BASE_PROF, auto || {}, ov);
+  // a counterspell answers on the stack — its own method, held out of evaluate()/analyze()
+  else if(auto)            prof = Object.assign({}, auto);
+  else if(counter)         prof = Object.assign({}, BASE_PROF, { method:"counter", speed:speedOf(card), hits:[], counter });
+  // tagged as removal but the parser can't categorise it — surfaced in review, left out of the
+  // analysis until the user picks a method (defaulting to "destroy" would inflate every creature's outs)
+  else                     prof = Object.assign({}, BASE_PROF, { method:null, speed:speedOf(card), uncategorized:true });
+
+  if(ov && ov.unconditional) prof.restrictions = [];
+  if(!prof.hits || !prof.hits.length) prof.hits = ["creature"];
+  prof.name = card.name;
+  prof.auto = auto ? auto.method : null;
+  prof.tagged = removalTag === true;
+  prof.edited = !!ov;
+  prof.colors = card.colors || (card.card_faces && card.card_faces[0] && card.card_faces[0].colors) || [];
+  prof.mv = card.cmc ?? 0;
+  prof.uri = card.scryfall_uri || "";
+  return prof;
+}
+
+/* ---------------- full cube analysis ----------------
+   removalSource : a Set of card names that are tagged removal, or null (classifier decides) */
+function analyze(cards, overrides, A, removalSource){
+  const spells = [], creatures = [], uncategorized = [], counters = [];
+  const tagOf = name => removalSource ? removalSource.has(name) : null;
+  for(const card of cards){
+    const prof = spellProfile(card, overrides[card.name], tagOf(card.name));
+    if(prof && prof.method === "counter") counters.push(prof);       // shown, but never evaluated per-creature
+    else if(prof && prof.method) spells.push(prof);
+    else if(prof && prof.uncategorized) uncategorized.push(prof.name);
+    if(/creature/i.test(typeText(card)) && !/^\s*$/.test(card.name||"")) creatures.push(parseCreature(card));
+  }
+
+  const rows = creatures.map(c => {
+    const outs = { kill:[], conditional:[], soft:[], edict:[] };
+    for(const s of spells){
+      const r = evaluate(s, c, A);
+      if(r.verdict) outs[r.verdict].push({ name:s.name, reason:r.reason, spell:s });
+    }
+    const hard = outs.kill;
+    return {
+      creature: c,
+      counts: {
+        kill: outs.kill.length,
+        conditional: outs.conditional.length,
+        soft: outs.soft.length,
+        edict: outs.edict.length,
+        total: outs.kill.length + outs.conditional.length + outs.edict.length,
+      },
+      flags: {
+        instant: hard.filter(o => o.spell.speed==="instant").length,
+        cheap: hard.filter(o => (o.spell.mv||0) <= 3).length,
+        // clean kills that exile — beat indestructible, recursion, death triggers and blink value
+        exileOuts: hard.filter(o => o.spell.method === "exile").length,
+      },
+      outs,
+    };
+  });
+
+  return { spells, creatures, rows, uncategorized, counters };
+}
+
+/* ---------------- counterspells ----------------
+   Partial removal: they answer a creature on the stack (before it lands / before ETB value),
+   aren't size-dependent, and dodge indestructible/hexproof — but do nothing once it resolves.
+   Kept out of evaluate()/analyze() entirely; the app shows a separate cube-wide count.
+   Returns { scope: "any"|"creature"|"noncreature", hard: bool } or null. */
+function classifyCounter(card){
+  const t = norm(removalText(card));
+  const tempo = /return target spell(?: or \w+)? to its owner'?s hand/.test(t);   // Remand / Reprieve / Unsubstantiate
+  if(!/counter(?:s)? target [^.]*\bspell\b/.test(t) && !/counter that spell/.test(t) && !tempo) return null;
+  if(/counter target (?:activated|triggered)/.test(t) && !/\bspell\b/.test(t)) return null;
+
+  let scope = "any";
+  if(/counter target noncreature spell/.test(t)) scope = "noncreature";      // Negate — dead vs creatures
+  else if(/counter target creature (?:or \w+ )?spell/.test(t)) scope = "creature";
+
+  const clause = clauseWith(t, /counter/);
+  const hard = !tempo && !/\bunless\b|if you control|mana value \d|less than or equal|for each|as long as|only if|— if|delirium|ferocious|threshold|revolt/.test(clause + " " + t);
+  return { scope, hard };
+}
+
+root.RemovalEngine = { classify, classifyCounter, spellProfile, speedOf, parseCreature, evaluate, analyze, removalText, typeText, verbHitTypes };
+
+})(typeof window !== "undefined" ? window : (typeof module !== "undefined" ? module.exports : globalThis));
+
+</script>
+<script>
+/* ============ Removal vs Creatures — UI ============ */
+(() => {
+"use strict";
+const E = window.RemovalEngine;
+const $ = s => document.querySelector(s);
+const el = (tag, props, kids) => {
+  const n = Object.assign(document.createElement(tag), props || {});
+  for (const k of [].concat(kids || [])) n.append(k);
+  return n;
+};
+
+const LS = {
+  get(k, d){ try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+const K = { list:"rvs-list", cache:"rvs-cache-v1", ov:"rvs-overrides-v1", as:"rvs-assump-v1", otag:"rvs-otag", cc:"rvs-cc-cache" };
+
+let CARDS = [];                          // resolved card minis (this session)
+let REMOVAL_SET = null;                  // Set<name> of removal/counter-tagged cards, or null if unavailable
+let OVERRIDES = LS.get(K.ov, {});
+let ASSUMP = Object.assign(
+  { fightPower:4, varX:3, starPT:4, countSweepers:true, hardNeutralize:false, hardSteal:false, threshold:6 },
+  LS.get(K.as, {}));
+let SORT = { key:"kill", dir:1 };
+let FLAGGED_ONLY = false;
+
+/* ---------------- input / fetch ---------------- */
+const CACHE = LS.get(K.cache, { _ts:{}, cards:{} });
+
+/* ---------------- CubeCobra import ----------------
+   cube/api/cubelist/<id> returns the mainboard as plaintext, one name per line,
+   and sends access-control-allow-origin:* so a fetch() from file:// works.
+   (download/plaintext has no CORS header; cubeJSON carries Scryfall ids, not names.)
+   Accepts full CubeCobra URLs or a bare cube id / short-name. */
+const CC_CACHE = LS.get(K.cc, { _ts:{}, lists:{} });
+
+function parseCubeId(input){
+  let s = (input || "").trim();
+  if (!s) return "";
+  s = s.replace(/^<|>$/g, "").trim();                       // stray angle brackets
+  s = s.replace(/^https?:\/\//i, "").replace(/^www\./i, "");
+  if (/^cubecobra\.com\//i.test(s)){
+    s = s.replace(/^cubecobra\.com\//i, "");
+    const m = s.match(/^(?:cube\/(?:overview|list|playtest|history|blog|analysis|api\/cubelist)|c)\/([^/?#]+)/i)
+           || s.match(/^cube\/([^/?#]+)/i);
+    s = m ? m[1] : s;
+  }
+  return decodeURIComponent(s.split(/[?#]/)[0].replace(/\/+$/, "").trim());
+}
+
+async function fetchCubeList(id){
+  const key = id.toLowerCase();
+  let text;
+  try {
+    const r = await fetch("https://cubecobra.com/cube/api/cubelist/" + encodeURIComponent(id));
+    if (!r.ok) throw new Error("HTTP " + r.status);         // 404s have no CORS header -> usually a TypeError instead
+    text = await r.text();
+  } catch (err){
+    const cached = CC_CACHE.lists[key];
+    if (cached){
+      return { text: cached, cachedAt: CC_CACHE._ts[key] || 0 };
+    }
+    throw new Error(`Couldn't load cube "${id}". Check the URL and that the cube is public. (${err.message})`);
+  }
+  const names = text.split("\n").map(t => t.trim()).filter(Boolean);
+  if (!names.length) throw new Error(`Cube "${id}" came back empty.`);
+  const list = names.join("\n");
+  CC_CACHE.lists[key] = list; CC_CACHE._ts[key] = Date.now();
+  LS.set(K.cc, CC_CACHE);
+  return { text: list, cachedAt: 0, count: names.length };
+}
+
+function parseNames(text){
+  const seen = new Set(), out = [];
+  for (let line of text.split("\n")) {
+    line = line.trim();
+    if (!line || line.startsWith("#") || /^(SB:|\/\/)/i.test(line)) continue;
+    if (/^[A-Za-z]{1,2}:?$/.test(line)) continue;                     // stray 1-2 char tokens (real cards: Fog, Hex, Zap, Web)
+    line = line.replace(/^\s*\d+\s*[xX]?\s+/, "");                    // "3 " / "3x "
+    line = line.replace(/\s*\((?:[A-Za-z0-9]{2,6})\)\s*(?:[A-Za-z0-9-★]+)?\s*$/, ""); // " (SET) 123"
+    line = line.replace(/\s*\[[^\]]*\]\s*$/, "").replace(/\s*\*[FE]\*\s*$/i, "");
+    line = line.replace(/\s+#\d+\s*$/, "").trim();
+    line = line.split(/\s\/\/\s/)[0].trim();                          // front face name
+    if (!line) continue;
+    const key = line.toLowerCase();
+    if (!seen.has(key)) { seen.add(key); out.push(line); }
+  }
+  return out;
+}
+
+const MINI = c => ({
+  name: c.name, oracle_id: c.oracle_id, layout: c.layout,
+  type_line: c.type_line, oracle_text: c.oracle_text,
+  mana_cost: c.mana_cost, cmc: c.cmc, colors: c.colors, color_identity: c.color_identity,
+  power: c.power, toughness: c.toughness, keywords: c.keywords,
+  scryfall_uri: c.scryfall_uri,
+  image: (c.image_uris && c.image_uris.normal) ||
+         (c.card_faces && c.card_faces[0] && c.card_faces[0].image_uris && c.card_faces[0].image_uris.normal) || "",
+  card_faces: c.card_faces && c.card_faces.map(f => ({
+    name:f.name, type_line:f.type_line, oracle_text:f.oracle_text,
+    power:f.power, toughness:f.toughness, colors:f.colors, mana_cost:f.mana_cost,
+  })),
+});
+
+async function resolve(names, onProgress){
+  const fresh = Date.now() - 14 * 864e5;
+  const need = [], resolved = [], notFound = [];
+  for (const n of names){
+    const key = n.toLowerCase();
+    const hit = CACHE.cards[key];
+    if (hit && (CACHE._ts[key] || 0) > fresh) resolved.push(hit);
+    else need.push({ name:n, key });
+  }
+  for (let i = 0; i < need.length; i += 75){
+    const chunk = need.slice(i, i + 75);
+    onProgress && onProgress(resolved.length, names.length);
+    let data;
+    try {
+      const r = await fetch("https://api.scryfall.com/cards/collection", {
+        method:"POST", headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ identifiers: chunk.map(c => ({ name:c.name })) }),
+      });
+      data = await r.json();
+    } catch (err){ throw new Error("Scryfall request failed. Are you online? (" + err.message + ")"); }
+    for (const c of (data.data || [])){
+      const m = MINI(c);
+      resolved.push(m);
+      const key = c.name.toLowerCase();
+      CACHE.cards[key] = m; CACHE._ts[key] = Date.now();
+      // also index by requested name so a front-face lookup hits next time
+      const req = chunk.find(x => c.name.toLowerCase().startsWith(x.key));
+      if (req){ CACHE.cards[req.key] = m; CACHE._ts[req.key] = Date.now(); }
+    }
+    for (const nf of (data.not_found || [])) notFound.push(nf.name);
+    if (i + 75 < need.length) await new Promise(r => setTimeout(r, 90));
+  }
+  // /cards/collection only knows real names. Flavor-name printings ("Fangorn Forest" for
+  // Yavimaya, "'Tis But a Scratch!" for Dismember) resolve through /cards/named?exact= instead.
+  const stillMissing = [];
+  for (const n of notFound){
+    onProgress && onProgress(resolved.length, names.length);
+    try {
+      const r = await fetch("https://api.scryfall.com/cards/named?exact=" + encodeURIComponent(n), { headers:{ Accept:"application/json" } });
+      if (!r.ok) throw 0;
+      const c = await r.json();
+      const m = MINI(c);
+      resolved.push(m);
+      const key = n.toLowerCase();
+      CACHE.cards[key] = m; CACHE._ts[key] = Date.now();
+    } catch { stillMissing.push(n); }
+    await new Promise(r => setTimeout(r, 90));
+  }
+  LS.set(K.cache, CACHE);
+  return { resolved, notFound: stillMissing };
+}
+
+/* ---------------- removal oracle-tag lookup ----------------
+   Scryfall's community oracle tags decide WHAT is removal. We union four:
+     otag:creature-removal / artifact-removal / enchantment-removal / counterspell
+   engine.spellProfile() then sorts each into removal vs counterspell and derives `hits`.
+   The /cards/collection endpoint doesn't carry tags, so we ask /cards/search in batches.
+   Returns a Set of card names, or null if the lookup failed (caller falls back to the parser). */
+const OTAGS = ["creature-removal", "artifact-removal", "enchantment-removal", "counterspell"];
+const OTAG_Q = OTAGS.join("|");
+// name -> { is:bool, q:"tags the answer was fetched under", _ts }. The key never changes; an entry is
+// stale when its `q` isn't the current tag list, so engine changes never wipe the cache and a new
+// tag only re-fetches what was answered under the old list.
+const OTAG = (() => {
+  const cur = LS.get(K.otag, null);
+  if (cur) return cur;
+  // one-time migration from the versioned cache: v4 was queried with exactly these four tags
+  const old = LS.get("rvs-otag-v4", null);
+  const fresh = { _ts:{}, is:{}, q:{} };
+  if (old && old.is){
+    for (const n of Object.keys(old.is)){ fresh.is[n] = old.is[n]; fresh._ts[n] = old._ts[n] || 0; fresh.q[n] = OTAG_Q; }
+    try { localStorage.removeItem("rvs-otag-v4"); } catch {}
+  }
+  return fresh;
+})();
+let TAG_STATS = { cached:0, fetched:0 };
+
+async function fetchRemovalTags(cardNames, onProgress, force){
+  const fresh = Date.now() - 14 * 864e5;
+  const known = new Set(), need = [];
+  for (const n of cardNames){
+    const hit = !force && OTAG.is[n] !== undefined && OTAG.q[n] === OTAG_Q && (OTAG._ts[n] || 0) > fresh;
+    if (hit){ if (OTAG.is[n]) known.add(n); }
+    else need.push(n);
+  }
+  TAG_STATS = { cached: cardNames.length - need.length, fetched: need.length };
+  // batch: ~16 exact-name clauses per search query keeps the URL well under limits
+  for (let i = 0; i < need.length; i += 16){
+    const batch = need.slice(i, i + 16);
+    onProgress && onProgress(i, need.length);
+    const q = `(` + OTAGS.map(t => "otag:" + t).join(" or ") + `) (` +
+      batch.map(n => `!"${n.replace(/"/g, "")}"`).join(" or ") + `)`;
+    const matched = new Set();
+    try {
+      let url = "https://api.scryfall.com/cards/search?q=" + encodeURIComponent(q) + "&unique=cards";
+      for (let page = 0; page < 6 && url; page++){
+        const r = await fetch(url, { headers:{ Accept:"application/json" } });
+        if (r.status === 404) break;                        // no cards in this batch are tagged
+        if (!r.ok) throw new Error("search HTTP " + r.status);
+        const d = await r.json();
+        for (const c of (d.data || [])){
+          matched.add(c.name);
+          matched.add(c.name.split(" // ")[0]);
+          (c.card_faces || []).forEach(f => f.name && matched.add(f.name));
+        }
+        url = d.has_more ? d.next_page : null;
+        if (url) await new Promise(res => setTimeout(res, 90));
+      }
+    } catch (err){
+      console.warn("otag lookup failed:", err.message);
+      return null;                                          // signal: use the parser instead
+    }
+    for (const n of batch){
+      OTAG.is[n] = matched.has(n);
+      OTAG._ts[n] = Date.now();
+      OTAG.q[n] = OTAG_Q;
+      if (OTAG.is[n]) known.add(n);
+    }
+    if (i + 16 < need.length) await new Promise(res => setTimeout(res, 90));
+  }
+  LS.set(K.otag, OTAG);
+  return known;
+}
+
+/* ---------------- restriction formatting ---------------- */
+function fmtRestr(r){
+  switch(r.kind){
+    case "mv": return `MV ${r.op} ${r.variable ? "colors spent" : r.n}`;
+    case "power": return `power ${r.op} ${r.n}`;
+    case "toughness": return `toughness ${r.op} ${r.n}`;
+    case "ptTotal": return `power+toughness ${r.op} ${r.n}`;
+    case "colorExclude": return "non-" + r.colors.map(c => ({W:"white",U:"blue",B:"black",R:"red",G:"green"}[c])).join("/");
+    case "colorless": return "colorless only";
+    case "monocolored": return "monocolored only";
+    case "multicolored": return "multicolored only";
+    case "nonlegendary": return "nonlegendary only";
+    case "nonartifact": return "nonartifact only";
+    case "nontoken": return "nontoken only";
+    case "notSubtype": return "not " + r.subtypes.join("/");
+    case "needKeyword": return "must have " + r.kw;
+    case "situational": return r.what;
+    default: return r.kind;
+  }
+}
+const METHOD_LABEL = {
+  destroy:"Destroy", exile:"Exile", damage:"Damage", minusxx:"−X/−X", edict:"Edict",
+  fight:"Fight", bite:"Bite (one-sided)", bounce:"Bounce", steal:"Steal", neutralize:"Neutralize", tap:"Tap-lock",
+  counter:"Counter (on the stack)",
+};
+const METHODS = Object.keys(METHOD_LABEL);
+const SPEEDS = ["instant","sorcery","etb","activated","loyalty","permanent","other"];
+
+function answersUpTo(sp){
+  // a spell that can't point at a creature only reaches artifact/enchantment creatures
+  const hits = sp.hits || ["creature"];
+  const gate = hits.includes("creature") ? "" : `, ${hits.filter(h => h !== "land" && h !== "battle").join("/")} creatures only`;
+  if (sp.modes && sp.modes.length > 1)
+    return "best mode: " + sp.modes.map(m => m.method + (m.capacity != null ? ` ${m.capacity}` : "")).join(" / ") + gate;
+  if (["destroy","exile","edict","steal","neutralize","bounce","tap"].includes(sp.method)) return "any size" + gate;
+  if (["damage","minusxx"].includes(sp.method)) return (sp.variable ? `toughness ≤ X (${ASSUMP.varX})` : `toughness ≤ ${sp.capacity}`) + gate;
+  if (["fight","bite"].includes(sp.method)) return `toughness ≤ ${ASSUMP.fightPower} (your power)` + gate;
+  return "?";
+}
+
+/* ---------------- REVIEW ---------------- */
+function tagOf(name){ return REMOVAL_SET ? REMOVAL_SET.has(name) : null; }
+
+function reviewSpells(){
+  // one row per card the tool considers removal, plus excluded ones (kept as a toggle)
+  const rows = [];
+  for (const card of CARDS){
+    const ov = OVERRIDES[card.name];
+    const autoProfile = E.classify(card);          // full profile or null — used for the "restrictions" column
+    if (ov && ov.excluded){
+      rows.push({ name:card.name, uri:card.scryfall_uri, method:null, scope:"single",
+        speed:E.speedOf(card), capacity:null, variable:false, restrictions:[],
+        autoProfile, card, excluded:true });
+      continue;
+    }
+    const sp = E.spellProfile(card, ov, tagOf(card.name));
+    if (!sp) continue;
+    sp.card = card;
+    sp.excluded = false;
+    sp.autoProfile = autoProfile;
+    sp.restrictions = (ov && ov.unconditional) ? [] : (autoProfile ? autoProfile.restrictions : []);
+    rows.push(sp);
+  }
+  rows.sort((a,b) => a.name.localeCompare(b.name));
+  return rows;
+}
+
+function setOverride(name, patch){
+  const auto = E.classify(CARDS.find(c => c.name === name));
+  const next = Object.assign({}, OVERRIDES[name] || {}, patch);
+  // drop no-op flags so a round-tripped edit leaves nothing behind
+  if (!next.excluded) delete next.excluded;
+  if (!next.unconditional) delete next.unconditional;
+  const matchesAuto = auto && !next.excluded && !next.unconditional &&
+    (next.method === undefined || next.method === auto.method) &&
+    (next.capacity ?? auto.capacity) === auto.capacity &&
+    (next.scope || auto.scope) === auto.scope &&
+    (next.speed || auto.speed) === auto.speed &&
+    (next.variable ?? auto.variable) === auto.variable;
+  if (matchesAuto || Object.keys(next).length === 0) delete OVERRIDES[name];
+  else OVERRIDES[name] = next;
+  LS.set(K.ov, OVERRIDES);
+  renderReview(); renderAnalysis();
+}
+
+function renderReview(){
+  if (!CARDS.length){ $("#review").hidden = true; return; }
+  $("#review").hidden = false;
+  const rows = reviewSpells();
+  const nRem = rows.filter(s => s.method && s.method !== "counter").length;
+  const nCtr = rows.filter(s => s.method === "counter").length;
+  const nUncat = rows.filter(s => s.uncategorized && !s.excluded).length;
+  $("#reviewCount").textContent = `${nRem} removal ${nRem === 1 ? "piece" : "pieces"}` +
+    (nCtr ? ` · ${nCtr} counterspell${nCtr === 1 ? "" : "s"}` : "") +
+    (REMOVAL_SET ? " · from Scryfall tags" : " · from the text parser") +
+    (nUncat ? ` · ${nUncat} need a category` : "");
+  const edited = Object.keys(OVERRIDES).length;
+  $("#reviewEdited").textContent = edited ? `${edited} edited` : "";
+
+  const tb = $("#reviewBody"); tb.textContent = "";
+  const groupHdr = (label, attn) => {
+    const tr = el("tr", { className: "grouphdr" + (attn ? " attn" : "") });
+    tr.append(el("td", { colSpan: 8, textContent: label }));
+    tb.append(tr);
+  };
+  // three groups: needs-a-category (attention), counterspells, then classified removal
+  const needCat  = rows.filter(s => s.uncategorized && !s.excluded);
+  const counters = rows.filter(s => s.method === "counter");
+  const rest     = rows.filter(s => !(s.uncategorized && !s.excluded) && s.method !== "counter");
+  if (needCat.length){
+    groupHdr(`Needs a category (${needCat.length}) · tagged as removal, but the method is unknown. Pick one or the card stays out of the numbers.`, true);
+    needCat.forEach(sp => tb.append(makeReviewRow(sp)));
+  }
+  if (counters.length){
+    groupHdr(`Counterspells (${counters.length}) · not counted per creature`);
+    counters.forEach(sp => tb.append(makeReviewRow(sp)));
+  }
+  if (needCat.length || counters.length) groupHdr(`Removal (${rest.length})`);
+  rest.forEach(sp => tb.append(makeReviewRow(sp)));
+
+  // add-card control
+  const notClassified = CARDS
+    .filter(c => !reviewSpells().some(s => s.name === c.name))
+    .map(c => c.name).sort();
+  $("#addList").textContent = "";
+  notClassified.forEach(n => $("#addList").append(el("option", { value:n })));
+}
+
+function makeReviewRow(sp){
+  {
+    const isRem = !!sp.method;
+    const isCounter = sp.method === "counter";
+    const tr = el("tr", { className: sp.excluded ? "off" : "" });
+
+    // remove / restore
+    const xTd = el("td");
+    const xb = el("button", { className:"xbtn",
+      textContent: sp.excluded ? "↺" : "×",
+      title: sp.excluded ? "Put it back" : "Not removal. Drop it from the list" });
+    xb.onclick = () => setOverride(sp.name, { excluded: !sp.excluded });
+    xTd.append(xb);
+    tr.append(xTd);
+
+    // name
+    const a = el("a", { href: sp.uri, target:"_blank", rel:"noopener", textContent: sp.name, className:"cardlink" });
+    if (sp.card.image) a.addEventListener("mouseenter", e => showPeek(e, sp.card.image));
+    a.addEventListener("mouseleave", hidePeek);
+    const nameTd = el("td", {}, a);
+    if (sp.excluded) nameTd.append(el("span", { className:"tag off", textContent:"off" }));
+    else if (sp.uncategorized) nameTd.append(el("span", { className:"tag cat", textContent:"categorize" }));
+    else if (OVERRIDES[sp.name]) nameTd.append(el("span", { className:"tag edited", textContent:"edited" }));
+    else if (sp.tagged && !sp.autoProfile && !isCounter) nameTd.append(el("span", { className:"tag tagonly", textContent:"tag only" }));
+    if (!sp.autoProfile && !sp.tagged && !sp.excluded && !sp.uncategorized) nameTd.append(el("span", { className:"tag added", textContent:"added" }));
+    tr.append(nameTd);
+
+    // method
+    const msel = el("select");
+    msel.append(el("option", { value:"", textContent:"— not removal —" }));
+    for (const m of METHODS) msel.append(el("option", { value:m, textContent: METHOD_LABEL[m], selected: m === sp.method }));
+    msel.value = sp.method || "";
+    msel.onchange = () => msel.value ? setOverride(sp.name, { method: msel.value, excluded:false })
+                                     : setOverride(sp.name, { excluded:true });
+    tr.append(el("td", {}, msel));
+
+    // capacity
+    const capWrap = el("td");
+    if (["damage","minusxx"].includes(sp.method)){
+      const varCb = el("input", { type:"checkbox", checked: !!sp.variable, title:"scales with X" });
+      varCb.onchange = () => setOverride(sp.name, {
+        variable: varCb.checked,
+        // don't leave a fixed spell with no number — fall back to assumed X
+        capacity: varCb.checked ? sp.capacity : (sp.capacity ?? ASSUMP.varX),
+      });
+      const cap = el("input", { type:"number", className:"cap", min:0, value: sp.capacity ?? "", disabled: !!sp.variable });
+      cap.onchange = () => setOverride(sp.name, { capacity: cap.value === "" ? null : +cap.value });
+      capWrap.append(cap, el("label", { className:"mini" }, [varCb, "X"]));
+      if (!sp.variable && sp.capacity == null)
+        capWrap.append(el("span", { className:"mini", style:"color:var(--danger)", textContent:" needs a number" }));
+    } else if (["fight","bite"].includes(sp.method)){
+      capWrap.append(el("span", { className:"mini", textContent:"= your power" }));
+    } else {
+      capWrap.append(el("span", { className:"mini", textContent:"—" }));
+    }
+    tr.append(capWrap);
+
+    // scope
+    if (isCounter){
+      tr.append(el("td", { className:"mini", textContent:"—" }));
+    } else {
+      const scSel = el("select");
+      for (const s of ["single","sweeper"]) scSel.append(el("option", { value:s, textContent:s, selected: s === sp.scope }));
+      scSel.value = sp.scope; scSel.disabled = !isRem;
+      scSel.onchange = () => setOverride(sp.name, { scope: scSel.value });
+      tr.append(el("td", {}, scSel));
+    }
+
+    // speed
+    const spSel = el("select");
+    for (const s of SPEEDS) spSel.append(el("option", { value:s, textContent:s, selected: s === sp.speed }));
+    spSel.value = sp.speed; spSel.disabled = !isRem;
+    spSel.onchange = () => setOverride(sp.name, { speed: spSel.value });
+    tr.append(el("td", {}, spSel));
+
+    // restrictions + unconditional
+    const rTd = el("td", { className:"restr" });
+    if (isCounter){
+      const s = sp.counter || {};
+      rTd.append(el("span", { className:"chip", textContent:
+        s.scope === "creature" ? "creature spells" : s.scope === "noncreature" ? "noncreature only" : "any spell" }));
+    } else if (isRem){
+      const chips = sp.restrictions || [];
+      if (chips.length) chips.forEach(r => rTd.append(el("span", { className:"chip", textContent: fmtRestr(r) })));
+      else rTd.append(el("span", { className:"mini", textContent: (OVERRIDES[sp.name] && OVERRIDES[sp.name].unconditional) ? "cleared" : "—" }));
+      if ((sp.autoProfile && sp.autoProfile.restrictions.length) || (OVERRIDES[sp.name] && OVERRIDES[sp.name].unconditional)){
+        const ucb = el("input", { type:"checkbox", checked: !!(OVERRIDES[sp.name] && OVERRIDES[sp.name].unconditional), title:"ignore restrictions" });
+        ucb.onchange = () => setOverride(sp.name, { unconditional: ucb.checked });
+        rTd.append(el("label", { className:"mini" }, [ucb, "ignore"]));
+      }
+    }
+    tr.append(rTd);
+
+    // modal / note
+    tr.append(el("td", { className:"mini", textContent:
+      isCounter ? (sp.counter && sp.counter.hard ? "hard" : "soft")
+                : (sp.modal ? "modal" : (sp.note || "")) }));
+    return tr;
+  }
+}
+
+/* card peek */
+let peekEl;
+function showPeek(e, src){
+  hidePeek();
+  peekEl = el("img", { src, className:"peek" });
+  document.body.append(peekEl);
+  movePeek(e);
+  window.addEventListener("mousemove", movePeek);
+}
+function movePeek(e){
+  if (!peekEl) return;
+  const pad = 16, w = 240, h = 340;
+  peekEl.style.left = Math.min(e.clientX + pad, innerWidth - w - pad) + "px";
+  peekEl.style.top = Math.min(e.clientY + pad, innerHeight - h - pad) + "px";
+}
+function hidePeek(){ if (peekEl){ peekEl.remove(); peekEl = null; window.removeEventListener("mousemove", movePeek); } }
+
+/* ---------------- ANALYSIS ---------------- */
+function currentAssump(){
+  return {
+    assumedPower: ASSUMP.fightPower, assumedX: ASSUMP.varX, starPT: ASSUMP.starPT,
+    countSweepers: ASSUMP.countSweepers, hardNeutralize: ASSUMP.hardNeutralize, hardSteal: ASSUMP.hardSteal,
+  };
+}
+
+function renderAnalysis(){
+  if (!CARDS.length){ $("#analysis").hidden = true; return; }
+  $("#analysis").hidden = false;
+
+  refreshCardMeta();
+  const A = currentAssump();
+  const { spells, rows, uncategorized, counters } = E.analyze(CARDS, OVERRIDES, A, REMOVAL_SET);
+  if (!ASSUMP.countSweepers){
+    // strip sweeper outs
+    rows.forEach(r => {
+      r.outs.conditional = r.outs.conditional.filter(o => o.spell.scope !== "sweeper");
+      r.counts.conditional = r.outs.conditional.length;
+      r.counts.total = r.counts.kill + r.counts.conditional + r.counts.edict;
+    });
+  }
+
+  const kills = rows.map(r => r.counts.kill).sort((a,b) => a - b);
+  const median = kills.length ? kills[Math.floor(kills.length / 2)] : 0;
+  const flagged = rows.filter(r => r.counts.kill < ASSUMP.threshold);
+  const stats = $("#summary"); stats.textContent = "";
+  const stat = (n, label, cls) => stats.append(el("div", { className:"stat " + (cls || "") }, [
+    el("b", { textContent: n }), el("span", { textContent: label })]));
+  stat(spells.length, "removal spells");
+  stat(rows.length, "creatures");
+  stat(median, "median clean kills per creature");
+  stat(flagged.length, `flagged (under ${ASSUMP.threshold} clean kills)`, flagged.length ? "warn" : "zero");
+  if (uncategorized.length)
+    stats.append(el("p", { className:"note" }, [
+      `${uncategorized.length} tagged removal spell${uncategorized.length === 1 ? " has" : "s have"} no method and ${uncategorized.length === 1 ? "is" : "are"} left out. `,
+      el("a", { href:"#review", textContent:"Set one in Review." })]));
+
+  renderAffected(spells, rows);
+  renderRemovalByColour(spells, counters);
+  renderChart(rows, spells);
+  renderTable(rows);
+  renderAudit(spells);
+
+  const copy = (btn, text) =>
+    navigator.clipboard.writeText(text).then(() => flash(btn, "copied"), () => flash(btn, "copy failed"));
+  $("#copyFlagged").onclick = () => copy($("#copyFlagged"),
+    flagged.sort((a,b) => a.counts.kill - b.counts.kill)
+      .map(r => `${r.creature.name}: ${r.counts.kill} clean, ${r.counts.conditional} conditional, ${r.counts.edict} edict`).join("\n"));
+  $("#copyCsv").onclick = () => {
+    const head = "Creature,P,T,MV,Colors,CleanKills,Conditional,Edicts,Instant,CheapMV3,ExileOuts";
+    const body = rows.map(r => {
+      const c = r.creature;
+      return [csv(c.name), c.powerRaw, c.toughnessRaw, c.mv, (c.colors || []).join(""),
+        r.counts.kill, r.counts.conditional, r.counts.edict,
+        r.flags.instant, r.flags.cheap, r.flags.exileOuts].join(",");
+    }).join("\n");
+    copy($("#copyCsv"), head + "\n" + body);
+  };
+}
+const csv = s => /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+
+/* ---------------- which cards each assumption touches ---------------- */
+function renderAffected(spells, rows){
+  const allModes = sp => (sp.modes && sp.modes.length) ? sp.modes.map(m => Object.assign({}, sp, m)) : [sp];
+  const usesX = sp => allModes(sp).some(m =>
+    (m.variable && ["damage","minusxx"].includes(m.method)) || (m.restrictions || []).some(r => r.variable));
+  const usesPower = sp => allModes(sp).some(m => ["fight","bite"].includes(m.method));
+  const usesStar = r => /[*x]/i.test(String(r.creature.powerRaw ?? "")) || /[*x]/i.test(String(r.creature.toughnessRaw ?? ""))
+                     || r.creature.toughness == null;
+  const put = (id, items, noun) => {
+    const el_ = $(id); el_.textContent = "";
+    if (!items.length){ el_.append(el("span", { className:"mini", textContent:`no ${noun} affected` })); return; }
+    const a = el("span", { className:"aff", textContent:`${items.length} ${noun}${items.length === 1 ? "" : "s"}` });
+    attachCardPop(a, items.map(meta));
+    el_.append(a);
+  };
+  put("#affX", spells.filter(usesX), "spell");
+  put("#affPower", spells.filter(usesPower), "spell");
+  put("#affStar", rows.filter(usesStar).map(r => r.creature), "creature");
+  put("#affSweep", spells.filter(sp => sp.scope === "sweeper"), "spell");
+  put("#affNeut", spells.filter(sp => allModes(sp).some(m => m.method === "neutralize")), "spell");
+  put("#affSteal", spells.filter(sp => allModes(sp).some(m => m.method === "steal")), "spell");
+}
+
+/* ---------------- colour badges with hover detail ---------------- */
+const CARD_META = new Map();                       // name -> { name, uri, image } (rebuilt each analyze)
+function refreshCardMeta(){
+  CARD_META.clear();
+  for (const c of CARDS) CARD_META.set(c.name, { name:c.name, uri:c.scryfall_uri || "", image:c.image || "" });
+}
+function meta(nameOrObj){
+  const name = typeof nameOrObj === "string" ? nameOrObj : nameOrObj.name;
+  return CARD_META.get(name)
+    || CARD_META.get(name.split(" // ")[0])
+    || { name, uri: (nameOrObj && nameOrObj.uri) || "", image:"" };
+}
+
+const CLR_HEX = { W:"#e6dfc2", U:"#2f7dc4", B:"#5b5b63", R:"#c8402c", G:"#3a8b4a" };
+function spellColour(cols){
+  if (!cols || !cols.length) return "#6b7280";
+  if (cols.length > 1) return "#c9a94e";                 // multicolour → gold
+  return CLR_HEX[cols[0]] || "#6b7280";
+}
+
+// group items (anything with .colors + .name) into WUBRG + C(◇), a card counting for every colour it's in
+function byColour(items){
+  const g = { W:[], U:[], B:[], R:[], G:[], C:[] };
+  for (const it of items){
+    const cols = (it.colors || []).filter(x => x in g);
+    (cols.length ? cols : ["C"]).forEach(k => g[k].push(meta(it)));
+  }
+  return g;
+}
+
+let bdPop = null, bdHideT = null;
+function hideBadgePop(){ clearTimeout(bdHideT); if (bdPop){ bdPop.remove(); bdPop = null; } hidePeek(); }
+function colourBadge(letter, cards){
+  const span = el("span", { className:"cbd " + letter + (cards.length ? "" : " zero"),
+    textContent:`${letter === "C" ? "◇" : letter} ${cards.length}` });
+  if (cards.length) attachCardPop(span, cards);
+  return span;
+}
+// hover `span` -> popover listing `cards` ({name, uri, image}) with Scryfall links and image previews
+function attachCardPop(span, cards){
+  span.classList.add("has-pop");
+  span.addEventListener("mouseenter", () => {
+    hideBadgePop();
+    const pop = el("div", { className:"bdpop" });
+    for (const c of [...cards].sort((a, b) => a.name.localeCompare(b.name))){
+      const a = el("a", { className:"cardlink", textContent: c.name, href: c.uri || "#", target:"_blank", rel:"noopener" });
+      if (c.image){
+        a.addEventListener("mouseenter", ev => showPeek(ev, c.image));
+        a.addEventListener("mouseleave", hidePeek);
+      }
+      pop.append(a);
+    }
+    pop.addEventListener("mouseenter", () => clearTimeout(bdHideT));
+    pop.addEventListener("mouseleave", () => { bdHideT = setTimeout(hideBadgePop, 150); });
+    document.body.append(pop);
+    const r = span.getBoundingClientRect();
+    pop.style.left = Math.min(r.left, innerWidth - pop.offsetWidth - 12) + "px";
+    pop.style.top = Math.min(r.bottom + 4, innerHeight - pop.offsetHeight - 12) + "px";
+    bdPop = pop;
+  });
+  span.addEventListener("mouseleave", () => { bdHideT = setTimeout(hideBadgePop, 150); });
+}
+function colourRow(wrap, label, groups, total){
+  const row = el("div", { className:"ncr-row" });
+  row.append(el("span", { className:"ncr-lbl", textContent:`${label} · ${total}` }));
+  for (const k of ["W","U","B","R","G","C"]) row.append(colourBadge(k, groups[k]));
+  wrap.append(row);
+}
+
+// one panel: removal (creature / artifact / enchantment) and counterspells, all bucketed by colour.
+function renderRemovalByColour(spells, counters){
+  hideBadgePop();
+  const wrap = $("#removalByColour"); wrap.textContent = "";
+  const hits = k => spells.filter(s => (s.hits || ["creature"]).includes(k));
+
+  wrap.append(el("div", { className:"ncr-head" }, ["Removal by colour",
+    el("span", { className:"ncr-sub", textContent:"a spell counts for every colour it's in · ◇ colourless · hover a badge to list the cards" })]));
+  colourRow(wrap, "creature removal", byColour(hits("creature")), hits("creature").length);
+  if (hits("artifact").length)    colourRow(wrap, "artifact removal", byColour(hits("artifact")), hits("artifact").length);
+  if (hits("enchantment").length) colourRow(wrap, "enchantment removal", byColour(hits("enchantment")), hits("enchantment").length);
+
+  // counterspells — partial removal, answer on the stack; kept out of the per-creature numbers
+  const usable = (counters || []).filter(s => s.counter && s.counter.scope !== "noncreature");
+  const dead = (counters || []).length - usable.length;
+  if (counters && counters.length){
+    wrap.append(el("div", { className:"ncr-head" }, [
+      "Counterspells",
+      el("span", { className:"ncr-sub", textContent:"not counted per creature" + (dead ? ` · ${dead} that only hit noncreature spells are not shown` : "") }),
+    ]));
+    const hard = usable.filter(s => s.counter.hard);
+    const soft = usable.filter(s => !s.counter.hard);
+    if (hard.length) colourRow(wrap, "hard counters", byColour(hard), hard.length);
+    if (soft.length) colourRow(wrap, "soft counters", byColour(soft), soft.length);
+  }
+}
+
+function renderChart(rows, spells){
+  const buckets = new Map();
+  for (const r of rows){
+    const T = r.creature.toughness ?? ASSUMP.starPT;
+    const key = T >= 7 ? "7+" : String(T);
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(r);
+  }
+  const order = ["1","2","3","4","5","6","7+"];
+  const wrap = $("#chart"); wrap.textContent = "";
+  wrap.append(el("div", { className:"ncr-head", style:"margin-bottom:6px" }, ["Clean kills by toughness",
+    el("span", { className:"ncr-sub", textContent:"bar: median for the cube's creatures of that toughness · badges: spells that kill a vanilla creature of that size, by colour" })]));
+  const max = Math.max(1, ...[...buckets.values()].map(rs => median(rs.map(r => r.counts.kill))));
+  const A = currentAssump();
+  for (const key of order){
+    const rs = buckets.get(key);
+    const row = el("div", { className:"crow" });
+    row.append(el("div", { className:"clabel", textContent: key }));
+    const barWrap = el("div", { className:"cbar" });
+    if (rs && rs.length){
+      const m = median(rs.map(r => r.counts.kill));
+      const fl = rs.filter(r => r.counts.kill < ASSUMP.threshold).length;
+      const bar = el("div", { className:"cfill" + (m < ASSUMP.threshold ? " low" : "") });
+      bar.style.width = (100 * m / max) + "%";
+      bar.textContent = m;
+      barWrap.append(bar);
+      row.append(barWrap, el("div", { className:"cmeta", textContent:`${rs.length} creature${rs.length === 1 ? "" : "s"}${fl ? ` · ${fl} flagged` : ""}` }));
+    } else {
+      row.append(barWrap, el("div", { className:"cmeta", textContent:"—" }));
+    }
+    // synthetic vanilla creature of this size → which colours can clean-kill it
+    const T = key === "7+" ? 7 : +key;
+    const vanilla = E.parseCreature({ name:"", type_line:"Creature", oracle_text:"",
+      power:String(T), toughness:String(T), cmc:3, colors:[] });
+    const killers = (spells || []).filter(s => E.evaluate(s, vanilla, A).verdict === "kill");
+    const g = byColour(killers);
+    const bd = el("div", { className:"crow-cbd" });
+    for (const k of ["W","U","B","R","G","C"]) bd.append(colourBadge(k, g[k]));
+    row.append(bd);
+    wrap.append(row);
+  }
+}
+function median(arr){
+  if (!arr.length) return 0;
+  const s = [...arr].sort((a,b) => a - b);
+  const mid = Math.floor(s.length / 2);
+  return s.length % 2 ? s[mid] : Math.round((s[mid - 1] + s[mid]) / 2);
+}
+
+const COLS = [
+  { key:"name", label:"Creature", get:r => r.creature.name, cmp:(a,b) => a.creature.name.localeCompare(b.creature.name) },
+  { key:"pt", label:"P/T", tip:"* means the value was assumed", get:r => `${r.creature.powerRaw ?? "?"}/${r.creature.toughnessRaw ?? "?"}`, cmp:(a,b) => (a.creature.toughness ?? 0) - (b.creature.toughness ?? 0) },
+  { key:"mv", label:"MV", get:r => r.creature.mv, cmp:(a,b) => a.creature.mv - b.creature.mv },
+  { key:"kill", label:"Clean kills", tip:"Destroys or exiles it unconditionally, at any size", get:r => r.counts.kill, cmp:(a,b) => a.counts.kill - b.counts.kill, num:true },
+  { key:"conditional", label:"Conditional", tip:"Sweepers, and spells that need a board state (attacking, etc.)", get:r => r.counts.conditional, cmp:(a,b) => a.counts.conditional - b.counts.conditional, num:true },
+  { key:"edict", label:"Edicts", tip:"Sacrifice effects. The opponent picks what dies", get:r => r.counts.edict, cmp:(a,b) => a.counts.edict - b.counts.edict, num:true },
+  { key:"soft", label:"Soft", tip:"Bounce, tap, steal, neutralize. Answers it without killing it", get:r => r.counts.soft, cmp:(a,b) => a.counts.soft - b.counts.soft, num:true },
+  { key:"instant", label:"Instant", tip:"Clean kills at instant speed", get:r => r.flags.instant, cmp:(a,b) => a.flags.instant - b.flags.instant, num:true },
+  { key:"cheap", label:"≤3 MV", tip:"Clean kills costing 3 or less", get:r => r.flags.cheap, cmp:(a,b) => a.flags.cheap - b.flags.cheap, num:true },
+  { key:"bi", label:"Exile", tip:"Clean kills that exile, so they beat indestructible and recursion", get:r => r.flags.exileOuts, cmp:(a,b) => a.flags.exileOuts - b.flags.exileOuts, num:true },
+];
+
+function renderTable(rows){
+  const table = $("#creatureTable");
+  table.textContent = "";
+  const thead = el("thead"), htr = el("tr");
+  for (const col of COLS){
+    const th = el("th", { textContent: col.label, className: col.num ? "num" : "", title: col.tip || "" });
+    if (SORT.key === col.key) th.append(el("span", { className:"arrow", textContent: SORT.dir > 0 ? " ▲" : " ▼" }));
+    th.onclick = () => { SORT = { key: col.key, dir: SORT.key === col.key ? -SORT.dir : (col.num ? 1 : 1) }; renderTable(sortRows(rows)); };
+    htr.append(th);
+  }
+  thead.append(htr); table.append(thead);
+
+  const byName = new Map(CARDS.map(c => [c.name, c]));
+  const tb = el("tbody");
+  const view = FLAGGED_ONLY ? rows.filter(r => r.counts.kill < ASSUMP.threshold) : rows;
+  for (const r of sortRows(view)){
+    const tr = el("tr", { className: r.counts.kill < ASSUMP.threshold ? "flag" : "" });
+    for (const col of COLS){
+      if (col.key === "name"){
+        const card = byName.get(r.creature.name);
+        const caret = el("span", { className:"caret", textContent:"▸" });
+        const a = el("a", { className:"cardlink", textContent: r.creature.name,
+          href: (card && card.scryfall_uri) || "#", target:"_blank", rel:"noopener" });
+        a.onclick = e => e.stopPropagation();          // don't toggle the row detail
+        if (card && card.image){
+          a.addEventListener("mouseenter", e => showPeek(e, card.image));
+          a.addEventListener("mouseleave", hidePeek);
+        }
+        tr.append(el("td", { className:"namecell" }, [caret, a]));
+      } else {
+        tr.append(el("td", { textContent: col.get(r), className: col.num ? "num" : "" }));
+      }
+    }
+    tr.onclick = () => toggleDetail(tr, r);
+    tb.append(tr);
+  }
+  table.append(tb);
+  $("#tableMeta").textContent = FLAGGED_ONLY ? `${view.length} of ${rows.length} creatures flagged` : `${view.length} creatures`;
+}
+function sortRows(rows){
+  const col = COLS.find(c => c.key === SORT.key) || COLS[3];
+  return [...rows].sort((a,b) => col.cmp(a,b) * SORT.dir);
+}
+function toggleDetail(tr, r){
+  const caret = tr.querySelector(".caret");
+  if (tr.nextSibling && tr.nextSibling.classList && tr.nextSibling.classList.contains("detail")){
+    tr.nextSibling.remove(); if (caret) caret.textContent = "▸"; return;
+  }
+  if (caret) caret.textContent = "▾";
+  const td = el("td"); td.colSpan = COLS.length;
+  const box = el("div", { className:"detailbox" });
+
+  // answers by colour — a spell counts for every colour it's in (what a deck of that colour reaches)
+  const realOuts = [...r.outs.kill, ...r.outs.conditional, ...r.outs.edict].map(o => o.spell);
+  const groups = byColour(realOuts);
+  const cbd = el("div", { className:"colorbd" });
+  cbd.append(el("span", { className:"lbl",
+    textContent:`answers by colour · ${realOuts.length} total` }));
+  for (const k of ["W","U","B","R","G","C"]) cbd.append(colourBadge(k, groups[k]));
+  box.append(cbd);
+
+  const group = (title, list, cls) => {
+    if (!list.length) return;
+    const d = el("div", { className:"dgroup" });
+    d.append(el("div", { className:"dhead " + cls, textContent:`${title} (${list.length})` }));
+    const ul = el("div", { className:"dlist" });
+    for (const o of [...list].sort((a, b) => a.name.localeCompare(b.name))){
+      const m = meta(o.spell);
+      const item = el("span", { className:"ditem" });
+      item.style.borderLeftColor = spellColour(o.spell && o.spell.colors);
+      const a = el("a", { className:"cardlink", textContent: o.name, href: m.uri || "#", target:"_blank", rel:"noopener" });
+      if (m.image){ a.addEventListener("mouseenter", e => showPeek(e, m.image)); a.addEventListener("mouseleave", hidePeek); }
+      item.append(a);
+      if (o.reason) item.title = o.reason;
+      if (o.reason && cls !== "k") item.append(el("span", { className:"dreason", textContent:` · ${o.reason}` }));
+      ul.append(item);
+    }
+    d.append(ul); box.append(d);
+  };
+  group("Clean kills", r.outs.kill, "k");
+  group("Conditional", r.outs.conditional, "c");
+  group("Edicts", r.outs.edict, "e");
+  group("Soft answers", r.outs.soft, "s");
+  td.append(box);
+  const dr = el("tr", { className:"detail" }, td);
+  tr.after(dr);
+}
+
+function renderAudit(spells){
+  const tb = $("#auditBody"); tb.textContent = "";
+  const order = { destroy:0, exile:1, edict:2, minusxx:3, damage:4, fight:5, bite:5, bounce:6, steal:6, neutralize:6, tap:6 };
+  [...spells].sort((a,b) => (order[a.method] - order[b.method]) || a.name.localeCompare(b.name)).forEach(sp => {
+    const tr = el("tr");
+    tr.append(el("td", {}, el("a", { href: sp.uri, target:"_blank", rel:"noopener", textContent: sp.name, className:"cardlink" })));
+    tr.append(el("td", { textContent: METHOD_LABEL[sp.method] + (sp.scope === "sweeper" ? " (sweep)" : "") }));
+    tr.append(el("td", { textContent: answersUpTo(sp) }));
+    tr.append(el("td", { textContent: sp.speed }));
+    const rt = el("td", { className:"restr" });
+    (sp.restrictions || []).forEach(r => rt.append(el("span", { className:"chip", textContent: fmtRestr(r) })));
+    if (sp.modal) rt.append(el("span", { className:"chip", textContent:"modal" }));
+    tr.append(rt);
+    tb.append(tr);
+  });
+}
+
+/* ---------------- assumptions form ---------------- */
+function bindAssump(){
+  const map = { fightPower:"asFightPower", varX:"asVarX", starPT:"asStar", threshold:"asThreshold" };
+  for (const [k, id] of Object.entries(map)){
+    const inp = $("#" + id);
+    inp.value = ASSUMP[k];
+    inp.onchange = () => { ASSUMP[k] = +inp.value || 0; LS.set(K.as, ASSUMP); renderAnalysis(); };
+  }
+  for (const [k, id] of Object.entries({ countSweepers:"asSweepers", hardNeutralize:"asNeutralize", hardSteal:"asSteal" })){
+    const cb = $("#" + id);
+    cb.checked = !!ASSUMP[k];
+    cb.onchange = () => { ASSUMP[k] = cb.checked; LS.set(K.as, ASSUMP); renderAnalysis(); };
+  }
+  $("#flaggedOnly").onchange = () => { FLAGGED_ONLY = $("#flaggedOnly").checked; renderAnalysis(); };
+}
+
+/* ---------------- misc ---------------- */
+function flash(btn, msg){
+  const old = btn.textContent; btn.textContent = msg;
+  setTimeout(() => btn.textContent = old, 1200);
+}
+
+/* ---------------- wire up ---------------- */
+$("#listInput").value = LS.get(K.list, "");
+$("#ccBtn").onclick = async () => {
+  const id = parseCubeId($("#ccInput").value);
+  if (!id){ $("#fetchStatus").textContent = "Paste a CubeCobra URL or cube id first."; return; }
+  $("#ccBtn").disabled = $("#fetchBtn").disabled = true;
+  $("#fetchStatus").textContent = `Loading cube "${id}" from CubeCobra…`;
+  try {
+    const { text, cachedAt } = await fetchCubeList(id);
+    $("#listInput").value = text;
+    LS.set(K.list, text);
+    const n = text.split("\n").filter(Boolean).length;
+    $("#fetchStatus").textContent = cachedAt
+      ? `⚠ CubeCobra didn't respond. Showing ${n} cards cached ${new Date(cachedAt).toLocaleDateString()}. Click Fetch & analyze.`
+      : `Loaded ${n} cards from cube “${id}”. Click Fetch & analyze.`;
+  } catch (err){
+    $("#fetchStatus").textContent = "⚠ " + err.message;
+  } finally {
+    $("#ccBtn").disabled = $("#fetchBtn").disabled = false;
+  }
+};
+$("#fetchBtn").onclick = async () => {
+  const raw = $("#listInput").value;
+  LS.set(K.list, raw);
+  const names = parseNames(raw);
+  if (!names.length){ $("#fetchStatus").textContent = "No card names found."; return; }
+  $("#fetchBtn").disabled = true;
+  $("#fetchStatus").textContent = `Resolving ${names.length} cards…`;
+  try {
+    const { resolved, notFound } = await resolve(names, (done, total) => {
+      $("#fetchStatus").textContent = `Resolving cards… ${done}/${total}`;
+    });
+    CARDS = resolved;
+
+    $("#fetchStatus").textContent = "Looking up removal tags…";
+    REMOVAL_SET = await fetchRemovalTags(resolved.map(c => c.name), (done, total) => {
+      $("#fetchStatus").textContent = `Looking up removal tags… ${done}/${total}`;
+    });
+
+    const nf = notFound.length ? ` · ${notFound.length} not found: ${notFound.slice(0, 6).join(", ")}${notFound.length > 6 ? "…" : ""}` : "";
+    $("#fetchStatus").textContent = `${resolved.length} cards` +
+      (REMOVAL_SET ? ` · ${REMOVAL_SET.size} tagged as removal or counterspells (tags: ${TAG_STATS.cached} cached, ${TAG_STATS.fetched} fetched)`
+                   : " · tag lookup failed, so the text parser decided what is removal") + nf;
+    renderReview(); renderAnalysis();
+    $("#review").scrollIntoView({ behavior:"smooth", block:"start" });
+  } catch (err){
+    $("#fetchStatus").textContent = "⚠ " + err.message;
+  } finally {
+    $("#fetchBtn").disabled = false;
+  }
+};
+$("#refetchTags").onclick = async () => {
+  if (!CARDS.length) return;
+  const btn = $("#refetchTags"); btn.disabled = true;
+  try {
+    REMOVAL_SET = await fetchRemovalTags(CARDS.map(c => c.name), (done, total) => { btn.textContent = `Re-fetching tags… ${done}/${total}`; }, true);
+    btn.textContent = REMOVAL_SET ? `Tags re-fetched (${TAG_STATS.fetched})` : "Tag lookup failed";
+    renderReview(); renderAnalysis();
+  } finally {
+    btn.disabled = false;
+    setTimeout(() => { btn.textContent = "Re-fetch removal tags"; }, 2000);
+  }
+};
+$("#addBtn").onclick = () => {
+  const name = $("#addInput").value.trim();
+  const card = CARDS.find(c => c.name.toLowerCase() === name.toLowerCase());
+  if (!card){ $("#addInput").value = ""; return; }
+  setOverride(card.name, { method:"destroy", scope:"single", speed: /instant/i.test(card.type_line) ? "instant" : "sorcery", excluded:false });
+  $("#addInput").value = "";
+};
+$("#clearOverrides").onclick = () => {
+  if (Object.keys(OVERRIDES).length && confirm("Reset all classification edits?")){
+    OVERRIDES = {}; LS.set(K.ov, OVERRIDES); renderReview(); renderAnalysis();
+  }
+};
+bindAssump();
+if (LS.get(K.list, "")){ /* leave it to the user to hit Analyze */ }
+})();
+
+</script>
+</body>
+</html>
