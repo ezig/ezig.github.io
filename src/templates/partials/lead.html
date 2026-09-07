@@ -5,7 +5,7 @@
             <tr>
                 {% for social in socials %}
                 <td class="social">
-                    <a href="{{ social.link }}"><i class="{{ social.icon }}"></i></a>
+                    <a href="{{ social.link }}"{% if social.title %} title="{{ social.title }}"{% endif %}><i class="{{ social.icon }}"></i></a>
                 </td>
                 {% endfor %}
             </tr>

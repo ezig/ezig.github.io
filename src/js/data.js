@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.title = "Ezra Zigmond";
-exports.description = "I am a software engineer at <a href=\"https://www.palantir.com/\">Palantir Technlogies</a> in London. <br><br> I received a bachelor's degree in Computer Science from Harvard in 2018 where I wrote a <a href=\"https://ezig.github.io/thesis.pdf\">thesis on language-based database security</a> with <a href=\"https://people.seas.harvard.edu/~chong/\">Prof. Stephen Chong</a> and was a Head Teaching Fellow for CS51, <a href=\"http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/\">one of the largest courses</a> at Harvard.<br>";
+exports.description = "I am a Group Engineering Lead at <a href=\"https://www.palantir.com/\">Palantir Technologies</a>. <br><br> I received a bachelor's degree in Computer Science from Harvard in 2018 where I wrote a <a href=\"https://ezig.github.io/thesis.pdf\">thesis on language-based database security</a> with <a href=\"https://people.seas.harvard.edu/~chong/\">Prof. Stephen Chong</a> and was a Head Teaching Fellow for CS51, <a href=\"http://www.thecrimson.com/article/2017/2/1/ec-10b-largest-course-2017/\">one of the largest courses</a> at Harvard.<br>";
 exports.imgDir = "assets/img/";
 exports.profilePic = "me.gif";
 exports.socials = [
@@ -24,6 +24,11 @@ exports.socials = [
     {
         link: "http://stackoverflow.com/users/3183737/ezig",
         icon: "fa fa-stack-overflow fa-3x"
+    },
+    {
+        link: "tools.html",
+        title: "Tools",
+        icon: "fa fa-wrench fa-3x"
     },
 ];
 exports.skills = {
