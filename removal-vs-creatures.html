@@ -195,6 +195,8 @@
   /* ---- narrow screens ---- */
   @media (max-width: 720px){
     header{padding:22px 14px 18px}
+    section > h2{flex-wrap:wrap; gap:2px 10px}
+    section > h2 .meta{flex-basis:100%}
     header h1{font-size:22px}
     header .lead{font-size:14px}
     section{padding:14px}
@@ -212,10 +214,30 @@
     .cmeta{font-size:10px}
     .chart{max-width:none}
     .tablebar{flex-wrap:wrap}
-    /* creature table: drop MV, Instant and ≤3 MV; they're still in the CSV */
+    /* creature table: keep Creature, P/T, Clean, Cond., Exile. The rest is in the detail view and the CSV. */
     #creatureTable th:nth-child(3), #creatureTable td:nth-child(3),
+    #creatureTable th:nth-child(6), #creatureTable td:nth-child(6),
+    #creatureTable th:nth-child(7), #creatureTable td:nth-child(7),
     #creatureTable th:nth-child(8), #creatureTable td:nth-child(8),
     #creatureTable th:nth-child(9), #creatureTable td:nth-child(9){display:none}
+    #creatureTable td.namecell{white-space:normal; align-items:flex-start}
+    #creatureTable td.namecell .caret{margin-top:5px}
+    #creatureTable th, #creatureTable td{padding:6px 4px}
+    #creatureTable th:first-child, #creatureTable td:first-child{padding-left:8px}
+    /* review table: one stacked card per row instead of an 8-column grid */
+    #reviewTable, #reviewTable tbody{display:block}
+    #reviewTable thead{display:none}
+    #reviewTable tr{display:grid; grid-template-columns:26px 1fr auto; gap:3px 6px; padding:7px 6px; border-bottom:1px solid var(--line); align-items:center}
+    #reviewTable tr.grouphdr{display:block; padding:7px 9px}
+    #reviewTable td{display:block; padding:0; white-space:normal}
+    #reviewTable td:nth-child(1){grid-column:1; grid-row:1}
+    #reviewTable td:nth-child(2){grid-column:2 / 4; grid-row:1}
+    #reviewTable td:nth-child(3){grid-column:2; grid-row:2}
+    #reviewTable td:nth-child(4){grid-column:3; grid-row:2; text-align:right}
+    #reviewTable td:nth-child(7){grid-column:2 / 4; grid-row:3; max-width:none}
+    #reviewTable td:nth-child(5), #reviewTable td:nth-child(6), #reviewTable td:nth-child(8){display:none}
+    #reviewTable select, #reviewTable input.cap{background:var(--panel-2); border-color:var(--line)}   /* no hover on touch */
+    #reviewTable select{max-width:100%}
     .lbl-full{display:none} .lbl-short{display:inline}
     /* the expanded spell list stays put while the wide table scrolls sideways */
     #creatureTable .detailbox{position:sticky; left:0; max-width:calc(100vw - 58px)}
