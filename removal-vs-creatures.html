@@ -182,6 +182,7 @@
 
   .ncr-sub{font-size:11px; color:var(--muted); text-transform:none; letter-spacing:0; margin-left:8px}
   .tablebar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 6px}
+  .lbl-short{display:none}
   details.legend{margin-top:18px}
   details.legend summary, details.audit summary{cursor:pointer; color:var(--muted); font-size:12px; margin-bottom:8px}
   details.legend dl{margin:0; max-width:80ch; font-size:12.5px; display:grid; grid-template-columns:max-content 1fr; gap:4px 14px}
@@ -215,7 +216,9 @@
     #creatureTable th:nth-child(3), #creatureTable td:nth-child(3),
     #creatureTable th:nth-child(8), #creatureTable td:nth-child(8),
     #creatureTable th:nth-child(9), #creatureTable td:nth-child(9){display:none}
-    #creatureTable td.detail{display:table-cell}
+    .lbl-full{display:none} .lbl-short{display:inline}
+    /* the expanded spell list stays put while the wide table scrolls sideways */
+    #creatureTable .detailbox{position:sticky; left:0; max-width:calc(100vw - 58px)}
     th,td{padding:5px 6px}
     .bdpop{max-width:calc(100vw - 16px); max-height:50vh}
     .peek{display:none}
@@ -1756,9 +1759,9 @@ const COLS = [
   { key:"name", label:"Creature", get:r => r.creature.name, cmp:(a,b) => a.creature.name.localeCompare(b.creature.name) },
   { key:"pt", label:"P/T", tip:"* means the value was assumed", get:r => `${r.creature.powerRaw ?? "?"}/${r.creature.toughnessRaw ?? "?"}`, cmp:(a,b) => (a.creature.toughness ?? 0) - (b.creature.toughness ?? 0) },
   { key:"mv", label:"MV", get:r => r.creature.mv, cmp:(a,b) => a.creature.mv - b.creature.mv },
-  { key:"kill", label:"Clean kills", tip:"Destroys or exiles it unconditionally, at any size", get:r => r.counts.kill, cmp:(a,b) => a.counts.kill - b.counts.kill, num:true },
-  { key:"conditional", label:"Conditional", tip:"Sweepers, and spells that need a board state (attacking, etc.)", get:r => r.counts.conditional, cmp:(a,b) => a.counts.conditional - b.counts.conditional, num:true },
-  { key:"edict", label:"Edicts", tip:"Sacrifice effects. The opponent picks what dies", get:r => r.counts.edict, cmp:(a,b) => a.counts.edict - b.counts.edict, num:true },
+  { key:"kill", label:"Clean kills", short:"Clean", tip:"Destroys or exiles it unconditionally, at any size", get:r => r.counts.kill, cmp:(a,b) => a.counts.kill - b.counts.kill, num:true },
+  { key:"conditional", label:"Conditional", short:"Cond.", tip:"Sweepers, and spells that need a board state (attacking, etc.)", get:r => r.counts.conditional, cmp:(a,b) => a.counts.conditional - b.counts.conditional, num:true },
+  { key:"edict", label:"Edicts", short:"Edict", tip:"Sacrifice effects. The opponent picks what dies", get:r => r.counts.edict, cmp:(a,b) => a.counts.edict - b.counts.edict, num:true },
   { key:"soft", label:"Soft", tip:"Bounce, tap, steal, neutralize. Answers it without killing it", get:r => r.counts.soft, cmp:(a,b) => a.counts.soft - b.counts.soft, num:true },
   { key:"instant", label:"Instant", tip:"Clean kills at instant speed", get:r => r.flags.instant, cmp:(a,b) => a.flags.instant - b.flags.instant, num:true },
   { key:"cheap", label:"≤3 MV", tip:"Clean kills costing 3 or less", get:r => r.flags.cheap, cmp:(a,b) => a.flags.cheap - b.flags.cheap, num:true },
@@ -1770,7 +1773,9 @@ function renderTable(rows){
   table.textContent = "";
   const thead = el("thead"), htr = el("tr");
   for (const col of COLS){
-    const th = el("th", { textContent: col.label, className: col.num ? "num" : "", title: col.tip || "" });
+    const th = el("th", { className: col.num ? "num" : "", title: col.tip || "" });
+    if (col.short) th.append(el("span", { className:"lbl-full", textContent: col.label }), el("span", { className:"lbl-short", textContent: col.short }));
+    else th.textContent = col.label;
     if (SORT.key === col.key) th.append(el("span", { className:"arrow", textContent: SORT.dir > 0 ? " ▲" : " ▼" }));
     th.onclick = () => { SORT = { key: col.key, dir: SORT.key === col.key ? -SORT.dir : (col.num ? 1 : 1) }; renderTable(sortRows(rows)); };
     htr.append(th);
