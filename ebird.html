@@ -277,9 +277,16 @@ const map = L.map('map', { worldCopyJump: true }).setView([20, 0], 2);
 const tileLight = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap', maxZoom: 19,
 });
-const tileDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19, subdomains: 'abcd',
-});
+// Esri Dark Gray needs no API key (CARTO now watermarks keyless tiles). The base has no labels,
+// so the matching Reference overlay is grouped on top. Native tiles stop at zoom 16; maxNativeZoom
+// lets Leaflet upscale them so the layer control's max zoom stays consistent.
+const ESRI_DARK = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_';
+const tileDark = L.layerGroup([
+  L.tileLayer(ESRI_DARK + 'Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ', maxZoom: 19, maxNativeZoom: 16,
+  }),
+  L.tileLayer(ESRI_DARK + 'Reference/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, maxNativeZoom: 16 }),
+]);
 const tileSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Tiles &copy; Esri', maxZoom: 19,
 });
